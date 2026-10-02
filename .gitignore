@@ -1,0 +1,79 @@
+# Apex Combate — arquivos locais e sensíveis
+
+# Segredos e ambiente
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.mobileprovision
+*.jks
+*.keystore
+
+# Dados locais e bancos
+data/*
+!data/.gitkeep
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+
+# Arquivos enviados por usuários
+uploads/*
+!uploads/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node, web e empacotamento
+node_modules/
+dist/
+build/
+out/
+.next/
+.vite/
+coverage/
+*.apk
+*.aab
+*.ipa
+
+# Android / Capacitor
+android/.gradle/
+android/local.properties
+android/app/release/
+android/app/debug/
+android/app/*.jks
+
+# iOS / Xcode
+DerivedData/
+Pods/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+# Editores e sistema
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Chaves temporárias de implantação local
+deploy-keys/
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+server.pid

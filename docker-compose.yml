@@ -1,0 +1,20 @@
+services:
+  apex-combate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apex-combate
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8080
+      APEX_DATA_DIR: /app/data
+      APEX_ENV: development
+    ports:
+      - "8080:8080"
+    volumes:
+      - apex-data:/app/data
+    restart: unless-stopped
+    init: true
+
+volumes:
+  apex-data:

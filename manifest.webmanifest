@@ -1,0 +1,28 @@
+{
+  "name": "Apex Combate",
+  "short_name": "Apex",
+  "description": "Treinos, academias, graduações e competições em uma única plataforma marcial.",
+  "lang": "pt-BR",
+  "start_url": "./apex-combate.html?v=37",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#080a0e",
+  "theme_color": "#080a0e",
+  "categories": ["sports", "health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/apex-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/apex-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

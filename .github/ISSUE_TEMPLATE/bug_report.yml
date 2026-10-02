@@ -1,0 +1,34 @@
+name: Relatar erro
+description: Informe um comportamento incorreto no Apex Combate
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição
+      description: O que aconteceu e o que deveria acontecer?
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Perfil afetado
+      options: [ATLETA, CLUBE, TÉCNICO, FEDERAÇÃO, PWA, API, Documentação]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Passos para reproduzir
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Dispositivo e navegador
+      placeholder: "Ex.: Android 13 / Chrome"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências sem dados pessoais

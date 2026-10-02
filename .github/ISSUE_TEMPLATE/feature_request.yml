@@ -1,0 +1,31 @@
+name: Propor funcionalidade
+description: Sugira uma melhoria para o Apex Combate
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Qual problema real será resolvido?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+    validations:
+      required: true
+  - type: dropdown
+    id: product
+    attributes:
+      label: Produto
+      options: [Apex Combate, Apex’s Forge, Apex Central, API/Infraestrutura, Documentação]
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceitação
+    validations:
+      required: true
