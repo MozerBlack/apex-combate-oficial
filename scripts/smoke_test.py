@@ -45,7 +45,7 @@ def main() -> None:
     assert health["ok"] is True
     assert health["database"] == "ready"
 
-    status, app, content_type = request("/apex-combate.html?v=37")
+    status, app, content_type = request("/apex-combate.html?v=38")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
 
     status, body, _ = request("/api/login/atleta", payload={"documento": "529.982.247-25", "nascimento": "10/05/1998"})
@@ -57,6 +57,21 @@ def main() -> None:
     assert status == 200, body.decode("utf-8", errors="replace")
     dashboard = json.loads(body)
     assert dashboard["ok"] is True
+    assert dashboard["documents"], "documentos do atleta ausentes"
+    assert dashboard["classes"], "turmas do atleta ausentes"
+    assert "readiness" in dashboard
+
+    status, body, _ = request("/api/login", payload={"usuario": "RYUZOKAN", "senha": "2026", "perfil": "clube"})
+    assert status == 200, body.decode("utf-8", errors="replace")
+    club_login = json.loads(body)
+    assert club_login["ok"] is True and club_login["role"] == "CLUB_ADMIN"
+
+    status, body, _ = request("/api/club/dashboard", token=club_login["token"])
+    assert status == 200, body.decode("utf-8", errors="replace")
+    club_dashboard = json.loads(body)
+    assert club_dashboard["students"], "alunos do clube ausentes"
+    assert club_dashboard["classes"], "turmas do clube ausentes"
+    assert club_dashboard["delegations"], "delegação do clube ausente"
 
     for protected_path in ("/data/.jwt-secret", "/server.py", "/.env", "/documentacao-mestre-apex-combate.md"):
         status, _, _ = request(protected_path)

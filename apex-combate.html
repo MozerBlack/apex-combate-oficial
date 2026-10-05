@@ -1765,14 +1765,14 @@
 
       <!-- PERFIL E DOCUMENTOS -->
       <section class="page" id="page-profile">
-        <article class="card profile-cover athlete-profile-cover"><div class="profile-head"><div class="avatar large">RM</div><div><h2>Rafael Martins <span class="verified"><svg class="icon sm"><use href="#i-shield"/></svg></span></h2><p>Registro AC-2026-001842 • Dojo Norte • Curitiba, PR</p></div></div><button class="dash-action profile-edit" data-toast="Editor de perfil aberto"><svg class="icon sm"><use href="#i-edit"/></svg>Editar perfil</button></article>
+        <article class="card profile-cover athlete-profile-cover"><div class="profile-head"><div class="avatar large" id="athleteProfileAvatar">RM</div><div><h2><span id="athleteProfileName">Rafael Martins</span> <span class="verified"><svg class="icon sm"><use href="#i-shield"/></svg></span></h2><p id="athleteProfileSummary">Registro AC-2026-001842 • Dojo Norte • Curitiba, PR</p></div></div><button class="dash-action profile-edit" data-modal="athlete-profile"><svg class="icon sm"><use href="#i-edit"/></svg>Editar perfil</button></article>
         <div class="profile-layout athlete-profile-layout">
           <div class="profile-column">
-            <article class="card profile-stats"><div class="section-head" style="margin-bottom:4px"><div><h3>Dados esportivos</h3><p>Informações usadas nas competições</p></div></div><div class="profile-stat-row"><span>Modalidade principal</span><strong>Jiu-jítsu</strong></div><div class="profile-stat-row"><span>Graduação</span><strong>Faixa azul • 3º grau</strong></div><div class="profile-stat-row"><span>Categoria atual</span><strong>Adulto • Médio</strong></div><div class="profile-stat-row"><span>Peso informado</span><strong>79,8 kg</strong></div><div class="profile-stat-row"><span>Clube</span><strong>Dojo Norte</strong></div><div class="profile-stat-row"><span>Federação</span><strong>Federação Paranaense</strong></div></article>
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Contato de emergência</h3><p>Visível somente para organização autorizada</p></div><button class="text-btn" data-toast="Editor de contato aberto">Editar</button></div><div class="profile-stat-row"><span>Responsável</span><strong>Ana Martins</strong></div><div class="profile-stat-row"><span>Telefone</span><strong>•• •••••-4821</strong></div></article>
+            <article class="card profile-stats"><div class="section-head" style="margin-bottom:4px"><div><h3>Dados esportivos</h3><p>Informações usadas nas competições</p></div></div><div class="profile-stat-row"><span>Modalidade principal</span><strong id="athleteProfileSport">Jiu-jítsu</strong></div><div class="profile-stat-row"><span>Graduação</span><strong id="athleteProfileRank">Faixa azul • 3º grau</strong></div><div class="profile-stat-row"><span>Categoria atual</span><strong id="athleteProfileCategory">Adulto • Médio</strong></div><div class="profile-stat-row"><span>Peso informado</span><strong id="athleteProfileWeight">79,8 kg</strong></div><div class="profile-stat-row"><span>Clube</span><strong id="athleteProfileClub">Dojo Norte</strong></div><div class="profile-stat-row"><span>Federação</span><strong id="athleteProfileFederation">Federação Paranaense</strong></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Contato de emergência</h3><p>Visível somente para organização autorizada</p></div><button class="text-btn" data-modal="athlete-profile">Editar</button></div><div class="profile-stat-row"><span>Responsável</span><strong id="athleteEmergencyName">Ana Martins</strong></div><div class="profile-stat-row"><span>Telefone</span><strong id="athleteEmergencyPhone">•• •••••-4821</strong></div></article>
           </div>
           <div class="profile-column">
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Documentos e verificações</h3><p>Situação necessária para competir</p></div><span class="status-pill">Tudo certo</span></div><div class="document-list"><div class="document-item"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><strong>Documento de identificação</strong><span>Verificado em 12 set 2026</span></div><span class="status-pill">Válido</span></div><div class="document-item"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><strong>Atestado médico</strong><span>Válido até 15 mar 2027</span></div><span class="status-pill">Válido</span></div><div class="document-item"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-clock"/></svg></div><div><strong>Termo de responsabilidade</strong><span>Renovar para a temporada 2027</span></div><span class="status-pill pending">Em breve</span></div></div><button class="wide-btn" data-toast="Central de documentos aberta">Gerenciar documentos</button></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Documentos e verificações</h3><p>Situação necessária para competir</p></div><span class="status-pill" id="athleteDocumentOverall">Tudo certo</span></div><div class="document-list" id="athleteDocumentList"><div class="document-item"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><strong>Documento de identificação</strong><span>Carregando situação…</span></div><span class="status-pill">Válido</span></div></div><button class="wide-btn" data-modal="athlete-document">Gerenciar documentos</button></article>
             <article class="card settings-card"><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-bell"/></svg></div><div class="setting-copy"><strong>Notificações de chamada</strong><span>Avisos de pesagem, chave e luta</span></div><button class="switch on"></button></div><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-eye"/></svg></div><div class="setting-copy"><strong>Perfil esportivo público</strong><span>Resultados e conquistas visíveis</span></div><button class="switch on"></button></div><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-lock"/></svg></div><div class="setting-copy"><strong>Privacidade e segurança</strong><span>Sessões, dispositivos e dados</span></div><svg class="icon sm"><use href="#i-chevron"/></svg></div><div class="setting logout-setting" data-logout><div class="setting-icon"><svg class="icon sm"><use href="#i-user"/></svg></div><div class="setting-copy"><strong>Sair da conta</strong><span>Encerrar a sessão neste dispositivo</span></div><svg class="icon sm"><use href="#i-chevron"/></svg></div></article>
           </div>
         </div>
@@ -1789,7 +1789,7 @@
               <p id="clubDashboardDescription">Gestão integrada de alunos, turmas, professores, delegações e financeiro.</p>
             </div>
             <div class="dash-actions">
-              <button class="dash-action" data-toast="Leitor de check-in aberto"><svg class="icon sm"><use href="#i-qr"/></svg>Check-in</button>
+              <button class="dash-action" data-modal="club-attendance"><svg class="icon sm"><use href="#i-qr"/></svg>Check-in</button>
               <button class="dash-action" data-toast="Relatório gerencial preparado"><svg class="icon sm"><use href="#i-calendar"/></svg>Exportar</button>
               <button class="dash-action primary" data-modal="club-student"><svg class="icon sm"><use href="#i-plus"/></svg>Novo aluno</button>
             </div>
@@ -1828,8 +1828,8 @@
               </article>
 
               <article class="card dash-panel club-live-classes">
-                <div class="panel-head"><div><h3>Operação de hoje</h3><p>8 turmas • 122 vagas ocupadas</p></div><button class="text-btn" data-club-scroll="club-classes">Agenda completa</button></div>
-                <div class="club-timeline">
+                <div class="panel-head"><div><h3>Operação de hoje</h3><p id="clubClassSummary">Carregando turmas…</p></div><button class="text-btn" data-club-scroll="club-classes">Agenda completa</button></div>
+                <div class="club-timeline" id="clubLiveClassList">
                   <div class="club-class-row done"><time>07:00</time><i></i><div><strong>Jiu-jítsu • Iniciantes</strong><span>Marcelo • Tatame 1</span></div><b>18/24</b></div>
                   <div class="club-class-row done"><time>09:30</time><i></i><div><strong>Judô • Infantil</strong><span>Renata • Tatame 2</span></div><b>14/18</b></div>
                   <div class="club-class-row live"><time>11:00</time><i></i><div><strong>Muay Thai • Fundamentos</strong><span>Camila • Sala 2</span><em>Em andamento</em></div><b>21/28</b></div>
@@ -1851,12 +1851,12 @@
                 <tr data-club-student data-name="lucas alves karate 002922" data-status="active"><td><span class="table-person"><i class="table-avatar yellow">LA</i><span><strong>Lucas Alves</strong><small>AC-2026-002922</small></span></span></td><td><strong>Karatê</strong><small>Faixa branca • Adulto</small></td><td>2x semana</td><td>24 set, 20:11</td><td><span class="status-pill">Ativo</span></td><td><button class="club-row-action" data-toast="Perfil de Lucas aberto"><svg class="icon sm"><use href="#i-more"/></svg></button></td></tr>
                 <tr data-club-student data-name="marina freitas mma 001267" data-status="inactive"><td><span class="table-person"><i class="table-avatar muted">MF</i><span><strong>Marina Freitas</strong><small>AC-2026-001267</small></span></span></td><td><strong>MMA</strong><small>Avançado • Adulto</small></td><td>Ilimitado</td><td>02 set, 18:47</td><td><span class="status-pill alert">Inativo</span></td><td><button class="club-row-action" data-toast="Perfil de Marina aberto"><svg class="icon sm"><use href="#i-more"/></svg></button></td></tr>
               </tbody></table><div class="club-empty" id="clubAthleteEmpty"><svg class="icon"><use href="#i-search"/></svg>Nenhum aluno encontrado.</div></div>
-              <div class="club-table-footer"><span>Exibindo 5 de 184 alunos</span><button class="text-btn" data-toast="Lista completa de alunos aberta">Ver todos os alunos</button></div>
+              <div class="club-table-footer"><span id="clubStudentTableSummary">Carregando alunos…</span><button class="text-btn" data-toast="Lista completa de alunos aberta">Ver todos os alunos</button></div>
             </article>
           </section>
 
           <section class="club-section club-anchor" id="club-classes">
-            <div class="club-section-head"><div><span>Grade e capacidade</span><h3>Turmas e modalidades</h3><p>Ocupação, professores responsáveis e desempenho de frequência.</p></div><button class="dash-action" data-toast="Editor de grade semanal aberto"><svg class="icon sm"><use href="#i-edit"/></svg>Editar grade</button></div>
+            <div class="club-section-head"><div><span>Grade e capacidade</span><h3>Turmas e modalidades</h3><p>Ocupação, professores responsáveis e desempenho de frequência.</p></div><button class="dash-action" data-modal="club-class"><svg class="icon sm"><use href="#i-plus"/></svg>Nova turma</button></div>
             <div class="dash-grid equal club-classes-grid">
               <article class="card dash-panel"><div class="panel-head"><div><h3>Ocupação por modalidade</h3><p>Média dos últimos 30 dias</p></div><span class="club-panel-badge">Meta 80%</span></div><div class="progress-list club-progress-list">
                 <div><div class="progress-item-head"><span><i class="club-sport-dot red"></i>Jiu-jítsu</span><strong>91% <small>86 alunos</small></strong></div><div class="slim-progress"><i style="--p:91%"></i></div></div>
@@ -1875,9 +1875,9 @@
           </section>
 
           <section class="club-section club-anchor" id="club-competition">
-            <div class="club-section-head"><div><span>Equipe de competição</span><h3>Delegação do Curitiba Open</h3><p>18 de outubro • Ginásio Tarumã • Inscrições até 5 de outubro.</p></div><button class="dash-action primary" data-toast="Gestor de delegação aberto"><svg class="icon sm"><use href="#i-award"/></svg>Gerenciar delegação</button></div>
+            <div class="club-section-head"><div><span>Equipe de competição</span><h3>Delegação do Curitiba Open</h3><p>18 de outubro • Ginásio Tarumã • Inscrições até 5 de outubro.</p></div><button class="dash-action primary" data-modal="club-delegation"><svg class="icon sm"><use href="#i-award"/></svg>Gerenciar delegação</button></div>
             <div class="dash-grid club-delegation-grid">
-              <article class="card dash-panel club-event-card"><div class="club-event-top"><div class="club-event-date"><strong>18</strong><span>OUT</span></div><div><span class="status-pill">Inscrições abertas</span><h3>Curitiba Open de Artes Marciais</h3><p>Jiu-jítsu • Judô • Karatê • Muay Thai</p></div></div><div class="club-delegation-stats"><div><strong>24</strong><span>Atletas inscritos</span></div><div><strong>7</strong><span>Pendências</span></div><div><strong>5</strong><span>Técnicos</span></div><div><strong>R$ 2.880</strong><span>Taxas</span></div></div><div class="club-roster-avatars"><span><i>RM</i><i>BN</i><i>EC</i><i>LA</i><i>+20</i></span><strong>83% da delegação confirmada</strong></div><div class="slim-progress"><i style="--p:83%"></i></div></article>
+              <article class="card dash-panel club-event-card"><div class="club-event-top"><div class="club-event-date"><strong>18</strong><span>OUT</span></div><div><span class="status-pill">Inscrições abertas</span><h3>Curitiba Open de Artes Marciais</h3><p>Jiu-jítsu • Judô • Karatê • Muay Thai</p></div></div><div class="club-delegation-stats"><div><strong id="clubDelegationAthletes">0</strong><span>Atletas inscritos</span></div><div><strong id="clubDelegationPending">0</strong><span>Pendências</span></div><div><strong id="clubDelegationTechnicians">0</strong><span>Técnicos</span></div><div><strong id="clubDelegationFees">R$ 0</strong><span>Taxas</span></div></div><div class="club-roster-avatars"><span id="clubDelegationAvatars"><i>—</i></span><strong id="clubDelegationProgressText">Carregando delegação…</strong></div><div class="slim-progress"><i id="clubDelegationProgress" style="--p:0%"></i></div></article>
               <article class="card dash-panel"><div class="panel-head"><div><h3>Prontidão da delegação</h3><p>Itens obrigatórios antes do prazo</p></div><span class="club-panel-badge warning">7 pendências</span></div><div class="club-checklist"><button data-toast="Todos os registros federativos estão válidos"><i class="done"><svg class="icon sm"><use href="#i-check"/></svg></i><span><strong>Registro federativo</strong><small>24 de 24 válidos</small></span><b>100%</b></button><button data-toast="Lista de atestados pendentes aberta"><i class="pending"><svg class="icon sm"><use href="#i-clock"/></svg></i><span><strong>Atestado médico</strong><small>3 aguardando envio</small></span><b>88%</b></button><button data-toast="Categorias para revisão abertas"><i class="pending"><svg class="icon sm"><use href="#i-clock"/></svg></i><span><strong>Peso e categoria</strong><small>4 aguardando confirmação</small></span><b>83%</b></button><button data-toast="Pagamentos da delegação abertos"><i class="done"><svg class="icon sm"><use href="#i-check"/></svg></i><span><strong>Pagamento das taxas</strong><small>Quitado pelo clube</small></span><b>100%</b></button></div></article>
             </div>
 
@@ -2151,6 +2151,65 @@
     </form>
   </div>
 
+  <!-- Edição do perfil completo do atleta -->
+  <div class="modal-backdrop" id="modal-athlete-profile" role="dialog" aria-modal="true" aria-labelledby="athleteProfileModalTitle">
+    <form class="modal" id="athleteProfileForm">
+      <div class="modal-head"><div><h3 id="athleteProfileModalTitle">Atualizar perfil do atleta</h3><p>Dados esportivos e contato de emergência usados nas operações autorizadas.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteProfileEmail">E-MAIL</label><input id="athleteProfileEmail" type="email" required></div><div class="form-field"><label for="athleteProfilePhone">TELEFONE</label><input id="athleteProfilePhone" required></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteProfileWeightInput">PESO ATUAL (KG)</label><input id="athleteProfileWeightInput" inputmode="decimal" required></div><div class="form-field"><label for="athleteProfileCategoryInput">CATEGORIA ATUAL</label><input id="athleteProfileCategoryInput" required></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteEmergencyNameInput">CONTATO DE EMERGÊNCIA</label><input id="athleteEmergencyNameInput" required></div><div class="form-field"><label for="athleteEmergencyPhoneInput">TELEFONE DE EMERGÊNCIA</label><input id="athleteEmergencyPhoneInput" required></div></div>
+      <div class="technician-privacy-note">Essas informações são privadas e visíveis somente para usuários autorizados nos fluxos necessários.</div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Salvar perfil</button></div>
+    </form>
+  </div>
+
+  <!-- Central documental do atleta -->
+  <div class="modal-backdrop" id="modal-athlete-document" role="dialog" aria-modal="true" aria-labelledby="athleteDocumentModalTitle">
+    <form class="modal" id="athleteDocumentForm">
+      <div class="modal-head"><div><h3 id="athleteDocumentModalTitle">Enviar documento</h3><p>O arquivo ficará com status pendente até a validação do clube ou federação.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field"><label for="athleteDocumentType">TIPO</label><select id="athleteDocumentType" required><option value="identity">Documento de identificação</option><option value="medical_certificate">Atestado médico</option><option value="responsibility_term">Termo de responsabilidade</option><option value="guardian_authorization">Autorização do responsável</option><option value="graduation_certificate">Certificado de graduação</option></select></div>
+      <div class="form-field"><label for="athleteDocumentFile">NOME DO ARQUIVO</label><input id="athleteDocumentFile" placeholder="documento.pdf" required></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteDocumentIssued">EMISSÃO</label><input id="athleteDocumentIssued" type="date" required></div><div class="form-field"><label for="athleteDocumentExpires">VALIDADE</label><input id="athleteDocumentExpires" type="date"></div></div>
+      <div class="technician-privacy-note">Nesta versão demonstrativa, o fluxo registra os metadados de envio. A produção utilizará armazenamento criptografado de documentos.</div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Enviar para validação</button></div>
+    </form>
+  </div>
+
+  <!-- Criação de turma pelo clube -->
+  <div class="modal-backdrop" id="modal-club-class" role="dialog" aria-modal="true" aria-labelledby="clubClassModalTitle">
+    <form class="modal" id="clubClassForm">
+      <div class="modal-head"><div><h3 id="clubClassModalTitle">Nova turma</h3><p>Configure modalidade, professor, horário e capacidade.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubClassName">NOME</label><input id="clubClassName" placeholder="Ex.: Jiu-jítsu • Iniciantes" required></div><div class="form-field"><label for="clubClassSport">MODALIDADE</label><select id="clubClassSport" required><option>Jiu-jítsu</option><option>Muay Thai</option><option>Judô</option><option>Karatê</option><option>MMA</option><option>Boxe</option><option>Taekwondo</option><option>Capoeira</option><option>Multimodalidades</option></select></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubClassLevel">NÍVEL</label><input id="clubClassLevel" value="Todos os níveis" required></div><div class="form-field"><label for="clubClassTechnician">PROFESSOR / TÉCNICO</label><select id="clubClassTechnician"></select></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubClassWeekday">DIA</label><select id="clubClassWeekday"><option value="1">Segunda-feira</option><option value="2">Terça-feira</option><option value="3">Quarta-feira</option><option value="4">Quinta-feira</option><option value="5">Sexta-feira</option><option value="6">Sábado</option><option value="0">Domingo</option></select></div><div class="form-field"><label for="clubClassStart">INÍCIO</label><input id="clubClassStart" type="time" required></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubClassDuration">DURAÇÃO (MIN)</label><input id="clubClassDuration" type="number" min="20" max="240" value="60" required></div><div class="form-field"><label for="clubClassCapacity">CAPACIDADE</label><input id="clubClassCapacity" type="number" min="1" max="200" value="20" required></div></div>
+      <div class="form-field"><label for="clubClassLocation">LOCAL</label><input id="clubClassLocation" placeholder="Tatame, ringue ou sala" required></div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Criar turma</button></div>
+    </form>
+  </div>
+
+  <!-- Presença do aluno -->
+  <div class="modal-backdrop" id="modal-club-attendance" role="dialog" aria-modal="true" aria-labelledby="clubAttendanceModalTitle">
+    <form class="modal" id="clubAttendanceForm">
+      <div class="modal-head"><div><h3 id="clubAttendanceModalTitle">Registrar presença</h3><p>Check-in auditável de um aluno em uma turma do clube.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field"><label for="clubAttendanceClass">TURMA</label><select id="clubAttendanceClass" required></select></div>
+      <div class="form-field"><label for="clubAttendanceAthlete">ALUNO</label><select id="clubAttendanceAthlete" required></select></div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Confirmar check-in</button></div>
+    </form>
+  </div>
+
+  <!-- Gestão de membro da delegação -->
+  <div class="modal-backdrop" id="modal-club-delegation" role="dialog" aria-modal="true" aria-labelledby="clubDelegationModalTitle">
+    <form class="modal" id="clubDelegationForm">
+      <div class="modal-head"><div><h3 id="clubDelegationModalTitle">Gerenciar delegação</h3><p>Adicione ou atualize a prontidão de um atleta para a competição.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field"><label for="clubDelegationCompetition">COMPETIÇÃO</label><select id="clubDelegationCompetition" required><option value="1">Curitiba Open de Artes Marciais</option></select></div>
+      <div class="form-field"><label for="clubDelegationAthlete">ATLETA</label><select id="clubDelegationAthlete" required></select></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubDelegationApproval">APROVAÇÃO DO CLUBE</label><select id="clubDelegationApproval"><option value="pending">Pendente</option><option value="approved">Aprovado</option><option value="rejected">Reprovado</option></select></div><div class="form-field"><label for="clubDelegationDocuments">DOCUMENTOS</label><select id="clubDelegationDocuments"><option value="pending">Pendentes</option><option value="verified">Verificados</option><option value="rejected">Rejeitados</option></select></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="clubDelegationCategory">CATEGORIA</label><select id="clubDelegationCategory"><option value="pending">Pendente</option><option value="confirmed">Confirmada</option><option value="rejected">Rejeitada</option></select></div><div class="form-field"><label for="clubDelegationPayment">PAGAMENTO</label><select id="clubDelegationPayment"><option value="pending">Pendente</option><option value="paid">Pago</option><option value="waived">Isento</option></select></div></div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Salvar na delegação</button></div>
+    </form>
+  </div>
+
   <!-- Inscrição em competição -->
   <div class="modal-backdrop" id="modal-competition" role="dialog" aria-modal="true" aria-labelledby="competitionModalTitle">
     <form class="modal" id="competitionForm">
@@ -2196,6 +2255,9 @@
 
   <script>
     let athleteEligibleTechnicians = [];
+    let athleteDashboardState = null;
+    let clubDashboardState = null;
+    let clubTechnicianState = { technicians: [], assignments: [] };
 
     const pageMeta = {
       home: ['Visão geral', 'Segunda-feira, 21 de setembro'],
@@ -2390,6 +2452,105 @@
     if (competitionSearch) competitionSearch.addEventListener('input', filterCompetitions);
 
 
+    const ATHLETE_DOCUMENT_LABELS = {
+      identity: 'Documento de identificação', medical_certificate: 'Atestado médico',
+      responsibility_term: 'Termo de responsabilidade', guardian_authorization: 'Autorização do responsável',
+      graduation_certificate: 'Certificado de graduação'
+    };
+    const WEEKDAY_LABELS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    function safeText(value = '') { const node = document.createElement('div'); node.textContent = String(value ?? ''); return node.innerHTML; }
+    function personInitials(name = '') { return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'AC'; }
+    function formatIsoDate(value) { if (!value) return 'Sem validade'; const [year,month,day] = value.slice(0,10).split('-'); return `${day}/${month}/${year}`; }
+
+    function renderAthleteCompleteDashboard(data) {
+      athleteDashboardState = data;
+      const athlete = data.athlete || {};
+      const setText = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value || '—'; };
+      setText('athleteProfileAvatar', personInitials(athlete.full_name));
+      setText('athleteProfileName', athlete.full_name);
+      setText('athleteProfileSummary', `Registro ${athlete.registration_code || '—'} • ${athlete.club_name || 'Sem clube'} • ${athlete.federation_name || 'Sem federação'}`);
+      setText('athleteProfileSport', athlete.sport);
+      setText('athleteProfileRank', athlete.rank_name);
+      setText('athleteProfileCategory', athlete.current_category || 'A definir');
+      setText('athleteProfileWeight', athlete.weight_kg ? `${String(athlete.weight_kg).replace('.', ',')} kg` : 'Não informado');
+      setText('athleteProfileClub', athlete.club_name);
+      setText('athleteProfileFederation', athlete.federation_name);
+      setText('athleteEmergencyName', athlete.emergency_name || 'Não informado');
+      setText('athleteEmergencyPhone', athlete.emergency_phone || 'Não informado');
+      const inputMap = {
+        athleteProfileEmail: athlete.email, athleteProfilePhone: athlete.phone,
+        athleteProfileWeightInput: athlete.weight_kg, athleteProfileCategoryInput: athlete.current_category,
+        athleteEmergencyNameInput: athlete.emergency_name, athleteEmergencyPhoneInput: athlete.emergency_phone
+      };
+      Object.entries(inputMap).forEach(([id,value]) => { const input = document.getElementById(id); if (input) input.value = value ?? ''; });
+      const list = document.getElementById('athleteDocumentList');
+      if (list) {
+        list.innerHTML = (data.documents || []).map(documentItem => {
+          const verified = documentItem.status === 'verified';
+          const pending = documentItem.status === 'pending';
+          const detail = verified ? `Válido até ${formatIsoDate(documentItem.expires_at)}` : (documentItem.notes || 'Aguardando validação');
+          return `<div class="document-item"><div class="metric-icon ${verified ? 'green' : 'yellow'}"><svg class="icon sm"><use href="#${verified ? 'i-check' : 'i-clock'}"/></svg></div><div><strong>${safeText(ATHLETE_DOCUMENT_LABELS[documentItem.document_type] || documentItem.document_type)}</strong><span>${safeText(detail)}</span></div><span class="status-pill ${pending ? 'pending' : verified ? '' : 'alert'}">${verified ? 'Válido' : pending ? 'Em análise' : 'Revisar'}</span></div>`;
+        }).join('') || '<div class="technician-empty">Nenhum documento enviado.</div>';
+      }
+      const overall = document.getElementById('athleteDocumentOverall');
+      if (overall) {
+        overall.textContent = data.readiness?.ready ? 'Tudo certo' : `${data.readiness?.documentsVerified || 0}/${data.readiness?.documentsRequired || 3} verificados`;
+        overall.className = `status-pill ${data.readiness?.ready ? '' : 'pending'}`;
+      }
+    }
+
+    function renderClubStudents(students = []) {
+      const rows = document.getElementById('clubAthleteRows');
+      if (!rows) return;
+      rows.innerHTML = students.map((student,index) => {
+        const statusLabel = student.status === 'active' ? 'Ativo' : student.status === 'pending' ? 'Documento' : 'Inativo';
+        const statusClass = student.status === 'active' ? '' : student.status === 'pending' ? 'pending' : 'alert';
+        const last = student.last_check_in ? new Date(student.last_check_in).toLocaleDateString('pt-BR') : 'Sem check-in';
+        return `<tr data-club-student data-athlete-id="${student.id}" data-name="${safeText(`${student.full_name} ${student.sport} ${student.registration_code}`.toLowerCase())}" data-status="${safeText(student.status)}"><td><span class="table-person"><i class="table-avatar ${index % 3 === 1 ? 'purple' : index % 3 === 2 ? 'green' : ''}">${safeText(personInitials(student.full_name))}</i><span><strong>${safeText(student.full_name)}</strong><small>${safeText(student.registration_code)}</small></span></span></td><td><strong>${safeText(student.sport)}</strong><small>${safeText(student.rank_name || student.current_category || 'Graduação pendente')}</small></td><td>${safeText(student.plan_name || 'Sem plano')}</td><td>${safeText(last)}</td><td><span class="status-pill ${statusClass}">${statusLabel}</span></td><td><button class="club-row-action" data-club-status="${student.id}" aria-label="Alterar situação"><svg class="icon sm"><use href="#i-more"/></svg></button></td></tr>`;
+      }).join('');
+      const summary = document.getElementById('clubStudentTableSummary');
+      if (summary) summary.textContent = `Exibindo ${students.length} de ${clubDashboardState?.metrics?.activeStudents || students.length} alunos`;
+      const athleteOptions = students.filter(item => item.status !== 'inactive').map(item => `<option value="${item.id}">${safeText(item.full_name)} • ${safeText(item.registration_code)}</option>`).join('');
+      ['clubAttendanceAthlete','clubDelegationAthlete'].forEach(id => { const select = document.getElementById(id); if (select) select.innerHTML = athleteOptions; });
+      filterClubAthletes();
+    }
+
+    function renderClubClasses(classes = []) {
+      const list = document.getElementById('clubLiveClassList');
+      const summary = document.getElementById('clubClassSummary');
+      if (summary) summary.textContent = `${classes.length} turmas ativas • ${classes.reduce((sum,item) => sum + Number(item.enrolled || 0), 0)} matrículas`;
+      if (list) list.innerHTML = classes.map(item => `<div class="club-class-row"><time>${safeText(item.start_time)}</time><i></i><div><strong>${safeText(item.name)}</strong><span>${safeText(item.technician_name || 'Professor a definir')} • ${safeText(item.location)}</span></div><b>${item.enrolled || 0}/${item.capacity}</b></div>`).join('') || '<div class="technician-empty">Nenhuma turma cadastrada.</div>';
+      const select = document.getElementById('clubAttendanceClass');
+      if (select) select.innerHTML = classes.filter(item => item.status === 'active').map(item => `<option value="${item.id}">${safeText(WEEKDAY_LABELS[item.weekday])} • ${safeText(item.start_time)} • ${safeText(item.name)}</option>`).join('');
+    }
+
+    function renderClubDelegation(data) {
+      const delegation = (data.delegations || [])[0];
+      const members = data.delegationMembers || [];
+      const assignments = data.assignments || [];
+      const athletes = Number(delegation?.athletes || members.length || 0);
+      const approved = Number(delegation?.approved || 0);
+      const pending = Number(delegation?.document_pending || 0) + Number(delegation?.category_pending || 0) + Number(delegation?.payment_pending || 0);
+      const progress = athletes ? Math.round(approved * 100 / athletes) : 0;
+      const setText = (id,value) => { const element = document.getElementById(id); if (element) element.textContent = value; };
+      setText('clubDelegationAthletes', athletes);
+      setText('clubDelegationPending', pending);
+      setText('clubDelegationTechnicians', assignments.length);
+      setText('clubDelegationFees', `R$ ${(athletes * 120).toLocaleString('pt-BR')}`);
+      setText('clubDelegationProgressText', `${progress}% da delegação confirmada`);
+      const progressBar = document.getElementById('clubDelegationProgress'); if (progressBar) progressBar.style.setProperty('--p', `${progress}%`);
+      const avatars = document.getElementById('clubDelegationAvatars'); if (avatars) avatars.innerHTML = members.slice(0,4).map(item => `<i>${safeText(personInitials(item.full_name))}</i>`).join('') + (members.length > 4 ? `<i>+${members.length - 4}</i>` : '');
+      const competitionSelect = document.getElementById('clubDelegationCompetition');
+      if (competitionSelect && data.delegations?.length) competitionSelect.innerHTML = data.delegations.map(item => `<option value="${item.competition_id}">${safeText(item.competition)}</option>`).join('');
+    }
+
+    function renderClubCompleteDashboard(data) {
+      clubDashboardState = data;
+      renderClubStudents(data.students || []);
+      renderClubClasses(data.classes || []);
+      renderClubDelegation(data);
+    }
+
     // Interações do dashboard do clube
     const clubAthleteSearch = document.getElementById('clubAthleteSearch');
     const clubAthleteStatus = document.getElementById('clubAthleteStatus');
@@ -2434,10 +2595,9 @@
         const response = await fetch('/api/club/students', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(payload) });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível cadastrar o aluno');
-        const total = document.getElementById('clubActiveStudents');
-        if (total) total.textContent = String(Number(total.textContent) + 1);
         closeModal(document.getElementById('modal-club-student'));
         event.target.reset();
+        await hydrateAuthenticatedDashboard('academy');
         showToast(`${data.athlete.name} cadastrado com registro ${data.athlete.registration}`);
       } catch (error) {
         showToast(error.message);
@@ -2446,6 +2606,77 @@
       }
     });
 
+
+    async function authenticatedPost(path, profile, payload) {
+      const response = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getApexToken(profile)}` }, body: JSON.stringify(payload) });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível concluir a operação');
+      return data;
+    }
+
+    document.getElementById('athleteProfileForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Salvando...'; }
+      try {
+        await authenticatedPost('/api/athlete/profile', 'athlete', {
+          email: document.getElementById('athleteProfileEmail').value.trim(), phone: document.getElementById('athleteProfilePhone').value.trim(),
+          weight: document.getElementById('athleteProfileWeightInput').value.trim(), category: document.getElementById('athleteProfileCategoryInput').value.trim(),
+          emergencyName: document.getElementById('athleteEmergencyNameInput').value.trim(), emergencyPhone: document.getElementById('athleteEmergencyPhoneInput').value.trim()
+        });
+        closeModal(document.getElementById('modal-athlete-profile')); await hydrateAuthenticatedDashboard('athlete'); showToast('Perfil atualizado e sincronizado');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Salvar perfil'; } }
+    });
+
+    document.getElementById('athleteDocumentForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Enviando...'; }
+      try {
+        await authenticatedPost('/api/athlete/documents', 'athlete', {
+          type: document.getElementById('athleteDocumentType').value, fileName: document.getElementById('athleteDocumentFile').value.trim(),
+          issuedAt: document.getElementById('athleteDocumentIssued').value, expiresAt: document.getElementById('athleteDocumentExpires').value
+        });
+        closeModal(document.getElementById('modal-athlete-document')); event.target.reset(); await hydrateAuthenticatedDashboard('athlete'); showToast('Documento enviado para validação');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Enviar para validação'; } }
+    });
+
+    document.getElementById('clubClassForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Criando...'; }
+      try {
+        await authenticatedPost('/api/club/classes', 'academy', {
+          name: document.getElementById('clubClassName').value.trim(), sport: document.getElementById('clubClassSport').value,
+          level: document.getElementById('clubClassLevel').value.trim(), technicianId: document.getElementById('clubClassTechnician').value || null,
+          weekday: Number(document.getElementById('clubClassWeekday').value), startTime: document.getElementById('clubClassStart').value,
+          duration: Number(document.getElementById('clubClassDuration').value), capacity: Number(document.getElementById('clubClassCapacity').value),
+          location: document.getElementById('clubClassLocation').value.trim()
+        });
+        closeModal(document.getElementById('modal-club-class')); event.target.reset(); await hydrateAuthenticatedDashboard('academy'); showToast('Turma criada com sucesso');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Criar turma'; } }
+    });
+
+    document.getElementById('clubAttendanceForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Confirmando...'; }
+      try {
+        const data = await authenticatedPost('/api/club/attendance', 'academy', { classId: Number(document.getElementById('clubAttendanceClass').value), athleteId: Number(document.getElementById('clubAttendanceAthlete').value) });
+        closeModal(document.getElementById('modal-club-attendance')); await hydrateAuthenticatedDashboard('academy'); showToast(`Check-in confirmado para ${data.attendance.athlete}`);
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Confirmar check-in'; } }
+    });
+
+    document.getElementById('clubDelegationForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Salvando...'; }
+      try {
+        const data = await authenticatedPost('/api/club/delegations/members', 'academy', {
+          competitionId: Number(document.getElementById('clubDelegationCompetition').value), athleteId: Number(document.getElementById('clubDelegationAthlete').value),
+          approvalStatus: document.getElementById('clubDelegationApproval').value, documentsStatus: document.getElementById('clubDelegationDocuments').value,
+          categoryStatus: document.getElementById('clubDelegationCategory').value, paymentStatus: document.getElementById('clubDelegationPayment').value
+        });
+        closeModal(document.getElementById('modal-club-delegation')); await hydrateAuthenticatedDashboard('academy'); showToast(`${data.athlete} atualizado na delegação`);
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Salvar na delegação'; } }
+    });
+
+    document.getElementById('clubAthleteRows')?.addEventListener('click', async event => {
+      const button = event.target.closest('[data-club-status]'); if (!button) return;
+      const row = button.closest('[data-club-student]');
+      const next = row.dataset.status === 'active' ? 'pending' : row.dataset.status === 'pending' ? 'inactive' : 'active';
+      try { const data = await authenticatedPost('/api/club/students/status', 'academy', { athleteId: Number(button.dataset.clubStatus), status: next }); await hydrateAuthenticatedDashboard('academy'); showToast(`${data.athlete.name}: situação atualizada`); } catch (error) { showToast(error.message); }
+    });
 
     // Técnicos e professores vinculados ao Clube e à competição
     function renderClubTechnicianAssignments(technicians, assignments) {
@@ -2477,8 +2708,10 @@
       const response = await fetch('/api/club/technicians', { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível carregar os técnicos');
-      const select = document.getElementById('technicianSelect');
-      if (select) {
+      clubTechnicianState = data;
+      ['technicianSelect','clubClassTechnician'].forEach(selectId => {
+        const select = document.getElementById(selectId);
+        if (!select) return;
         select.textContent = '';
         data.technicians.forEach(technician => {
           const option = document.createElement('option');
@@ -2486,7 +2719,7 @@
           option.textContent = `${technician.full_name} • ${technician.registration_code}`;
           select.appendChild(option);
         });
-      }
+      });
       renderClubTechnicianAssignments(data.technicians, data.assignments.filter(item => Number(item.competition_id) === 1));
       return data;
     }
@@ -3094,8 +3327,9 @@
           } else if (data.metrics) {
             document.getElementById('clubActiveStudents').textContent = data.metrics.activeStudents;
             document.getElementById('clubDashboardHeading').textContent = `Bom dia, equipe ${data.club.name}`;
-            document.getElementById('clubDashboardDescription').textContent = 'Gestão integrada de alunos, turmas, professores, delegações e financeiro.';
+            document.getElementById('clubDashboardDescription').textContent = 'Gestão integrada de alunos, turmas, responsáveis, delegações e frequência.';
             document.getElementById('currentRoleLabel').textContent = `${data.club.name} • Clube`;
+            renderClubCompleteDashboard(data);
             await loadClubTechnicians(token);
           }
         }
@@ -3111,6 +3345,7 @@
         }
         if (role === 'athlete' && data.athlete) {
           document.getElementById('currentRoleLabel').textContent = `${data.athlete.full_name} • ${data.athlete.club_name || 'Atleta'}`;
+          renderAthleteCompleteDashboard(data);
           if (data.technicians) {
             athleteEligibleTechnicians = data.technicians;
             populateCompetitionTechnicians();
@@ -3359,7 +3594,7 @@
       federationOtpModal.hidden = true;
       activeSessionToken = '';
       activeAdminToken = '';
-      try { sessionStorage.removeItem('apex-session'); sessionStorage.removeItem('apex-admin-jwt'); sessionStorage.removeItem('apex-profile'); sessionStorage.removeItem('apex-federation-scope'); sessionStorage.removeItem('apex-federation-name'); sessionStorage.removeItem('apex-federation-role'); sessionStorage.removeItem('apex-club-account-type'); sessionStorage.removeItem('apex-technician-name'); localStorage.removeItem('apex-technician-operations-v37'); localStorage.removeItem('apex-technician-offline-queue-v37'); } catch (_) {}
+      try { sessionStorage.removeItem('apex-session'); sessionStorage.removeItem('apex-admin-jwt'); sessionStorage.removeItem('apex-profile'); sessionStorage.removeItem('apex-federation-scope'); sessionStorage.removeItem('apex-federation-name'); sessionStorage.removeItem('apex-federation-role'); sessionStorage.removeItem('apex-club-account-type'); sessionStorage.removeItem('apex-technician-name'); localStorage.removeItem('apex-technician-operations-v38'); localStorage.removeItem('apex-technician-offline-queue-v38'); } catch (_) {}
       showProfileSelection();
       showToast('Sessão encerrada com segurança');
     }));
@@ -3661,7 +3896,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=37', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=38', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

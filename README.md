@@ -4,7 +4,11 @@
 
 Apex Combate é uma plataforma universal “Tudo em um” para atletas, clubes, dojôs, academias e federações de artes marciais. O produto cobre a jornada esportiva, a operação de competições e a governança multi-federação sem criar perfis públicos além de **ATLETA**, **CLUBE** e **FEDERAÇÃO**.
 
-> Estado atual: v37 demonstrativa, com frontend responsivo, PWA, API Python e banco SQLite local. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
+> Estado atual: v38 demonstrativa, com frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
+
+- **Demonstração online:** https://apex-combate-demo.onrender.com
+- **Repositório oficial:** https://github.com/MozerBlack/apex-combate-oficial
+- **Pipeline:** GitHub Actions com testes de contrato, autenticação, fluxos v38 e Docker.
 
 ## Propriedade
 

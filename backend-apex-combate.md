@@ -1,4 +1,4 @@
-# Backend Apex Combate — Fundação local v37
+# Backend Apex Combate — Fundação local v38
 
 ## Arquitetura atual
 
@@ -83,7 +83,7 @@ As rotas proprietárias permanecem desabilitadas nesta fase. A futura Apex Centr
 
 ## Fundação de desenvolvimento no GitHub
 
-A base v37 foi preparada para versionamento profissional:
+A base v38 foi preparada para versionamento profissional:
 
 - repositório Git local inicializado na branch `main`;
 - `.gitignore` protegendo banco, segredo JWT, uploads, ambientes e certificados móveis;
@@ -97,7 +97,49 @@ A base v37 foi preparada para versionamento profissional:
 - porta, host, diretório de dados e segredo JWT configuráveis por ambiente;
 - bloqueio HTTP de arquivos internos, código-fonte, documentação e dados sensíveis.
 
-O código ainda não foi enviado a uma conta GitHub nem conectado a um repositório remoto. Essa etapa exige que Mozer crie ou indique o repositório e autorize o acesso sem compartilhar senha.
+O código está publicado no repositório oficial público `https://github.com/MozerBlack/apex-combate-oficial`. O GitHub Actions valida testes, contratos, autenticação e Docker antes das próximas entregas. A demonstração completa está publicada em `https://apex-combate-demo.onrender.com` por integração automática com a branch `main`.
+
+## Fluxos integrados adicionados na v38
+
+### Atleta
+
+- perfil esportivo e contato de emergência editáveis;
+- peso e categoria atualizados pelo próprio atleta;
+- central documental com identificação, atestado, termo, autorização e certificado;
+- situação documental e prontidão calculadas no backend;
+- responsáveis vinculados para menores;
+- turmas matriculadas e histórico de presença;
+- inscrições e técnicos elegíveis preservados.
+
+### Clube
+
+- listagem real de alunos com documentos e último check-in;
+- alteração auditável da situação do aluno;
+- criação de turmas com modalidade, nível, horário, professor, local e capacidade;
+- matrícula automática no primeiro check-in;
+- presença auditável com prevenção de duplicidade diária;
+- delegações por competição;
+- prontidão individual por aprovação, documentos, categoria e pagamento;
+- métricas integradas de turmas, presenças e delegação.
+
+### Novas entidades
+
+- `athlete_documents`;
+- `athlete_guardians`;
+- `club_classes`;
+- `class_enrollments`;
+- `attendance_records`;
+- `delegations`;
+- `delegation_members`.
+
+### Novas rotas
+
+- `POST /api/athlete/profile`;
+- `POST /api/athlete/documents`;
+- `POST /api/club/students/status`;
+- `POST /api/club/classes`;
+- `POST /api/club/attendance`;
+- `POST /api/club/delegations/members`.
 
 ## Evolução para produção
 

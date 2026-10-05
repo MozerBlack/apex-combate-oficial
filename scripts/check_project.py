@@ -38,7 +38,7 @@ def check_required_files() -> None:
 
 
 def check_python() -> None:
-    for name in ("server.py", "apex_db.py", "scripts/smoke_test.py"):
+    for name in ("server.py", "apex_db.py", "scripts/smoke_test.py", "scripts/v38_flow_test.py"):
         py_compile.compile(str(ROOT / name), doraise=True)
 
 
@@ -47,7 +47,7 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "manifest.webmanifest", "apex-sw.js?v=37")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "manifest.webmanifest", "apex-sw.js?v=38")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
@@ -69,7 +69,7 @@ def check_master_document() -> None:
     master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "DEC-037"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "DEC-041"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 

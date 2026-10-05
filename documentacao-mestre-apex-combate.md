@@ -4,11 +4,26 @@
 **Produto principal:** Apex Combate  
 **Produto comercial conectado:** Apex’s Forge  
 **Central proprietária futura:** Apex Central  
-**Versão documentada:** v37  
-**Data de consolidação:** 1º de outubro de 2026  
-**Status:** documento único oficial do ecossistema
+**Versão documentada:** v38  
+**Data de consolidação:** 5 de outubro de 2026  
+**Status:** documento único oficial do ecossistema  
+**Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
+**Demonstração online:** `https://apex-combate-demo.onrender.com`
 
 > Este arquivo reúne em um único lugar todas as definições de produto, identidade, autenticação, perfis, permissões, governança, arquitetura, APIs, compatibilidade, aplicativo comercial e decisões oficiais. Em caso de divergência, prevalece a instrução mais recente e explícita de Mozer.
+
+### Entrega funcional v38
+
+- perfil completo do atleta com peso, categoria, contatos e emergência;
+- documentos esportivos com situação e prontidão calculadas;
+- responsáveis vinculados para atletas menores;
+- turmas do clube com professor, horário, capacidade e local;
+- matrículas e presença auditável;
+- alunos sincronizados com documentos e último check-in;
+- delegações por competição com prontidão individual;
+- APIs e banco persistente para todos esses fluxos;
+- testes unitários, contratos, smoke test e fluxo integrado v38;
+- implantação contínua por GitHub e Render.
 
 ---
 
@@ -216,7 +231,7 @@ Nenhuma funcionalidade principal poderá depender exclusivamente de um tamanho d
 **Proprietário:** Mozer  
 **Produto:** Apex Combate  
 **Posicionamento:** Tudo em um para o ecossistema das artes marciais  
-**Versão documentada:** v37  
+**Versão documentada:** v38  
 **Data de consolidação:** 1º de outubro de 2026  
 **Status:** protótipo funcional com backend local persistente
 
@@ -464,7 +479,7 @@ Ele entra com login individual pelo botão público CLUBE e é direcionado autom
 - ferramentas da Apex Central;
 - dados de atletas não atribuídos.
 
-#### 7.4 Recursos implementados na v37
+#### 7.4 Recursos implementados na v38
 
 - painel da próxima competição;
 - próximo atleta e contagem regressiva;
@@ -615,7 +630,7 @@ O produto foi estruturado para:
 - APIs fora do cache HTTP;
 - modo offline da área técnica com dados locais e fila de sincronização.
 
-A versão atual de cache é `apex-combate-v37`.
+A versão atual de cache é `apex-combate-v38`.
 
 ---
 
@@ -779,7 +794,7 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 ---
 
-### 16. Estado da versão v37
+### 16. Estado da versão v38
 
 #### Validado
 
@@ -794,8 +809,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 - seleção de técnico elegível por competição;
 - bloqueio de técnico não credenciado;
 - QR Code decodificável;
-- frontend v37;
-- manifesto e Service Worker v37;
+- frontend v38;
+- manifesto e Service Worker v38;
 - sintaxe JavaScript e Python;
 - integridade do HTML;
 - limpeza de dados temporários de testes.
@@ -816,13 +831,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 | Arquivo | Finalidade |
 |---|---|
-| `apex-combate.html` | Aplicação principal v37 |
+| `apex-combate.html` | Aplicação principal v38 |
 | `index.html` | Entrada da prévia |
 | `server.py` | API, autenticação e autorização |
 | `apex_db.py` | Banco, migrações e sementes |
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
-| `apex-sw.js` | Service Worker v37 |
+| `apex-sw.js` | Service Worker v38 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `backend-apex-combate.md` | Backend e APIs |
 | `sistema-login-apex-combate.md` | Regras de autenticação |
@@ -871,7 +886,7 @@ Nenhuma decisão futura deve reintroduzir Supabase, um quarto perfil público, a
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v37 com backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.  
+> **Status:** protótipo funcional v38 com backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.  
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 ---
@@ -1491,7 +1506,7 @@ O histórico completo está em `registro-de-decisoes-apex-combate.md`.
 
 ### 20. Próximos passos recomendados
 
-1. Validar a v37 com atletas, clubes, técnicos e uma federação piloto;
+1. Validar a v38 com atletas, clubes, técnicos e uma federação piloto;
 2. Migrar a fundação local para infraestrutura de produção com PostgreSQL, HTTPS, segredos e OTP real;
 3. Completar notificações, documentos, auditoria e operação real de eventos;
 4. Executar um piloto de competição em Curitiba;
@@ -2089,7 +2104,7 @@ As rotas proprietárias permanecem desabilitadas nesta fase. A futura Apex Centr
 
 ### Fundação de desenvolvimento no GitHub
 
-A base v37 foi preparada para versionamento profissional:
+A base v38 foi preparada para versionamento profissional:
 
 - repositório Git local inicializado na branch `main`;
 - `.gitignore` protegendo banco, segredo JWT, uploads, ambientes e certificados móveis;
@@ -2103,7 +2118,49 @@ A base v37 foi preparada para versionamento profissional:
 - porta, host, diretório de dados e segredo JWT configuráveis por ambiente;
 - bloqueio HTTP de arquivos internos, código-fonte, documentação e dados sensíveis.
 
-O código ainda não foi enviado a uma conta GitHub nem conectado a um repositório remoto. Essa etapa exige que Mozer crie ou indique o repositório e autorize o acesso sem compartilhar senha.
+O código está publicado no repositório oficial público `https://github.com/MozerBlack/apex-combate-oficial`. O GitHub Actions valida testes, contratos, autenticação e Docker antes das próximas entregas. A demonstração completa está publicada em `https://apex-combate-demo.onrender.com` por integração automática com a branch `main`.
+
+### Fluxos integrados adicionados na v38
+
+#### Atleta
+
+- perfil esportivo e contato de emergência editáveis;
+- peso e categoria atualizados pelo próprio atleta;
+- central documental com identificação, atestado, termo, autorização e certificado;
+- situação documental e prontidão calculadas no backend;
+- responsáveis vinculados para menores;
+- turmas matriculadas e histórico de presença;
+- inscrições e técnicos elegíveis preservados.
+
+#### Clube
+
+- listagem real de alunos com documentos e último check-in;
+- alteração auditável da situação do aluno;
+- criação de turmas com modalidade, nível, horário, professor, local e capacidade;
+- matrícula automática no primeiro check-in;
+- presença auditável com prevenção de duplicidade diária;
+- delegações por competição;
+- prontidão individual por aprovação, documentos, categoria e pagamento;
+- métricas integradas de turmas, presenças e delegação.
+
+#### Novas entidades
+
+- `athlete_documents`;
+- `athlete_guardians`;
+- `club_classes`;
+- `class_enrollments`;
+- `attendance_records`;
+- `delegations`;
+- `delegation_members`.
+
+#### Novas rotas
+
+- `POST /api/athlete/profile`;
+- `POST /api/athlete/documents`;
+- `POST /api/club/students/status`;
+- `POST /api/club/classes`;
+- `POST /api/club/attendance`;
+- `POST /api/club/delegations/members`.
 
 ### Evolução para produção
 
@@ -2782,7 +2839,10 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-035 | O entregável Android final do Apex Combate será um APK, acompanhado por AAB para a Google Play e pela versão web/PWA universal. | Aprovada |
 | DEC-036 | O Apex Combate também terá aplicativo instalável para iPhone e iPad, distribuído por TestFlight em demonstrações e pela App Store na publicação oficial, mantendo a PWA como alternativa. | Aprovada |
 | DEC-037 | O APK Android é um entregável obrigatório do projeto, mas sua instalação não é obrigatória para utilizar o Apex Combate; navegador e PWA permanecem como acessos completos. | Aprovada |
-| DEC-038 | O desenvolvimento será versionado no GitHub com proteção de segredos, testes automatizados, GitHub Actions e construção Docker; o envio ao repositório remoto dependerá da autorização segura de Mozer. | Aprovada |
+| DEC-038 | O desenvolvimento será versionado no GitHub com proteção de segredos, testes automatizados, GitHub Actions e construção Docker; o envio ao repositório remoto dependerá da autorização segura de Mozer. | Aprovada e implementada |
+| DEC-039 | O repositório oficial público da versão atual é `MozerBlack/apex-combate-oficial`; o repositório acadêmico anterior permanece separado e inalterado. | Aprovada e implementada |
+| DEC-040 | A demonstração completa será publicada pelo Render em `https://apex-combate-demo.onrender.com`, integrada à branch `main`. | Aprovada e implementada |
+| DEC-041 | A v38 prioriza as áreas completas de atleta e clube com perfil, documentos, responsáveis, turmas, presença, alunos e delegações persistentes. | Aprovada e implementada |
 
 ### Regras de mudança
 

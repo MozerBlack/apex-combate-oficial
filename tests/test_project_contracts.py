@@ -34,7 +34,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-035", "DEC-036", "DEC-037"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041"):
             self.assertIn(decision, self.master)
 
 
@@ -48,8 +48,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=37'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v37", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=38'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v38", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

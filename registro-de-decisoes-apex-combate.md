@@ -44,7 +44,10 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-035 | O entregável Android final do Apex Combate será um APK, acompanhado por AAB para a Google Play e pela versão web/PWA universal. | Aprovada |
 | DEC-036 | O Apex Combate também terá aplicativo instalável para iPhone e iPad, distribuído por TestFlight em demonstrações e pela App Store na publicação oficial, mantendo a PWA como alternativa. | Aprovada |
 | DEC-037 | O APK Android é um entregável obrigatório do projeto, mas sua instalação não é obrigatória para utilizar o Apex Combate; navegador e PWA permanecem como acessos completos. | Aprovada |
-| DEC-038 | O desenvolvimento será versionado no GitHub com proteção de segredos, testes automatizados, GitHub Actions e construção Docker; o envio ao repositório remoto dependerá da autorização segura de Mozer. | Aprovada |
+| DEC-038 | O desenvolvimento será versionado no GitHub com proteção de segredos, testes automatizados, GitHub Actions e construção Docker; o envio ao repositório remoto dependerá da autorização segura de Mozer. | Aprovada e implementada |
+| DEC-039 | O repositório oficial público da versão atual é `MozerBlack/apex-combate-oficial`; o repositório acadêmico anterior permanece separado e inalterado. | Aprovada e implementada |
+| DEC-040 | A demonstração completa será publicada pelo Render em `https://apex-combate-demo.onrender.com`, integrada à branch `main`. | Aprovada e implementada |
+| DEC-041 | A v38 prioriza as áreas completas de atleta e clube com perfil, documentos, responsáveis, turmas, presença, alunos e delegações persistentes. | Aprovada e implementada |
 
 ## Regras de mudança
 

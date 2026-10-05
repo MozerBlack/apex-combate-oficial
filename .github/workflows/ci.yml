@@ -63,6 +63,7 @@ jobs:
           SERVER_PID=$!
           trap 'cat server.log; kill $SERVER_PID 2>/dev/null || true' EXIT
           python scripts/smoke_test.py http://127.0.0.1:8080
+          python scripts/v38_flow_test.py http://127.0.0.1:8080
 
   docker:
     name: Imagem Docker

@@ -1,7 +1,7 @@
 # Apex Combate — Índice da Documentação
 
 **Proprietário:** Mozer  
-**Versão atual:** v37
+**Versão atual:** v38
 
 ## Comece aqui
 

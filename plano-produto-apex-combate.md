@@ -3,8 +3,25 @@
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v37 com backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.  
+> **Status:** protótipo funcional v38 com backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.  
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
+
+**Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
+**Demonstração online:** `https://apex-combate-demo.onrender.com`
+
+### Entrega v38
+
+A v38 transforma as áreas de atleta e clube em fluxos persistentes e integrados:
+
+- perfil, peso, categoria e emergência do atleta;
+- documentos e prontidão esportiva;
+- responsáveis para menores;
+- turmas, matrículas e presenças;
+- cadastro e situação de alunos;
+- delegações e pendências por competição;
+- atualização cruzada entre atleta e clube;
+- auditoria das operações;
+- testes automatizados ponta a ponta.
 
 ---
 
@@ -623,7 +640,7 @@ O histórico completo está em `registro-de-decisoes-apex-combate.md`.
 
 ## 20. Próximos passos recomendados
 
-1. Validar a v37 com atletas, clubes, técnicos e uma federação piloto;
+1. Validar a v38 com atletas, clubes, técnicos e uma federação piloto;
 2. Migrar a fundação local para infraestrutura de produção com PostgreSQL, HTTPS, segredos e OTP real;
 3. Completar notificações, documentos, auditoria e operação real de eventos;
 4. Executar um piloto de competição em Curitiba;

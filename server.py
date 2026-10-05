@@ -236,8 +236,20 @@ class ApexHandler(SimpleHTTPRequestHandler):
             self.handle_otp()
         elif path == "/api/translate":
             self.handle_translate()
+        elif path == "/api/athlete/profile":
+            self.handle_update_athlete_profile()
+        elif path == "/api/athlete/documents":
+            self.handle_upsert_athlete_document()
         elif path == "/api/club/students":
             self.handle_create_student()
+        elif path == "/api/club/students/status":
+            self.handle_update_student_status()
+        elif path == "/api/club/classes":
+            self.handle_create_club_class()
+        elif path == "/api/club/attendance":
+            self.handle_club_attendance()
+        elif path == "/api/club/delegations/members":
+            self.handle_delegation_member()
         elif path == "/api/club/competition-technicians":
             self.handle_assign_technician()
         elif path == "/api/technician/status":
@@ -451,10 +463,134 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    ORDER BY c.event_date,t.full_name""",
                 (athlete["club_id"],),
             ).fetchall() if athlete else []
+            documents = db.execute(
+                """SELECT id,document_type,file_name,status,issued_at,expires_at,reviewed_by,notes,updated_at
+                   FROM athlete_documents WHERE athlete_id=? ORDER BY
+                   CASE document_type WHEN 'identity' THEN 0 WHEN 'medical_certificate' THEN 1
+                   WHEN 'guardian_authorization' THEN 2 ELSE 3 END""",
+                (auth.get("athlete_id"),),
+            ).fetchall()
+            guardians = db.execute(
+                """SELECT id,full_name,relationship,phone,email,authorized_competitions,emergency_contact
+                   FROM athlete_guardians WHERE athlete_id=? ORDER BY emergency_contact DESC,full_name""",
+                (auth.get("athlete_id"),),
+            ).fetchall()
+            classes = db.execute(
+                """SELECT cc.id,cc.name,cc.sport,cc.level_name,cc.weekday,cc.start_time,cc.duration_minutes,
+                          cc.capacity,cc.location,t.full_name AS technician_name,ce.status AS enrollment_status
+                   FROM class_enrollments ce JOIN club_classes cc ON cc.id=ce.class_id
+                   LEFT JOIN technicians t ON t.id=cc.technician_id
+                   WHERE ce.athlete_id=? AND ce.status='active' AND cc.status='active'
+                   ORDER BY cc.weekday,cc.start_time""",
+                (auth.get("athlete_id"),),
+            ).fetchall()
+            attendance = db.execute(
+                """SELECT ar.id,ar.checked_in_at,ar.source,cc.name AS class_name,cc.sport
+                   FROM attendance_records ar JOIN club_classes cc ON cc.id=ar.class_id
+                   WHERE ar.athlete_id=? ORDER BY ar.checked_in_at DESC LIMIT 20""",
+                (auth.get("athlete_id"),),
+            ).fetchall()
         if not athlete:
             self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
             return
-        self.send_json(200, {"ok": True, "athlete": row_to_dict(athlete), "registrations": [dict(row) for row in registrations], "technicians": [dict(row) for row in technicians]})
+        athlete_data = row_to_dict(athlete)
+        required_documents = {"identity", "medical_certificate", "responsibility_term"}
+        verified_documents = {row["document_type"] for row in documents if row["status"] == "verified"}
+        profile_fields = ("email", "phone", "weight_kg", "current_category", "emergency_name", "emergency_phone")
+        profile_complete = round(100 * sum(bool(athlete_data.get(field)) for field in profile_fields) / len(profile_fields))
+        self.send_json(200, {
+            "ok": True,
+            "athlete": athlete_data,
+            "registrations": [dict(row) for row in registrations],
+            "technicians": [dict(row) for row in technicians],
+            "documents": [dict(row) for row in documents],
+            "guardians": [dict(row) for row in guardians],
+            "classes": [dict(row) for row in classes],
+            "attendance": [dict(row) for row in attendance],
+            "readiness": {
+                "profileComplete": profile_complete,
+                "documentsVerified": len(verified_documents & required_documents),
+                "documentsRequired": len(required_documents),
+                "ready": required_documents.issubset(verified_documents),
+            },
+        })
+
+    def handle_update_athlete_profile(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Dados de perfil inválidos"})
+            return
+        email = str(payload.get("email", "")).strip().lower()[:180]
+        phone = str(payload.get("phone", "")).strip()[:40]
+        category = str(payload.get("category", "")).strip()[:120]
+        emergency_name = str(payload.get("emergencyName", "")).strip()[:120]
+        emergency_phone = str(payload.get("emergencyPhone", "")).strip()[:40]
+        try:
+            weight = float(str(payload.get("weight", "")).replace(",", "."))
+        except (TypeError, ValueError):
+            weight = 0
+        if "@" not in email or len(phone) < 8 or not 20 <= weight <= 350 or len(category) < 3 or len(emergency_name) < 3 or len(emergency_phone) < 8:
+            self.send_json(400, {"ok": False, "message": "Preencha corretamente contato, peso, categoria e emergência"})
+            return
+        updated_at = utc_now()
+        with connection() as db:
+            cursor = db.execute(
+                """UPDATE athletes SET email=?,phone=?,weight_kg=?,current_category=?,emergency_name=?,
+                   emergency_phone=?,contact=?,profile_updated_at=? WHERE id=?""",
+                (email, phone, weight, category, emergency_name, emergency_phone, email or phone, updated_at, auth.get("athlete_id")),
+            )
+            if not cursor.rowcount:
+                self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
+                return
+        audit(auth["sub"], "atleta", "ATHLETE_PROFILE_UPDATE", "athlete", auth.get("athlete_id"), ip_address=self.client_ip())
+        self.send_json(200, {"ok": True, "profile": {"email": email, "phone": phone, "weight_kg": weight, "current_category": category, "emergency_name": emergency_name, "emergency_phone": emergency_phone, "updated_at": updated_at}})
+
+    def handle_upsert_athlete_document(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Documento inválido"})
+            return
+        document_type = str(payload.get("type", "")).strip().lower()
+        allowed_types = {"identity", "medical_certificate", "responsibility_term", "guardian_authorization", "graduation_certificate"}
+        file_name = re.sub(r"[^A-Za-z0-9._-]", "-", str(payload.get("fileName", "documento.pdf")).strip())[:180]
+        issued_at = str(payload.get("issuedAt", "")).strip()[:10]
+        expires_at = str(payload.get("expiresAt", "")).strip()[:10]
+        if document_type not in allowed_types or not file_name or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", issued_at or ""):
+            self.send_json(400, {"ok": False, "message": "Informe tipo, arquivo e data de emissão válidos"})
+            return
+        if expires_at and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", expires_at):
+            self.send_json(400, {"ok": False, "message": "Data de validade inválida"})
+            return
+        updated_at = utc_now()
+        with connection() as db:
+            db.execute(
+                """INSERT INTO athlete_documents
+                   (athlete_id,document_type,file_name,status,issued_at,expires_at,reviewed_by,notes,created_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(athlete_id,document_type) DO UPDATE SET
+                   file_name=excluded.file_name,status='pending',issued_at=excluded.issued_at,
+                   expires_at=excluded.expires_at,reviewed_by='',notes='Aguardando validação',updated_at=excluded.updated_at""",
+                (auth.get("athlete_id"), document_type, file_name, "pending", issued_at, expires_at, "", "Aguardando validação", updated_at, updated_at),
+            )
+            document = db.execute(
+                """SELECT id,document_type,file_name,status,issued_at,expires_at,reviewed_by,notes,updated_at
+                   FROM athlete_documents WHERE athlete_id=? AND document_type=?""",
+                (auth.get("athlete_id"), document_type),
+            ).fetchone()
+        audit(auth["sub"], "atleta", "ATHLETE_DOCUMENT_SUBMIT", "athlete_document", document["id"], json.dumps({"type": document_type}), self.client_ip())
+        self.send_json(201, {"ok": True, "document": dict(document)})
+
+    def require_club_admin(self) -> dict | None:
+        auth = self.require_auth({"clube"})
+        if auth and auth.get("role") != "CLUB_ADMIN":
+            self.send_json(403, {"ok": False, "message": "Operação exclusiva da administração do clube"})
+            return None
+        return auth
 
     def handle_club_dashboard(self) -> None:
         auth = self.require_auth({"clube"})
@@ -463,7 +599,14 @@ class ApexHandler(SimpleHTTPRequestHandler):
         with connection() as db:
             club = db.execute("SELECT * FROM clubs WHERE id=?", (auth.get("club_id"),)).fetchone()
             students = [] if auth.get("role") == "CLUB_TECHNICIAN" else db.execute(
-                "SELECT id,full_name,registration_code,sport,rank_name,plan_name,status FROM athletes WHERE club_id=? ORDER BY id DESC LIMIT 20",
+                """SELECT a.id,a.full_name,a.registration_code,a.birth_date,a.sport,a.rank_name,a.plan_name,
+                          a.contact,a.email,a.phone,a.weight_kg,a.current_category,a.status,
+                          COUNT(DISTINCT ad.id) AS document_count,
+                          COUNT(DISTINCT CASE WHEN ad.status='verified' THEN ad.id END) AS verified_documents,
+                          MAX(ar.checked_in_at) AS last_check_in
+                   FROM athletes a LEFT JOIN athlete_documents ad ON ad.athlete_id=a.id
+                   LEFT JOIN attendance_records ar ON ar.athlete_id=a.id
+                   WHERE a.club_id=? GROUP BY a.id ORDER BY a.id DESC LIMIT 100""",
                 (auth.get("club_id"),),
             ).fetchall()
             federation = db.execute("SELECT id,name,code FROM federations WHERE id=?", (club["federation_id"],)).fetchone() if club else None
@@ -488,6 +631,45 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    WHERE r.technician_id=? ORDER BY c.event_date,a.full_name""",
                 (auth.get("technician_id"),),
             ).fetchall() if auth.get("technician_id") else []
+            classes = [] if auth.get("role") == "CLUB_TECHNICIAN" else db.execute(
+                """SELECT cc.id,cc.name,cc.sport,cc.level_name,cc.weekday,cc.start_time,cc.duration_minutes,
+                          cc.capacity,cc.location,cc.status,t.full_name AS technician_name,
+                          COUNT(DISTINCT ce.athlete_id) AS enrolled,
+                          COUNT(DISTINCT CASE WHEN date(ar.checked_in_at)=date('now') THEN ar.athlete_id END) AS attendance_today
+                   FROM club_classes cc LEFT JOIN technicians t ON t.id=cc.technician_id
+                   LEFT JOIN class_enrollments ce ON ce.class_id=cc.id AND ce.status='active'
+                   LEFT JOIN attendance_records ar ON ar.class_id=cc.id
+                   WHERE cc.club_id=? GROUP BY cc.id ORDER BY cc.weekday,cc.start_time""",
+                (auth.get("club_id"),),
+            ).fetchall()
+            delegations = [] if auth.get("role") == "CLUB_TECHNICIAN" else db.execute(
+                """SELECT d.id,d.name,d.status,d.deadline,d.notes,c.id AS competition_id,c.name AS competition,
+                          c.event_date,c.venue,c.city,c.state,
+                          COUNT(dm.athlete_id) AS athletes,
+                          SUM(CASE WHEN dm.approval_status='approved' THEN 1 ELSE 0 END) AS approved,
+                          SUM(CASE WHEN dm.documents_status!='verified' THEN 1 ELSE 0 END) AS document_pending,
+                          SUM(CASE WHEN dm.category_status!='confirmed' THEN 1 ELSE 0 END) AS category_pending,
+                          SUM(CASE WHEN dm.payment_status!='paid' THEN 1 ELSE 0 END) AS payment_pending
+                   FROM delegations d JOIN competitions c ON c.id=d.competition_id
+                   LEFT JOIN delegation_members dm ON dm.delegation_id=d.id
+                   WHERE d.club_id=? GROUP BY d.id ORDER BY c.event_date""",
+                (auth.get("club_id"),),
+            ).fetchall()
+            delegation_members = [] if auth.get("role") == "CLUB_TECHNICIAN" else db.execute(
+                """SELECT dm.delegation_id,dm.athlete_id,dm.registration_id,dm.approval_status,dm.documents_status,
+                          dm.category_status,dm.payment_status,a.full_name,a.registration_code,a.sport,a.rank_name,
+                          r.category,t.full_name AS technician_name
+                   FROM delegation_members dm JOIN delegations d ON d.id=dm.delegation_id
+                   JOIN athletes a ON a.id=dm.athlete_id LEFT JOIN registrations r ON r.id=dm.registration_id
+                   LEFT JOIN technicians t ON t.id=r.technician_id
+                   WHERE d.club_id=? ORDER BY a.full_name""",
+                (auth.get("club_id"),),
+            ).fetchall()
+            attendance_today = 0 if auth.get("role") == "CLUB_TECHNICIAN" else db.execute(
+                """SELECT COUNT(*) FROM attendance_records ar JOIN club_classes cc ON cc.id=ar.class_id
+                   WHERE cc.club_id=? AND date(ar.checked_in_at)=date('now')""",
+                (auth.get("club_id"),),
+            ).fetchone()[0]
         if not club:
             self.send_json(404, {"ok": False, "message": "Clube não encontrado"})
             return
@@ -498,8 +680,11 @@ class ApexHandler(SimpleHTTPRequestHandler):
             "club": {"id": club["id"], "name": club["name"], "registration": club["registration_code"]},
             "federation": row_to_dict(federation),
             "technician": row_to_dict(technician),
-            "metrics": None if auth.get("role") == "CLUB_TECHNICIAN" else {"activeStudents": club["active_students"], "monthlyRevenue": club["monthly_revenue_cents"] / 100, "attendanceRate": 78, "retentionRate": 94.2},
+            "metrics": None if auth.get("role") == "CLUB_TECHNICIAN" else {"activeStudents": club["active_students"], "monthlyRevenue": club["monthly_revenue_cents"] / 100, "attendanceRate": 78, "retentionRate": 94.2, "attendanceToday": attendance_today, "activeClasses": sum(1 for row in classes if row["status"] == "active")},
             "students": [dict(row) for row in students],
+            "classes": [dict(row) for row in classes],
+            "delegations": [dict(row) for row in delegations],
+            "delegationMembers": [dict(row) for row in delegation_members],
             "assignments": [dict(row) for row in assignments],
             "competitionAthletes": [dict(row) for row in competition_athletes],
         })
@@ -943,6 +1128,140 @@ class ApexHandler(SimpleHTTPRequestHandler):
             return
         audit(auth["sub"], "federacao", "FEDERATION_CREATE", "federation", federation_id, ip_address=self.client_ip())
         self.send_json(201, {"ok": True, "federation": {"id": federation_id, "name": name, "code": code, "status": "onboarding", "plan_name": plan, "contact": contact}})
+
+    def handle_update_student_status(self) -> None:
+        auth = self.require_club_admin()
+        if not auth:
+            return
+        payload = self.read_json() or {}
+        try:
+            athlete_id = int(payload.get("athleteId"))
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Aluno inválido"})
+            return
+        status = str(payload.get("status", "")).strip().lower()
+        if status not in {"active", "pending", "inactive"}:
+            self.send_json(400, {"ok": False, "message": "Situação inválida"})
+            return
+        with connection() as db:
+            athlete = db.execute("SELECT id,full_name FROM athletes WHERE id=? AND club_id=?", (athlete_id, auth.get("club_id"))).fetchone()
+            if not athlete:
+                self.send_json(404, {"ok": False, "message": "Aluno não pertence a este clube"})
+                return
+            db.execute("UPDATE athletes SET status=? WHERE id=?", (status, athlete_id))
+        audit(auth["sub"], "clube", "STUDENT_STATUS_UPDATE", "athlete", athlete_id, json.dumps({"status": status}), self.client_ip())
+        self.send_json(200, {"ok": True, "athlete": {"id": athlete_id, "name": athlete["full_name"], "status": status}})
+
+    def handle_create_club_class(self) -> None:
+        auth = self.require_club_admin()
+        if not auth:
+            return
+        payload = self.read_json() or {}
+        name = str(payload.get("name", "")).strip()[:120]
+        sport = str(payload.get("sport", "")).strip()[:80]
+        level_name = str(payload.get("level", "Todos os níveis")).strip()[:80]
+        start_time = str(payload.get("startTime", "")).strip()
+        location = str(payload.get("location", "")).strip()[:100]
+        try:
+            weekday = int(payload.get("weekday"))
+            duration = int(payload.get("duration", 60))
+            capacity = int(payload.get("capacity", 20))
+            technician_id = int(payload.get("technicianId")) if payload.get("technicianId") else None
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Dados numéricos da turma são inválidos"})
+            return
+        if len(name) < 3 or not sport or weekday not in range(7) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", start_time) or not 20 <= duration <= 240 or not 1 <= capacity <= 200 or not location:
+            self.send_json(400, {"ok": False, "message": "Preencha corretamente os dados da turma"})
+            return
+        with connection() as db:
+            if technician_id and not db.execute("SELECT 1 FROM technicians WHERE id=? AND club_id=? AND status='active'", (technician_id, auth.get("club_id"))).fetchone():
+                self.send_json(404, {"ok": False, "message": "Professor ou técnico não pertence ao clube"})
+                return
+            cursor = db.execute(
+                """INSERT INTO club_classes(club_id,technician_id,name,sport,level_name,weekday,start_time,duration_minutes,capacity,location,status,created_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (auth.get("club_id"), technician_id, name, sport, level_name, weekday, start_time, duration, capacity, location, "active", utc_now()),
+            )
+            class_id = cursor.lastrowid
+        audit(auth["sub"], "clube", "CLASS_CREATE", "club_class", class_id, ip_address=self.client_ip())
+        self.send_json(201, {"ok": True, "class": {"id": class_id, "name": name, "sport": sport, "level_name": level_name, "weekday": weekday, "start_time": start_time, "duration_minutes": duration, "capacity": capacity, "location": location, "status": "active"}})
+
+    def handle_club_attendance(self) -> None:
+        auth = self.require_club_admin()
+        if not auth:
+            return
+        payload = self.read_json() or {}
+        try:
+            class_id = int(payload.get("classId"))
+            athlete_id = int(payload.get("athleteId"))
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Selecione a turma e o aluno"})
+            return
+        now = utc_now()
+        with connection() as db:
+            club_class = db.execute("SELECT id,name FROM club_classes WHERE id=? AND club_id=? AND status='active'", (class_id, auth.get("club_id"))).fetchone()
+            athlete = db.execute("SELECT id,full_name FROM athletes WHERE id=? AND club_id=? AND status='active'", (athlete_id, auth.get("club_id"))).fetchone()
+            if not club_class or not athlete:
+                self.send_json(404, {"ok": False, "message": "Turma ou aluno não encontrado"})
+                return
+            exists = db.execute("SELECT id FROM attendance_records WHERE class_id=? AND athlete_id=? AND date(checked_in_at)=date(?)", (class_id, athlete_id, now)).fetchone()
+            if exists:
+                self.send_json(409, {"ok": False, "message": "Presença já registrada hoje para esta turma"})
+                return
+            db.execute("INSERT OR IGNORE INTO class_enrollments(class_id,athlete_id,status,joined_at) VALUES(?,?,?,?)", (class_id, athlete_id, "active", now))
+            cursor = db.execute(
+                "INSERT INTO attendance_records(class_id,athlete_id,checked_in_at,source,recorded_by) VALUES(?,?,?,?,?)",
+                (class_id, athlete_id, now, "club", auth["sub"]),
+            )
+            attendance_id = cursor.lastrowid
+        audit(auth["sub"], "clube", "ATTENDANCE_CREATE", "attendance", attendance_id, json.dumps({"classId": class_id, "athleteId": athlete_id}), self.client_ip())
+        self.send_json(201, {"ok": True, "attendance": {"id": attendance_id, "class": club_class["name"], "athlete": athlete["full_name"], "checked_in_at": now}})
+
+    def handle_delegation_member(self) -> None:
+        auth = self.require_club_admin()
+        if not auth:
+            return
+        payload = self.read_json() or {}
+        try:
+            competition_id = int(payload.get("competitionId"))
+            athlete_id = int(payload.get("athleteId"))
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Selecione a competição e o atleta"})
+            return
+        action = str(payload.get("action", "upsert")).strip().lower()
+        allowed = {"pending", "approved", "rejected"}
+        approval = str(payload.get("approvalStatus", "pending")).strip().lower()
+        documents = str(payload.get("documentsStatus", "pending")).strip().lower()
+        category = str(payload.get("categoryStatus", "pending")).strip().lower()
+        payment = str(payload.get("paymentStatus", "pending")).strip().lower()
+        if approval not in allowed or documents not in {"pending", "verified", "rejected"} or category not in {"pending", "confirmed", "rejected"} or payment not in {"pending", "paid", "waived"}:
+            self.send_json(400, {"ok": False, "message": "Situação da delegação inválida"})
+            return
+        with connection() as db:
+            athlete = db.execute("SELECT id,full_name FROM athletes WHERE id=? AND club_id=?", (athlete_id, auth.get("club_id"))).fetchone()
+            competition = db.execute("SELECT id,name,registration_deadline FROM competitions WHERE id=?", (competition_id,)).fetchone()
+            if not athlete or not competition:
+                self.send_json(404, {"ok": False, "message": "Atleta ou competição não encontrado"})
+                return
+            db.execute(
+                """INSERT OR IGNORE INTO delegations(club_id,competition_id,name,status,deadline,created_at)
+                   VALUES(?,?,?,?,?,?)""",
+                (auth.get("club_id"), competition_id, f"Delegação • {competition['name']}", "draft", competition["registration_deadline"], utc_now()),
+            )
+            delegation = db.execute("SELECT id FROM delegations WHERE club_id=? AND competition_id=?", (auth.get("club_id"), competition_id)).fetchone()
+            if action == "remove":
+                db.execute("DELETE FROM delegation_members WHERE delegation_id=? AND athlete_id=?", (delegation["id"], athlete_id))
+            else:
+                registration = db.execute("SELECT id FROM registrations WHERE competition_id=? AND athlete_id=?", (competition_id, athlete_id)).fetchone()
+                db.execute(
+                    """INSERT INTO delegation_members(delegation_id,athlete_id,registration_id,approval_status,documents_status,category_status,payment_status,added_at)
+                       VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(delegation_id,athlete_id) DO UPDATE SET
+                       registration_id=excluded.registration_id,approval_status=excluded.approval_status,
+                       documents_status=excluded.documents_status,category_status=excluded.category_status,payment_status=excluded.payment_status""",
+                    (delegation["id"], athlete_id, registration["id"] if registration else None, approval, documents, category, payment, utc_now()),
+                )
+        audit(auth["sub"], "clube", "DELEGATION_MEMBER_UPDATE", "delegation", delegation["id"], json.dumps({"athleteId": athlete_id, "action": action}), self.client_ip())
+        self.send_json(200, {"ok": True, "delegationId": delegation["id"], "athlete": athlete["full_name"], "action": action, "approval_status": approval})
 
     def handle_create_student(self) -> None:
         auth = self.require_auth({"clube"})
