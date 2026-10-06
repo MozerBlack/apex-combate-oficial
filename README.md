@@ -1,5 +1,4 @@
 🥋 Apex Combate — Plataforma Universal de Artes Marciais
-**Uma plataforma. Todas as lutas.**
 
 Apex Combate é uma plataforma universal “Tudo em um” para atletas, clubes, dojôs, academias e federações de artes marciais. O produto cobre a jornada esportiva, a operação de competições e a governança multi-federação sem criar perfis públicos além de **ATLETA**, **CLUBE** e **FEDERAÇÃO**.
 
