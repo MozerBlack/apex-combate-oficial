@@ -68,6 +68,7 @@ O aplicativo não bloqueará um aparelho apenas por ser antigo. Primeiro tentar�
 
 ## Recursos já adicionados ao protótipo
 
+- apresentação pública anterior ao login, responsiva de celulares compactos a TVs e sem avanço automático;
 - layout responsivo de 320 px a telas 4K;
 - suporte a retrato e paisagem;
 - áreas seguras para notch e barra de gestos;

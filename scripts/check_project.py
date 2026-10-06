@@ -47,10 +47,12 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "manifest.webmanifest", "apex-sw.js?v=38")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=39")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
+    if html.index('id="welcomeScreen"') > html.index('id="authScreen"'):
+        fail("a apresentação pública deve preceder o login")
 
 
 def check_manifest() -> None:
@@ -69,7 +71,7 @@ def check_master_document() -> None:
     master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "DEC-041"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "DEC-041", "DEC-042"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 

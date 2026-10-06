@@ -21,6 +21,17 @@ class ProductContractTests(unittest.TestCase):
         for label in ("ATLETA", "CLUBE", "FEDERAÇÃO"):
             self.assertIn(f">{label}</strong>", self.html)
 
+    def test_welcome_screen_precedes_login_and_requires_explicit_action(self):
+        self.assertIn('<body class="prelogin-active auth-active">', self.html)
+        self.assertLess(self.html.index('id="welcomeScreen"'), self.html.index('id="authScreen"'))
+        self.assertIn('class="welcome-primary enter-apex-login"', self.html)
+        self.assertIn("addEventListener('click', showLoginScreen)", self.html)
+        self.assertNotRegex(self.html, r"setTimeout\s*\(\s*showLoginScreen")
+
+    def test_logout_returns_to_welcome_screen(self):
+        logout_handler = self.html[self.html.index("document.querySelectorAll('[data-logout]')"):]
+        self.assertIn("showWelcomeScreen();", logout_handler[:2200])
+
     def test_club_login_contract_is_preserved(self):
         self.assertIn("perfil: 'clube'", self.html)
         self.assertIn("payload.get(\"perfil\")", self.server)
@@ -34,7 +45,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042"):
             self.assertIn(decision, self.master)
 
 
@@ -48,8 +59,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=38'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v38", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=39'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v39", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

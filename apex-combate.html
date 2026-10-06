@@ -1473,9 +1473,79 @@
     @media(max-width:650px) { .technician-next-top { flex-direction:column; }.technician-countdown { width:100%; }.technician-next-meta { grid-template-columns:repeat(2,1fr); }.technician-operation-kpis { grid-template-columns:repeat(2,1fr); gap:7px; }.technician-global-checklist,.technician-rules-grid,.technician-modal-grid { grid-template-columns:1fr; }.technician-modal-panel.full { grid-column:auto; }.technician-modal-tabs { grid-template-columns:repeat(2,1fr); }.technician-queue-row { grid-template-columns:40px 34px minmax(0,1fr); }.technician-queue-row em { grid-column:3; justify-self:start; }.technician-sync { width:100%; justify-content:center; }.technician-athlete-grid article { grid-template-columns:38px minmax(0,1fr) 28px; }.technician-athlete-grid .table-avatar { width:38px;height:38px; } }
     @media(min-width:2000px) { .technician-event-hero { min-height:360px; }.technician-event-copy h3 { font-size:35px; }.technician-next-card h3 { font-size:28px; }.technician-timer-card strong { font-size:50px; }.technician-rule-card,.technician-queue-card,.technician-stage-card { padding:25px; } }
 
+
+    /* Boas-vindas pública — antes do login */
+    body.prelogin-active { overflow: auto !important; background: #06080c; }
+    body.prelogin-active .auth-screen,
+    body.prelogin-active .app-shell,
+    body.prelogin-active .mobile-nav { display: none !important; }
+    .welcome-screen { display: none; min-height: 100dvh; overflow: hidden; position: relative; color: #f6f7f9; background: #06080c; }
+    body.prelogin-active .welcome-screen { display: block; }
+    .welcome-screen::before { content:""; position: fixed; inset: 0; pointer-events:none; background: radial-gradient(circle at 82% 17%,rgba(239,38,54,.13),transparent 30%),radial-gradient(circle at 12% 72%,rgba(97,168,255,.07),transparent 28%); }
+    .welcome-header { width:min(1240px,calc(100% - 40px)); height:86px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:20px; position:relative; z-index:3; }
+    .welcome-brand { display:flex; align-items:center; text-decoration:none; color:white; }
+    .welcome-brand img { width:82px; height:82px; object-fit:contain; mix-blend-mode:screen; filter:drop-shadow(0 9px 20px rgba(239,38,54,.2)); }
+    .welcome-header-actions { display:flex; align-items:center; gap:9px; }
+    .welcome-language { height:40px; min-width:154px; display:flex; align-items:center; padding:0 10px; border:1px solid rgba(255,255,255,.12); border-radius:9px; background:rgba(11,14,20,.74); backdrop-filter:blur(10px); }
+    .welcome-language > span { display:none; }
+    .welcome-language select { width:100%; border:0; outline:0; background:transparent; color:#d7dbe1; cursor:pointer; font-size:9px; font-weight:760; }
+    .welcome-language option,.welcome-language optgroup { background:#10141b; color:white; }
+    .welcome-login { min-height:40px; padding:0 17px; border:1px solid rgba(239,38,54,.55); border-radius:9px; background:rgba(239,38,54,.1); color:#fff; cursor:pointer; font-size:9px; font-weight:850; text-transform:uppercase; letter-spacing:.07em; }
+    .welcome-login:hover { background:var(--accent); transform:translateY(-1px); }
+    .welcome-hero { min-height:630px; display:grid; align-items:center; position:relative; isolation:isolate; border-top:1px solid rgba(255,255,255,.055); border-bottom:1px solid rgba(255,255,255,.07); background:linear-gradient(90deg,rgba(5,7,11,.98) 0%,rgba(5,7,11,.9) 47%,rgba(5,7,11,.48) 100%),url('assets/apex-combate-hero.jpg') 72% 36%/cover no-repeat; }
+    .welcome-hero::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(0deg,#06080c 0,transparent 22%),linear-gradient(90deg,rgba(239,38,54,.08),transparent 35%); }
+    .welcome-hero-inner { width:min(1240px,calc(100% - 40px)); margin:auto; padding:70px 0 86px; position:relative; z-index:2; }
+    .welcome-kicker { width:fit-content; display:flex; align-items:center; gap:8px; padding:7px 10px; border:1px solid rgba(239,38,54,.3); border-radius:99px; background:rgba(9,12,17,.7); color:#d4d8de; font-size:8px; font-weight:850; text-transform:uppercase; letter-spacing:.13em; }
+    .welcome-kicker i { width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px rgba(239,38,54,.8); }
+    .welcome-copy { width:min(720px,100%); }
+    .welcome-copy h1 { margin:21px 0 0; font-size:clamp(42px,6vw,80px); line-height:.96; letter-spacing:-.065em; }
+    .welcome-copy h1 span { display:block; margin-top:9px; color:transparent; background:linear-gradient(90deg,#fff,#aab1bc 64%,#737c89); background-clip:text; -webkit-background-clip:text; }
+    .welcome-signature { margin:21px 0 0; color:var(--accent-2); font-size:clamp(14px,1.8vw,20px); font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+    .welcome-description { max-width:630px; margin:17px 0 0; color:#a3aab5; font-size:clamp(13px,1.3vw,17px); line-height:1.72; }
+    .welcome-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:28px; }
+    .welcome-primary,.welcome-secondary { min-height:48px; padding:0 20px; border-radius:9px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.06em; }
+    .welcome-primary { border:1px solid var(--accent); color:#fff; background:var(--accent); box-shadow:0 12px 35px rgba(239,38,54,.22); }
+    .welcome-primary:hover { filter:brightness(1.08); transform:translateY(-2px); }
+    .welcome-secondary { border:1px solid rgba(255,255,255,.16); color:#d7dbe1; background:rgba(8,11,16,.6); }
+    .welcome-secondary:hover { border-color:rgba(255,255,255,.32); color:white; }
+    .welcome-profile-strip { width:min(700px,100%); display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:33px; }
+    .welcome-profile-strip div { min-width:0; padding:13px; border:1px solid rgba(255,255,255,.09); border-radius:10px; background:rgba(8,11,16,.7); backdrop-filter:blur(8px); }
+    .welcome-profile-strip strong,.welcome-profile-strip span { display:block; }
+    .welcome-profile-strip strong { color:#eef0f3; font-size:9px; letter-spacing:.08em; }
+    .welcome-profile-strip span { margin-top:5px; color:#858e9b; font-size:8px; line-height:1.45; }
+    .welcome-how { position:relative; z-index:2; padding:90px 20px; }
+    .welcome-section-inner { width:min(1160px,100%); margin:auto; }
+    .welcome-section-heading { max-width:720px; margin:auto; text-align:center; }
+    .welcome-section-heading > span { color:var(--accent-2); font-size:8px; font-weight:900; text-transform:uppercase; letter-spacing:.17em; }
+    .welcome-section-heading h2 { margin:10px 0 0; font-size:clamp(27px,4vw,44px); letter-spacing:-.045em; }
+    .welcome-section-heading p { margin:13px auto 0; color:#858e9b; font-size:12px; line-height:1.7; }
+    .welcome-steps { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; margin-top:40px; }
+    .welcome-step { min-height:220px; padding:21px; border:1px solid rgba(255,255,255,.085); border-radius:14px; position:relative; overflow:hidden; background:linear-gradient(145deg,#10151d,#0a0d12); }
+    .welcome-step::after { content:attr(data-step); position:absolute; right:10px; bottom:-22px; color:rgba(255,255,255,.025); font-size:82px; font-weight:950; }
+    .welcome-step-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:11px; color:var(--accent-2); background:var(--accent-soft); }
+    .welcome-step h3 { margin:20px 0 0; font-size:15px; }
+    .welcome-step p { margin:9px 0 0; color:#858e9a; font-size:10px; line-height:1.65; }
+    .welcome-ecosystem { position:relative; z-index:2; padding:8px 20px 90px; }
+    .welcome-ecosystem-card { width:min(1160px,100%); margin:auto; padding:32px; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); align-items:center; gap:35px; border:1px solid rgba(239,38,54,.2); border-radius:18px; background:radial-gradient(circle at 100% 0,rgba(239,38,54,.1),transparent 34%),#0c1016; }
+    .welcome-ecosystem-card h2 { margin:0; font-size:clamp(25px,3.5vw,40px); letter-spacing:-.045em; }
+    .welcome-ecosystem-card p { margin:12px 0 0; color:#8c95a1; font-size:11px; line-height:1.7; }
+    .welcome-ecosystem-list { display:grid; gap:8px; }
+    .welcome-ecosystem-list div { display:grid; grid-template-columns:34px minmax(0,1fr); gap:11px; align-items:center; padding:12px; border:1px solid rgba(255,255,255,.07); border-radius:10px; background:#090c11; }
+    .welcome-ecosystem-list i { width:34px; height:34px; display:grid; place-items:center; border-radius:9px; color:#fff; background:var(--accent); font-style:normal; font-size:8px; font-weight:900; }
+    .welcome-ecosystem-list strong,.welcome-ecosystem-list span { display:block; }
+    .welcome-ecosystem-list strong { font-size:10px; }.welcome-ecosystem-list span { margin-top:4px; color:#77808c; font-size:8px; }
+    .welcome-final { position:relative; z-index:2; padding:70px 20px; text-align:center; border-top:1px solid rgba(255,255,255,.06); background:#080b10; }
+    .welcome-final img { width:110px; height:110px; object-fit:contain; mix-blend-mode:screen; }
+    .welcome-final h2 { margin:9px 0 0; font-size:clamp(25px,4vw,42px); }.welcome-final p { margin:11px auto 22px; color:#89929e; font-size:11px; }
+    .welcome-footer { position:relative; z-index:2; min-height:65px; padding:18px 20px; display:flex; align-items:center; justify-content:center; color:#555e6a; border-top:1px solid rgba(255,255,255,.055); font-size:8px; }
+    @media(max-width:900px) { .welcome-steps { grid-template-columns:repeat(2,1fr); }.welcome-ecosystem-card { grid-template-columns:1fr; }.welcome-hero { background-position:65% 36%; } }
+    @media(max-width:620px) { .welcome-header { width:calc(100% - 24px); height:72px; }.welcome-brand img { width:66px;height:66px; }.welcome-language { width:46px; min-width:46px; padding:0; justify-content:center; }.welcome-language > span { display:block; font-size:8px; font-weight:900; }.welcome-language select { position:absolute; width:46px; height:40px; opacity:0; }.welcome-login { padding:0 12px; }.welcome-hero { min-height:620px; background-position:62% center; }.welcome-hero-inner { width:calc(100% - 28px); padding:58px 0 72px; }.welcome-copy h1 { font-size:43px; }.welcome-description { font-size:12px; }.welcome-profile-strip { grid-template-columns:1fr; }.welcome-steps { grid-template-columns:1fr; }.welcome-step { min-height:180px; }.welcome-how { padding:70px 14px; }.welcome-ecosystem { padding-inline:14px; }.welcome-ecosystem-card { padding:22px; }.welcome-actions > button { width:100%; }.welcome-header-actions { gap:6px; } }
+    @media(max-width:360px) { .welcome-copy h1 { font-size:37px; }.welcome-login { font-size:8px; padding-inline:9px; }.welcome-kicker { font-size:7px; }.welcome-signature { font-size:13px; } }
+    @media(min-width:2000px) { .welcome-header,.welcome-hero-inner { width:min(1560px,calc(100% - 100px)); }.welcome-header { height:120px; }.welcome-brand img { width:110px;height:110px; }.welcome-hero { min-height:860px; }.welcome-copy { width:900px; }.welcome-copy h1 { font-size:102px; }.welcome-description { font-size:21px; }.welcome-section-inner,.welcome-ecosystem-card { width:min(1480px,100%); }.welcome-step { min-height:300px;padding:30px; }.welcome-step h3 { font-size:20px; }.welcome-step p { font-size:13px; } }
+
   </style>
 </head>
-<body class="auth-active">
+<body class="prelogin-active auth-active">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
@@ -1504,6 +1574,97 @@
     <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 0 1 4.6 1c0 2-2.4 2.2-2.4 4M12 18h.01"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
   </svg>
+
+  <section class="welcome-screen" id="welcomeScreen" aria-labelledby="welcomeTitle">
+    <header class="welcome-header">
+      <div class="welcome-brand" aria-label="Apex Combate">
+        <img src="assets/apex-combate-logo-oficial.png" alt="Apex Combate" />
+      </div>
+      <div class="welcome-header-actions">
+        <label class="welcome-language" title="Selecionar idioma">
+          <span id="welcomeLanguageCode">PT</span>
+          <select id="welcomeLanguage" aria-label="Idioma da interface"></select>
+        </label>
+        <button class="welcome-login enter-apex-login" type="button">Entrar</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="welcome-hero" aria-label="Boas-vindas">
+        <div class="welcome-hero-inner">
+          <div class="welcome-copy">
+            <div class="welcome-kicker"><i></i> Ecossistema universal de artes marciais</div>
+            <h1 id="welcomeTitle">Bem-vindo ao <span>Apex Combate</span></h1>
+            <p class="welcome-signature">Uma plataforma. Todas as lutas.</p>
+            <p class="welcome-description">Atletas, clubes e federações conectados em uma experiência única para treinar, gerir, competir e evoluir — em todas as modalidades.</p>
+            <div class="welcome-actions">
+              <button class="welcome-primary enter-apex-login" type="button">Entrar no Apex <svg class="icon sm"><use href="#i-chevron"/></svg></button>
+              <button class="welcome-secondary" id="discoverApex" type="button">Como funciona <svg class="icon sm"><use href="#i-chevron"/></svg></button>
+            </div>
+            <div class="welcome-profile-strip" aria-label="Perfis de acesso">
+              <div><strong>ATLETA</strong><span>Identidade esportiva e jornada competitiva.</span></div>
+              <div><strong>CLUBE</strong><span>Gestão completa de academias e equipes.</span></div>
+              <div><strong>FEDERAÇÃO</strong><span>Governança, regulação e inteligência.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="welcome-how" id="como-funciona" aria-labelledby="howTitle">
+        <div class="welcome-section-inner">
+          <div class="welcome-section-heading">
+            <span>Como funciona</span>
+            <h2 id="howTitle">Do primeiro treino ao pódio</h2>
+            <p>O Apex Combate reúne a vida esportiva, a operação dos clubes e a governança das federações em um fluxo integrado, seguro e acessível.</p>
+          </div>
+          <div class="welcome-steps">
+            <article class="welcome-step" data-step="01">
+              <div class="welcome-step-icon"><svg class="icon"><use href="#i-user"/></svg></div>
+              <h3>Escolha seu perfil</h3>
+              <p>Acesse como Atleta, Clube ou Federação. Professores e técnicos operam com credenciais individuais dentro do clube.</p>
+            </article>
+            <article class="welcome-step" data-step="02">
+              <div class="welcome-step-icon"><svg class="icon"><use href="#i-map"/></svg></div>
+              <h3>Conecte o ecossistema</h3>
+              <p>Cadastros, documentos, filiações e equipes permanecem conectados entre organizações autorizadas.</p>
+            </article>
+            <article class="welcome-step" data-step="03">
+              <div class="welcome-step-icon"><svg class="icon"><use href="#i-calendar"/></svg></div>
+              <h3>Organize e participe</h3>
+              <p>Treinos, graduações, inscrições e competições convivem em uma única experiência para todas as lutas.</p>
+            </article>
+            <article class="welcome-step" data-step="04">
+              <div class="welcome-step-icon"><svg class="icon"><use href="#i-award"/></svg></div>
+              <h3>Evolua com dados</h3>
+              <p>Acompanhe desempenho, ranking e resultados para transformar cada etapa da jornada em evolução.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="welcome-ecosystem" aria-labelledby="ecosystemTitle">
+        <div class="welcome-ecosystem-card">
+          <div>
+            <h2 id="ecosystemTitle">Tudo em um.<br />Para todos os tatames.</h2>
+            <p>Uma base tecnológica compartilhada, com áreas privadas adequadas a cada responsabilidade. A federação é o cérebro do ecossistema; atletas e clubes dão vida a ele.</p>
+          </div>
+          <div class="welcome-ecosystem-list">
+            <div><i>01</i><span><strong>Atleta</strong><span>Perfil, documentos, inscrições, resultados e evolução.</span></span></div>
+            <div><i>02</i><span><strong>Clube</strong><span>Alunos, professores, técnicos, turmas, graduações e financeiro.</span></span></div>
+            <div><i>03</i><span><strong>Federação</strong><span>Eventos, filiações, regras, governança e visão estratégica.</span></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="welcome-final" aria-label="Começar no Apex Combate">
+        <img src="assets/apex-combate-logo-oficial.png" alt="" aria-hidden="true" />
+        <h2>Seu próximo combate começa aqui.</h2>
+        <p>Entre no Apex Combate e acesse o seu espaço.</p>
+        <button class="welcome-primary enter-apex-login" type="button">Escolher perfil de acesso <svg class="icon sm"><use href="#i-chevron"/></svg></button>
+      </section>
+    </main>
+    <footer class="welcome-footer">© 2026 Apex Combate · Uma plataforma. Todas as lutas.</footer>
+  </section>
 
   <section class="auth-screen" id="authScreen" aria-label="Acesso Apex Combate">
     <header class="auth-header">
@@ -2258,6 +2419,33 @@
     let athleteDashboardState = null;
     let clubDashboardState = null;
     let clubTechnicianState = { technicians: [], assignments: [] };
+
+    function showWelcomeScreen() {
+      document.body.classList.add('prelogin-active', 'auth-active');
+      document.getElementById('authScreen').style.display = '';
+      document.getElementById('welcomeScreen').scrollTop = 0;
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      if (typeof translateCurrentView === 'function' && typeof currentInterfaceLanguage !== 'undefined') {
+        setTimeout(() => translateCurrentView(currentInterfaceLanguage, false), 0);
+      }
+    }
+
+    function showLoginScreen() {
+      document.body.classList.remove('prelogin-active');
+      document.body.classList.add('auth-active');
+      document.getElementById('authScreen').style.display = '';
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      if (typeof showProfileSelection === 'function') showProfileSelection();
+      if (typeof translateCurrentView === 'function' && typeof currentInterfaceLanguage !== 'undefined') {
+        setTimeout(() => translateCurrentView(currentInterfaceLanguage, false), 0);
+      }
+      setTimeout(() => document.getElementById('continueProfile')?.focus(), 80);
+    }
+
+    document.querySelectorAll('.enter-apex-login').forEach(button => button.addEventListener('click', showLoginScreen));
+    document.getElementById('discoverApex').addEventListener('click', () => {
+      document.getElementById('como-funciona').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     const pageMeta = {
       home: ['Visão geral', 'Segunda-feira, 21 de setembro'],
@@ -3589,13 +3777,13 @@
     document.querySelectorAll('[data-auth-info]').forEach(button => button.addEventListener('click', () => showToast(button.dataset.authInfo)));
 
     document.querySelectorAll('[data-logout]').forEach(button => button.addEventListener('click', () => {
-      authScreen.style.display = 'flex';
-      document.body.classList.add('auth-active');
       federationOtpModal.hidden = true;
       activeSessionToken = '';
       activeAdminToken = '';
+      document.body.classList.remove('management-active', 'technician-mode', 'club-mode');
       try { sessionStorage.removeItem('apex-session'); sessionStorage.removeItem('apex-admin-jwt'); sessionStorage.removeItem('apex-profile'); sessionStorage.removeItem('apex-federation-scope'); sessionStorage.removeItem('apex-federation-name'); sessionStorage.removeItem('apex-federation-role'); sessionStorage.removeItem('apex-club-account-type'); sessionStorage.removeItem('apex-technician-name'); localStorage.removeItem('apex-technician-operations-v38'); localStorage.removeItem('apex-technician-offline-queue-v38'); } catch (_) {}
       showProfileSelection();
+      showWelcomeScreen();
       showToast('Sessão encerrada com segurança');
     }));
 
@@ -3697,7 +3885,7 @@
       ]}
     ];
 
-    const languageSelects = [document.getElementById('authLanguage'), document.getElementById('appLanguage')];
+    const languageSelects = [document.getElementById('welcomeLanguage'), document.getElementById('authLanguage'), document.getElementById('appLanguage')];
     const languageNames = {};
     LANGUAGE_GROUPS.forEach(group => {
       group.languages.forEach(([code, name]) => { languageNames[code] = name; });
@@ -3832,9 +4020,11 @@
         if (notify) showToast('Interface restaurada para Português');
         return;
       }
-      const roots = document.body.classList.contains('auth-active')
-        ? [document.getElementById('authScreen'), federationOtpModal.hidden ? null : federationOtpModal]
-        : [document.querySelector('.sidebar'), document.querySelector('.topbar'), document.querySelector('.page.active'), document.querySelector('.right-rail')];
+      const roots = document.body.classList.contains('prelogin-active')
+        ? [document.getElementById('welcomeScreen')]
+        : document.body.classList.contains('auth-active')
+          ? [document.getElementById('authScreen'), federationOtpModal.hidden ? null : federationOtpModal]
+          : [document.querySelector('.sidebar'), document.querySelector('.topbar'), document.querySelector('.page.active'), document.querySelector('.right-rail')];
       if (notify) showToast(`Traduzindo para ${languageNames[target]}...`);
       try {
         for (const root of roots.filter(Boolean)) await translateRoot(root, target, generation);
@@ -3851,6 +4041,7 @@
       languageSelects.forEach(select => { select.value = safeCode; });
       document.documentElement.lang = safeCode;
       const shortCode = safeCode.split('-')[0].toUpperCase();
+      document.getElementById('welcomeLanguageCode').textContent = shortCode;
       document.getElementById('authLanguageCode').textContent = shortCode;
       document.getElementById('appLanguageCode').textContent = shortCode;
       try { localStorage.setItem('apex-language', safeCode); } catch (_) {}
@@ -3896,7 +4087,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=38', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=39', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

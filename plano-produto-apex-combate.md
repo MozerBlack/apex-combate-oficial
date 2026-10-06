@@ -3,11 +3,22 @@
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v38 com backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.  
+> **Status:** protótipo funcional v39 com apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
+
+### Entrega v39
+
+A v39 acrescenta uma experiência pública anterior à autenticação:
+
+- boas-vindas e apresentação da proposta do Apex Combate;
+- explicação concisa do fluxo integrado;
+- visão dos grupos ATLETA, CLUBE e FEDERAÇÃO sem criar novo perfil;
+- avanço para o login exclusivamente por botão, sem transição automática;
+- retorno às boas-vindas após logout;
+- tradução real e layout adaptado de celulares compactos a TVs.
 
 ### Entrega v38
 

@@ -1,5 +1,13 @@
 # Sistema de Login — Apex Combate
 
+## Apresentação anterior ao login
+
+A aplicação inicia em uma tela pública de boas-vindas, distinta da autenticação. Essa apresentação usa o logo oficial, a assinatura **“Uma plataforma. Todas as lutas.”**, explica como o ecossistema funciona e apresenta somente os grupos **ATLETA**, **CLUBE** e **FEDERAÇÃO**.
+
+A tela de login não aparece por temporizador nem por redirecionamento automático. O visitante precisa pressionar **Entrar**, **Entrar no Apex** ou **Escolher perfil de acesso**. Depois disso, a composição oficial de login permanece inalterada e oferece exatamente os três perfis públicos. O botão **Como funciona** apenas navega pela própria apresentação. Ao encerrar uma sessão, a pessoa retorna às boas-vindas.
+
+O seletor de idioma da apresentação usa o mesmo catálogo internacional e a mesma tradução efetiva da interface. O layout é adaptável de 320 px a telas grandes e TVs.
+
 ## Perfil ATLETA
 
 ### Objetivo

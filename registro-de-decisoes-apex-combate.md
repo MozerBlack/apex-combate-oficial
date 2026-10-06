@@ -1,7 +1,7 @@
 # Registro de Decisões — Apex Combate
 
 **Responsável pelo produto:** Mozer  
-**Atualizado em:** 1º de outubro de 2026
+**Atualizado em:** 6 de outubro de 2026
 
 Este arquivo registra decisões vigentes para impedir regressões de escopo ou interpretações conflitantes.
 
@@ -48,6 +48,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-039 | O repositório oficial público da versão atual é `MozerBlack/apex-combate-oficial`; o repositório acadêmico anterior permanece separado e inalterado. | Aprovada e implementada |
 | DEC-040 | A demonstração completa será publicada pelo Render em `https://apex-combate-demo.onrender.com`, integrada à branch `main`. | Aprovada e implementada |
 | DEC-041 | A v38 prioriza as áreas completas de atleta e clube com perfil, documentos, responsáveis, turmas, presença, alunos e delegações persistentes. | Aprovada e implementada |
+| DEC-042 | A v39 inicia em uma apresentação responsiva de boas-vindas e “Como funciona”; o login oficial só aparece após ação explícita em um botão, sem avanço automático, e o logout retorna à apresentação. | Aprovada e implementada |
 
 ## Regras de mudança
 
