@@ -1,4 +1,12 @@
-# Identidade Visual — Apex Combate
+# 🥋 Apex Combate — Plataforma Universal de Artes Marciais
+
+## Identidade Visual
+
+### Título institucional oficial
+
+**🥋 Apex Combate — Plataforma Universal de Artes Marciais**
+
+A assinatura complementar permanece **“Uma plataforma. Todas as lutas.”**. O título comunica a abrangência de todas as modalidades; a assinatura reforça o posicionamento “Tudo em um”.
 
 ## Conceito
 

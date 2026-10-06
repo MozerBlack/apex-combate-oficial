@@ -49,6 +49,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-040 | A demonstração completa será publicada pelo Render em `https://apex-combate-demo.onrender.com`, integrada à branch `main`. | Aprovada e implementada |
 | DEC-041 | A v38 prioriza as áreas completas de atleta e clube com perfil, documentos, responsáveis, turmas, presença, alunos e delegações persistentes. | Aprovada e implementada |
 | DEC-042 | A v39 inicia em uma apresentação responsiva de boas-vindas e “Como funciona”; o login oficial só aparece após ação explícita em um botão, sem avanço automático, e o logout retorna à apresentação. | Aprovada e implementada |
+| DEC-043 | O título institucional é “🥋 Apex Combate — Plataforma Universal de Artes Marciais”, aplicado na abertura pública e na documentação; “Uma plataforma. Todas as lutas.” permanece como assinatura. | Aprovada e implementada na v40 |
 
 ## Regras de mudança
 

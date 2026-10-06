@@ -1,10 +1,12 @@
-# Apex Combate — Documentação Completa e Unificada
+# 🥋 Apex Combate — Plataforma Universal de Artes Marciais
+
+## Documentação Completa e Unificada
 
 **Proprietário:** Mozer  
 **Produto principal:** Apex Combate  
 **Produto comercial conectado:** Apex’s Forge  
 **Central proprietária futura:** Apex Central  
-**Versão documentada:** v39
+**Versão documentada:** v40
 **Data de consolidação:** 6 de outubro de 2026
 **Status:** documento único oficial do ecossistema  
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
@@ -12,8 +14,10 @@
 
 > Este arquivo reúne em um único lugar todas as definições de produto, identidade, autenticação, perfis, permissões, governança, arquitetura, APIs, compatibilidade, aplicativo comercial e decisões oficiais. Em caso de divergência, prevalece a instrução mais recente e explícita de Mozer.
 
-### Entrega funcional v39
+### Entrega funcional v40
 
+- título institucional **“🥋 Apex Combate — Plataforma Universal de Artes Marciais”** aplicado na abertura e na documentação;
+- assinatura **“Uma plataforma. Todas as lutas.”** preservada;
 - apresentação pública de boas-vindas antes da autenticação;
 - proposta “Uma plataforma. Todas as lutas.” e explicação de como o ecossistema funciona;
 - avanço para o login somente por botão, sem transição automática;
@@ -237,7 +241,7 @@ Nenhuma funcionalidade principal poderá depender exclusivamente de um tamanho d
 **Proprietário:** Mozer  
 **Produto:** Apex Combate  
 **Posicionamento:** Tudo em um para o ecossistema das artes marciais  
-**Versão documentada:** v39
+**Versão documentada:** v40
 **Data de consolidação:** 1º de outubro de 2026  
 **Status:** protótipo funcional com backend local persistente
 
@@ -636,7 +640,7 @@ O produto foi estruturado para:
 - APIs fora do cache HTTP;
 - modo offline da área técnica com dados locais e fila de sincronização.
 
-A versão atual de cache é `apex-combate-v39`.
+A versão atual de cache é `apex-combate-v40`.
 
 ---
 
@@ -800,10 +804,11 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 ---
 
-### 16. Estado da versão v39
+### 16. Estado da versão v40
 
 #### Validado
 
+- título institucional exibido na abertura pública;
 - apresentação pública exibida antes da autenticação;
 - avanço para o login somente por ação explícita do visitante;
 - retorno às boas-vindas depois do logout;
@@ -818,8 +823,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 - seleção de técnico elegível por competição;
 - bloqueio de técnico não credenciado;
 - QR Code decodificável;
-- frontend v39;
-- manifesto e Service Worker v39;
+- frontend v40;
+- manifesto e Service Worker v40;
 - sintaxe JavaScript e Python;
 - integridade do HTML;
 - limpeza de dados temporários de testes.
@@ -840,13 +845,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 | Arquivo | Finalidade |
 |---|---|
-| `apex-combate.html` | Aplicação principal v39 |
+| `apex-combate.html` | Aplicação principal v40 |
 | `index.html` | Entrada da prévia |
 | `server.py` | API, autenticação e autorização |
 | `apex_db.py` | Banco, migrações e sementes |
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
-| `apex-sw.js` | Service Worker v39 |
+| `apex-sw.js` | Service Worker v40 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `backend-apex-combate.md` | Backend e APIs |
 | `sistema-login-apex-combate.md` | Regras de autenticação |
@@ -895,7 +900,7 @@ Nenhuma decisão futura deve reintroduzir Supabase, um quarto perfil público, a
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v39 com apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v40 com título institucional, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 ---
@@ -2054,7 +2059,7 @@ Em produção, senhas deverão usar hash forte, o segredo JWT deverá ficar em c
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v39 preserva esse backend e acrescenta no frontend uma apresentação pública anterior ao login, com avanço explícito e retorno após logout.
+- A v40 preserva esse backend e acrescenta no frontend uma apresentação pública anterior ao login, com avanço explícito e retorno após logout.
 
 ### Endpoints principais
 
@@ -2863,6 +2868,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-040 | A demonstração completa será publicada pelo Render em `https://apex-combate-demo.onrender.com`, integrada à branch `main`. | Aprovada e implementada |
 | DEC-041 | A v38 prioriza as áreas completas de atleta e clube com perfil, documentos, responsáveis, turmas, presença, alunos e delegações persistentes. | Aprovada e implementada |
 | DEC-042 | A v39 inicia em uma apresentação responsiva de boas-vindas e “Como funciona”; o login oficial só aparece após ação explícita em um botão, sem avanço automático, e o logout retorna à apresentação. | Aprovada e implementada |
+| DEC-043 | O título institucional é “🥋 Apex Combate — Plataforma Universal de Artes Marciais”, aplicado na abertura pública e na documentação; “Uma plataforma. Todas as lutas.” permanece como assinatura. | Aprovada e implementada na v40 |
 
 ### Regras de mudança
 

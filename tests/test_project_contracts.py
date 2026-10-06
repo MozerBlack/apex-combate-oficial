@@ -25,6 +25,8 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn('<body class="prelogin-active auth-active">', self.html)
         self.assertLess(self.html.index('id="welcomeScreen"'), self.html.index('id="authScreen"'))
         self.assertIn('class="welcome-primary enter-apex-login"', self.html)
+        self.assertIn('class="welcome-title-emoji"', self.html)
+        self.assertIn("Plataforma Universal de Artes Marciais", self.html)
         self.assertIn("addEventListener('click', showLoginScreen)", self.html)
         self.assertNotRegex(self.html, r"setTimeout\s*\(\s*showLoginScreen")
 
@@ -45,7 +47,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043"):
             self.assertIn(decision, self.master)
 
 
@@ -59,8 +61,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=39'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v39", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=40'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v40", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

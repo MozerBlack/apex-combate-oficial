@@ -1,13 +1,19 @@
-# Plano de Produto — Apex Combate
+# 🥋 Apex Combate — Plataforma Universal de Artes Marciais
+
+## Plano de Produto
 
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v39 com apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v40 com título institucional, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
+
+### Entrega v40
+
+A v40 oficializa e aplica o título institucional **“🥋 Apex Combate — Plataforma Universal de Artes Marciais”** na abertura pública e na documentação principal, preservando **“Uma plataforma. Todas as lutas.”** como assinatura do produto.
 
 ### Entrega v39
 

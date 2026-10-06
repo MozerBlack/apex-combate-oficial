@@ -1,7 +1,9 @@
-# Apex Combate — Índice da Documentação
+# 🥋 Apex Combate — Plataforma Universal de Artes Marciais
+
+## Índice da Documentação
 
 **Proprietário:** Mozer  
-**Versão atual:** v39
+**Versão atual:** v40
 
 ## Comece aqui
 
