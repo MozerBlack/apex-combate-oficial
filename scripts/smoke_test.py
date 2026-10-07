@@ -45,7 +45,7 @@ def main() -> None:
     assert health["ok"] is True
     assert health["database"] == "ready"
 
-    status, app, content_type = request("/apex-combate.html?v=40")
+    status, app, content_type = request("/apex-combate.html?v=41")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
 
     status, body, _ = request("/api/login/atleta", payload={"documento": "529.982.247-25", "nascimento": "10/05/1998"})

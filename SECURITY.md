@@ -17,7 +17,7 @@ Falhas de segurança não devem ser abertas em issues públicas. Informe o propr
 
 ## Escopo atual
 
-A v40 é uma demonstração funcional. Credenciais, OTP, SQLite e seeds são exclusivamente demonstrativos. Produção exige HTTPS, PostgreSQL, OTP externo, rotação de segredos, monitoramento, backups, gestão de incidentes e revisão LGPD.
+A v41 é uma demonstração funcional. Credenciais, OTP, SQLite e seeds são exclusivamente demonstrativos. Produção exige HTTPS, PostgreSQL, OTP externo, rotação de segredos, monitoramento, backups, gestão de incidentes e revisão LGPD.
 
 ## Princípios
 
