@@ -51,6 +51,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-042 | A v39 inicia em uma apresentação responsiva de boas-vindas e “Como funciona”; o login oficial só aparece após ação explícita em um botão, sem avanço automático, e o logout retorna à apresentação. | Aprovada e implementada |
 | DEC-043 | O título institucional é “🥋 Apex Combate — Plataforma Universal de Artes Marciais”, aplicado na abertura pública e na documentação; “Uma plataforma. Todas as lutas.” permanece como assinatura. | Aprovada e implementada na v40 |
 | DEC-044 | A faixa superior da apresentação pública é removida; a abertura começa diretamente no hero, mantendo “Entrar no Apex” e “Como funciona” no conteúdo principal. | Aprovada e implementada na v41 |
+| DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 
 ## Regras de mudança
 

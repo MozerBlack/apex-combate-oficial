@@ -1,4 +1,4 @@
-# Backend Apex Combate — Fundação local v41
+# Backend Apex Combate — Fundação local v42
 
 ## Arquitetura atual
 
@@ -16,7 +16,7 @@
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v41 preserva esse backend e acrescenta no frontend uma apresentação pública anterior ao login, com avanço explícito e retorno após logout.
+- A v42 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito e retorno após logout.
 
 ## Endpoints principais
 

@@ -882,6 +882,9 @@
     .auth-language { height: 42px; padding: 0 15px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(8,10,14,.48); color: #b8bec7; cursor: pointer; font-size: 9px; font-weight: 750; letter-spacing: .08em; }
     .auth-language:hover { color: white; border-color: rgba(255,255,255,.3); }
     .auth-language span { margin-left: 5px; color: #ef2636; }
+    .auth-header.auth-header--language-only { position: absolute; top: 18px; top: max(18px, env(safe-area-inset-top)); right: 24px; right: max(24px, env(safe-area-inset-right)); left: auto; z-index: 5; width: auto; min-height: 0; margin: 0; border: 0; display: block; background: transparent; }
+    .auth-header--language-only .auth-header-actions { display: block; }
+    .auth-header--language-only .auth-language { display: flex; align-items: center; min-width: 155px; }
 
     .auth-stage { position: relative; z-index: 2; width: 100%; flex: 1; min-height: 650px; padding: 54px 20px 48px; display: grid; place-items: center; }
     .auth-card { position: relative; width: min(455px, 100%); padding: 28px 30px 27px; border: 1px solid rgba(239,38,54,.42); border-radius: 7px; background: linear-gradient(155deg, rgba(20,24,31,.97), rgba(7,10,15,.98)); box-shadow: 0 32px 90px rgba(0,0,0,.68), inset 0 1px 0 rgba(255,255,255,.04); backdrop-filter: blur(14px); }
@@ -1646,19 +1649,9 @@
   </section>
 
   <section class="auth-screen" id="authScreen" aria-label="Acesso Apex Combate">
-    <header class="auth-header">
-      <a class="auth-brand auth-brand--official" href="#" aria-label="Apex Combate — Início">
-        <img class="auth-brand-logo" src="assets/apex-combate-logo-oficial.png" alt="Apex Combate" />
-      </a>
-      <nav class="auth-nav" aria-label="Navegação institucional">
-        <button id="navModalities" data-core-i18n type="button" data-auth-info="Modalidades como jiu-jítsu, muay thai, karatê, judô, boxe e MMA estarão conectadas.">Modalidades</button>
-        <button id="navAcademies" data-core-i18n type="button" data-auth-info="Encontre clubes, dojôs e academias verificados.">Academias</button>
-        <button id="navCompetitions" data-core-i18n type="button" data-auth-info="Competições e eventos oficiais estarão disponíveis no calendário.">Competições</button>
-        <button id="navAbout" data-core-i18n type="button" data-auth-info="Apex Combate conecta toda a jornada marcial em uma única plataforma.">Sobre</button>
-      </nav>
+    <header class="auth-header auth-header--language-only" aria-label="Tradução da interface">
       <div class="auth-header-actions">
         <label class="auth-language language-selector" title="Selecionar idioma"><span id="authLanguageCode">PT</span><select id="authLanguage" aria-label="Selecionar idioma"></select></label>
-        <button class="auth-create" id="authTopLogin" data-core-i18n type="button">Entrar</button>
       </div>
     </header>
 
@@ -3539,7 +3532,6 @@
 
     document.querySelectorAll('[data-role-choice]').forEach(button => button.addEventListener('click', () => selectAuthRole(button.dataset.roleChoice)));
     document.getElementById('continueProfile').addEventListener('click', showCredentials);
-    document.getElementById('authTopLogin').addEventListener('click', showCredentials);
     document.getElementById('backToProfiles').addEventListener('click', showProfileSelection);
     document.getElementById('backToCredentials')?.addEventListener('click', showCredentials);
 
@@ -4065,7 +4057,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=41', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=42', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

@@ -47,12 +47,25 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=41")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=42")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
     if html.index('id="welcomeScreen"') > html.index('id="authScreen"'):
         fail("a apresentação pública deve preceder o login")
+    login_header = re.search(
+        r'<header class="auth-header auth-header--language-only"[^>]*>(.*?)</header>',
+        html,
+        re.DOTALL,
+    )
+    if not login_header:
+        fail("cabeçalho discreto do tradutor ausente no login")
+    header = login_header.group(1)
+    if 'id="authLanguage"' not in header or 'id="authLanguageCode"' not in header:
+        fail("tradutor ausente no cabeçalho do login")
+    for removed in ('class="auth-brand', 'class="auth-nav"', 'id="authTopLogin"'):
+        if removed in header:
+            fail(f"controle superior obsoleto no login: {removed}")
 
 
 def check_manifest() -> None:
@@ -71,7 +84,7 @@ def check_master_document() -> None:
     master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 

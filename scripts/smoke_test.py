@@ -45,8 +45,12 @@ def main() -> None:
     assert health["ok"] is True
     assert health["database"] == "ready"
 
-    status, app, content_type = request("/apex-combate.html?v=41")
+    status, app, content_type = request("/apex-combate.html?v=42")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
+    login_header = app.split(b'<header class="auth-header auth-header--language-only"', 1)[1].split(b"</header>", 1)[0]
+    assert b'id="authLanguage"' in login_header
+    for removed in (b'class="auth-brand', b'class="auth-nav"', b'id="authTopLogin"'):
+        assert removed not in login_header
 
     status, body, _ = request("/api/login/atleta", payload={"documento": "529.982.247-25", "nascimento": "10/05/1998"})
     assert status == 200, body.decode("utf-8", errors="replace")

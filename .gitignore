@@ -10,6 +10,7 @@
 *.mobileprovision
 *.jks
 *.keystore
+.ssh/
 
 # Dados locais e bancos
 data/*

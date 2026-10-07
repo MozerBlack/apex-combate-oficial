@@ -32,6 +32,29 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn("addEventListener('click', showLoginScreen)", self.html)
         self.assertNotRegex(self.html, r"setTimeout\s*\(\s*showLoginScreen")
 
+    def test_login_header_keeps_only_the_translator(self):
+        match = re.search(
+            r'<header class="auth-header auth-header--language-only"[^>]*>(.*?)</header>',
+            self.html,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match)
+        header = match.group(1)
+        self.assertIn('id="authLanguage"', header)
+        self.assertIn('id="authLanguageCode"', header)
+        for removed in (
+            'class="auth-brand',
+            'class="auth-nav"',
+            'id="navModalities"',
+            'id="navAcademies"',
+            'id="navCompetitions"',
+            'id="navAbout"',
+            'id="authTopLogin"',
+        ):
+            self.assertNotIn(removed, header)
+        self.assertIn("border: 0", self.html)
+        self.assertIn("background: transparent", self.html)
+
     def test_logout_returns_to_welcome_screen(self):
         logout_handler = self.html[self.html.index("document.querySelectorAll('[data-logout]')"):]
         self.assertIn("showWelcomeScreen();", logout_handler[:2200])
@@ -49,7 +72,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045"):
             self.assertIn(decision, self.master)
 
 
@@ -63,8 +86,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=41'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v41", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=42'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v42", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

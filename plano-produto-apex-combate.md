@@ -5,11 +5,15 @@
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v41 com abertura simplificada e título institucional, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v42 com cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
+
+### Entrega v42
+
+A v42 remove da tela de login o logo superior, os atalhos **Modalidades**, **Academias**, **Competições** e **Sobre**, o botão superior **Entrar** e a faixa visual do cabeçalho. O tradutor real permanece disponível em um controle flutuante e discreto, sem alterar o logo oficial, os três acessos ou a autenticação do cartão central.
 
 ### Entrega v41
 

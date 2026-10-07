@@ -3,7 +3,7 @@
 ## Índice da Documentação
 
 **Proprietário:** Mozer  
-**Versão atual:** v41
+**Versão atual:** v42
 
 ## Comece aqui
 
