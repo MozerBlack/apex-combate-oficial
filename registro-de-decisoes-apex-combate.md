@@ -52,6 +52,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-043 | O título institucional é “🥋 Apex Combate — Plataforma Universal de Artes Marciais”, aplicado na abertura pública e na documentação; “Uma plataforma. Todas as lutas.” permanece como assinatura. | Aprovada e implementada na v40 |
 | DEC-044 | A faixa superior da apresentação pública é removida; a abertura começa diretamente no hero, mantendo “Entrar no Apex” e “Como funciona” no conteúdo principal. | Aprovada e implementada na v41 |
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
+| DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 
 ## Regras de mudança
 

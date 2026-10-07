@@ -47,7 +47,7 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=42")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=43")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
@@ -67,6 +67,17 @@ def check_html_contract() -> None:
         if removed in header:
             fail(f"controle superior obsoleto no login: {removed}")
 
+    css = html.split("<style>", 1)[1].split("</style>", 1)[0]
+    for token in ("--font-micro: clamp(", "--font-caption: clamp(", "--font-small: clamp(", "--font-label: clamp(", "--font-body: clamp(", "--font-body-lg: clamp("):
+        if token not in css:
+            fail(f"escala tipográfica fluida ausente: {token}")
+    if len(re.findall(r"font-size\s*:\s*var\(--font-", css)) < 400:
+        fail("escala tipográfica v43 não foi aplicada de forma abrangente")
+    if re.search(r"font-size\s*:\s*[6-9]px\b", css):
+        fail("a interface ainda contém texto funcional crítico entre 6 e 9 px")
+    if not re.search(r"input,\s*select,\s*textarea\s*\{\s*font-size:\s*16px\s*!important;", css):
+        fail("controles de formulário móveis não possuem mínimo de 16 px")
+
 
 def check_manifest() -> None:
     manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
@@ -74,6 +85,11 @@ def check_manifest() -> None:
         fail("nome inválido no manifesto")
     if manifest.get("display") != "standalone" or manifest.get("orientation") != "any":
         fail("configuração PWA incompleta")
+    if manifest.get("start_url") != "./apex-combate.html?v=43":
+        fail("URL inicial do manifesto não corresponde à v43")
+    index = (ROOT / "index.html").read_text(encoding="utf-8")
+    if "apex-combate.html?v=43" not in index:
+        fail("entrada principal não aponta para a v43")
     for icon in manifest.get("icons", []):
         icon_path = ROOT / icon.get("src", "")
         if not icon_path.is_file():
@@ -84,7 +100,7 @@ def check_master_document() -> None:
     master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 

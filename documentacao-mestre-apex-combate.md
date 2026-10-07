@@ -6,7 +6,7 @@
 **Produto principal:** Apex Combate  
 **Produto comercial conectado:** Apex’s Forge  
 **Central proprietária futura:** Apex Central  
-**Versão documentada:** v42
+**Versão documentada:** v43
 **Data de consolidação:** 6 de outubro de 2026
 **Status:** documento único oficial do ecossistema  
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
@@ -14,7 +14,12 @@
 
 > Este arquivo reúne em um único lugar todas as definições de produto, identidade, autenticação, perfis, permissões, governança, arquitetura, APIs, compatibilidade, aplicativo comercial e decisões oficiais. Em caso de divergência, prevalece a instrução mais recente e explícita de Mozer.
 
-### Entrega funcional v42
+### Entrega funcional v43
+
+- escala tipográfica fluida e reutilizável com `clamp()`, `rem` e limites controlados;
+- textos funcionais de 6–9 px elevados a patamares legíveis em toda a plataforma;
+- formulários móveis com texto mínimo de 16 px para evitar zoom automático no iPhone;
+- progressão de leitura entre celulares, tablets, notebooks, desktops, monitores grandes e TVs sem detecção de modelo;
 
 - cabeçalho da tela de login reduzido a um tradutor flutuante e discreto, sem faixa visual;
 - logo superior auxiliar, links institucionais e botão superior **Entrar** removidos do login;
@@ -246,7 +251,7 @@ Nenhuma funcionalidade principal poderá depender exclusivamente de um tamanho d
 **Proprietário:** Mozer  
 **Produto:** Apex Combate  
 **Posicionamento:** Tudo em um para o ecossistema das artes marciais  
-**Versão documentada:** v42
+**Versão documentada:** v43
 **Data de consolidação:** 6 de outubro de 2026
 **Status:** protótipo funcional com backend local persistente
 
@@ -645,7 +650,7 @@ O produto foi estruturado para:
 - APIs fora do cache HTTP;
 - modo offline da área técnica com dados locais e fila de sincronização.
 
-A versão atual de cache é `apex-combate-v42`.
+A versão atual de cache é `apex-combate-v43`.
 
 ---
 
@@ -809,10 +814,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 ---
 
-### 16. Estado da versão v42
+### 16. Estado da versão v43
 
 #### Validado
 
+- escala tipográfica fluida aplicada aos componentes funcionais;
+- antigos tamanhos críticos de 6–9 px eliminados das declarações de fonte;
+- campos móveis protegidos por mínimo de 16 px;
 - cabeçalho visual do login removido, mantendo somente o tradutor discreto;
 - cartão central, logo oficial e três acessos preservados;
 - abertura pública sem a antiga faixa superior;
@@ -831,8 +839,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 - seleção de técnico elegível por competição;
 - bloqueio de técnico não credenciado;
 - QR Code decodificável;
-- frontend v42;
-- manifesto e Service Worker v42;
+- frontend v43;
+- manifesto e Service Worker v43;
 - sintaxe JavaScript e Python;
 - integridade do HTML;
 - limpeza de dados temporários de testes.
@@ -853,13 +861,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 | Arquivo | Finalidade |
 |---|---|
-| `apex-combate.html` | Aplicação principal v42 |
+| `apex-combate.html` | Aplicação principal v43 |
 | `index.html` | Entrada da prévia |
 | `server.py` | API, autenticação e autorização |
 | `apex_db.py` | Banco, migrações e sementes |
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
-| `apex-sw.js` | Service Worker v42 |
+| `apex-sw.js` | Service Worker v43 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `backend-apex-combate.md` | Backend e APIs |
 | `sistema-login-apex-combate.md` | Regras de autenticação |
@@ -908,8 +916,12 @@ Nenhuma decisão futura deve reintroduzir Supabase, um quarto perfil público, a
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v42 com cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v43 com tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
+
+### Entrega v43
+
+A v43 introduz uma escala tipográfica fluida e reutilizável para todo o frontend, com limites mínimos e máximos em `clamp()` e unidades relativas. Textos funcionais antes fixados entre 6 e 9 px passam a patamares legíveis, mantendo hierarquia e composição. Em telas de até 820 px, campos, seletores e áreas de texto usam no mínimo 16 px para evitar o zoom automático do iPhone. Celulares, tablets, notebooks, desktops, monitores grandes e TVs recebem crescimento progressivo sem detecção de modelo específico.
 
 ### Entrega v42
 
@@ -2071,7 +2083,7 @@ Em produção, senhas deverão usar hash forte, o segredo JWT deverá ficar em c
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v42 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito e retorno após logout.
+- A v43 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito e retorno após logout.
 
 ### Endpoints principais
 
@@ -2832,7 +2844,7 @@ Nenhuma dessas pendências altera a decisão principal: o Apex’s Forge será o
 **Documento de origem:** `registro-de-decisoes-apex-combate.md`
 
 **Responsável pelo produto:** Mozer  
-**Atualizado em:** 1º de outubro de 2026
+**Atualizado em:** 6 de outubro de 2026
 
 Este arquivo registra decisões vigentes para impedir regressões de escopo ou interpretações conflitantes.
 
@@ -2883,6 +2895,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-043 | O título institucional é “🥋 Apex Combate — Plataforma Universal de Artes Marciais”, aplicado na abertura pública e na documentação; “Uma plataforma. Todas as lutas.” permanece como assinatura. | Aprovada e implementada na v40 |
 | DEC-044 | A faixa superior da apresentação pública é removida; a abertura começa diretamente no hero, mantendo “Entrar no Apex” e “Como funciona” no conteúdo principal. | Aprovada e implementada na v41 |
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
+| DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 
 ### Regras de mudança
 

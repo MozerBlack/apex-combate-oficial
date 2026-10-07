@@ -72,8 +72,48 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046"):
             self.assertIn(decision, self.master)
+
+
+class TypographyContractTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.html = (ROOT / "apex-combate.html").read_text(encoding="utf-8")
+        cls.css = cls.html.split("<style>", 1)[1].split("</style>", 1)[0]
+
+    def test_fluid_semantic_scale_is_declared(self):
+        expected_tokens = (
+            "--font-micro: clamp(",
+            "--font-caption: clamp(",
+            "--font-small: clamp(",
+            "--font-label: clamp(",
+            "--font-body: clamp(",
+            "--font-body-lg: clamp(",
+        )
+        for token in expected_tokens:
+            self.assertIn(token, self.css)
+        self.assertIn("@supports (font-size: clamp(", self.css)
+        fixed_fallbacks = (
+            "--font-micro: 10px;",
+            "--font-caption: 11px;",
+            "--font-small: 12px;",
+            "--font-label: 13px;",
+            "--font-body: 14px;",
+            "--font-body-lg: 15px;",
+        )
+        for fallback in fixed_fallbacks:
+            self.assertIn(fallback, self.css)
+        self.assertGreaterEqual(self.css.count("font-size: var(--font-"), 400)
+
+    def test_critically_small_functional_fonts_are_eliminated(self):
+        self.assertNotRegex(self.css, r"font-size\s*:\s*[6-9]px\b")
+
+    def test_mobile_form_controls_prevent_ios_automatic_zoom(self):
+        self.assertRegex(
+            self.css,
+            r"(?s)@media\s*\(max-width:\s*820px\).*?input,\s*select,\s*textarea\s*\{\s*font-size:\s*16px\s*!important;",
+        )
 
 
 class PwaContractTests(unittest.TestCase):
@@ -82,12 +122,14 @@ class PwaContractTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "Apex Combate")
         self.assertEqual(manifest["display"], "standalone")
         self.assertEqual(manifest["orientation"], "any")
+        self.assertEqual(manifest["start_url"], "./apex-combate.html?v=43")
+        self.assertIn("apex-combate.html?v=43", (ROOT / "index.html").read_text(encoding="utf-8"))
         sizes = {icon["sizes"] for icon in manifest["icons"]}
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=42'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v42", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=43'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v43", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

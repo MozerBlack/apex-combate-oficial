@@ -5,11 +5,15 @@
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v42 com cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v43 com tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
+
+### Entrega v43
+
+A v43 introduz uma escala tipográfica fluida e reutilizável para todo o frontend, com limites mínimos e máximos em `clamp()` e unidades relativas. Textos funcionais antes fixados entre 6 e 9 px passam a patamares legíveis, mantendo hierarquia e composição. Em telas de até 820 px, campos, seletores e áreas de texto usam no mínimo 16 px para evitar o zoom automático do iPhone. Celulares, tablets, notebooks, desktops, monitores grandes e TVs recebem crescimento progressivo sem detecção de modelo específico.
 
 ### Entrega v42
 

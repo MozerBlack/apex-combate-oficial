@@ -45,8 +45,17 @@ def main() -> None:
     assert health["ok"] is True
     assert health["database"] == "ready"
 
-    status, app, content_type = request("/apex-combate.html?v=42")
+    status, index, content_type = request("/")
+    assert status == 200 and b"apex-combate.html?v=43" in index and content_type == "text/html"
+
+    status, app, content_type = request("/apex-combate.html?v=43")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
+    css = app.split(b"<style>", 1)[1].split(b"</style>", 1)[0]
+    assert b"--font-micro: clamp(" in css and b"--font-body-lg: clamp(" in css
+    assert css.count(b"font-size: var(--font-") >= 400
+    for critical_size in (b"6px", b"7px", b"8px", b"9px"):
+        assert b"font-size: " + critical_size not in css
+    assert b"input, select, textarea { font-size: 16px !important; }" in css
     login_header = app.split(b'<header class="auth-header auth-header--language-only"', 1)[1].split(b"</header>", 1)[0]
     assert b'id="authLanguage"' in login_header
     for removed in (b'class="auth-brand', b'class="auth-nav"', b'id="authTopLogin"'):
