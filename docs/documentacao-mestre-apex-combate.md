@@ -875,14 +875,14 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 | `manifest.webmanifest` | Manifesto PWA |
 | `apex-sw.js` | Service Worker v44 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
-| `backend-apex-combate.md` | Backend e APIs |
-| `sistema-login-apex-combate.md` | Regras de autenticação |
-| `perfis-e-permissoes-apex-combate.md` | Papéis e permissões |
-| `admin-apex-central.md` | Central proprietária futura |
-| `compatibilidade-apex-combate.md` | Responsividade e PWA |
-| `identidade-visual-apex-combate.md` | Marca e direção visual |
-| `apexs-forge.md` | Aplicativo comercial oficial para lojistas |
-| `registro-de-decisoes-apex-combate.md` | Decisões vigentes |
+| `docs/backend-apex-combate.md` | Backend e APIs |
+| `docs/sistema-login-apex-combate.md` | Regras de autenticação |
+| `docs/perfis-e-permissoes-apex-combate.md` | Papéis e permissões |
+| `docs/admin-apex-central.md` | Central proprietária futura |
+| `docs/compatibilidade-apex-combate.md` | Responsividade e PWA |
+| `docs/identidade-visual-apex-combate.md` | Marca e direção visual |
+| `docs/apexs-forge.md` | Aplicativo comercial oficial para lojistas |
+| `docs/registro-de-decisoes-apex-combate.md` | Decisões vigentes |
 
 ---
 

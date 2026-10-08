@@ -11,7 +11,7 @@ class ProductContractTests(unittest.TestCase):
     def setUpClass(cls):
         cls.html = (ROOT / "apex-combate.html").read_text(encoding="utf-8")
         cls.server = (ROOT / "server.py").read_text(encoding="utf-8")
-        cls.master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
+        cls.master = (ROOT / "docs/documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
 
     def test_exactly_three_public_profile_choices(self):
         choices = re.findall(r'data-role-choice="([^"]+)"', self.html)
@@ -97,6 +97,27 @@ class ProductContractTests(unittest.TestCase):
 
     def test_owner_central_is_disabled(self):
         self.assertIn("APEX_CENTRAL_ENABLED = False", self.server)
+
+    def test_complementary_documentation_is_grouped_under_docs(self):
+        documentation = (
+            "admin-apex-central.md",
+            "apexs-forge.md",
+            "backend-apex-combate.md",
+            "compatibilidade-apex-combate.md",
+            "documentacao-mestre-apex-combate.md",
+            "identidade-visual-apex-combate.md",
+            "perfis-e-permissoes-apex-combate.md",
+            "plano-produto-apex-combate.md",
+            "registro-de-decisoes-apex-combate.md",
+            "sistema-login-apex-combate.md",
+        )
+        self.assertTrue((ROOT / "docs/README.md").is_file())
+        self.assertFalse((ROOT / "README-APEX-COMBATE.md").exists())
+        for name in documentation:
+            self.assertTrue((ROOT / "docs" / name).is_file(), name)
+            self.assertFalse((ROOT / name).exists(), name)
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("[Índice documental](docs/README.md)", readme)
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)

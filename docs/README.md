@@ -5,6 +5,8 @@
 **Proprietário:** Mozer  
 **Versão atual:** v44
 
+A documentação complementar fica concentrada nesta pasta para manter a raiz do repositório objetiva. Para visão geral, execução e publicação, consulte o [`README.md` principal](../README.md).
+
 ## Comece aqui
 
 1. [`documentacao-mestre-apex-combate.md`](documentacao-mestre-apex-combate.md) — documento único oficial, reunindo toda a documentação do ecossistema;
@@ -26,12 +28,12 @@
 
 ## Implementação
 
-- `apex-combate.html` — aplicação web principal;
-- `server.py` — API local;
-- `apex_db.py` — persistência e migrações;
-- `manifest.webmanifest` — instalação PWA;
-- `apex-sw.js` — cache e modo offline;
-- `assets/apex-combate-logo-oficial.png` — logo oficial.
+- [`apex-combate.html`](../apex-combate.html) — aplicação web principal;
+- [`server.py`](../server.py) — API local;
+- [`apex_db.py`](../apex_db.py) — persistência e migrações;
+- [`manifest.webmanifest`](../manifest.webmanifest) — instalação PWA;
+- [`apex-sw.js`](../apex-sw.js) — cache e modo offline;
+- [`assets/apex-combate-logo-oficial.png`](../assets/apex-combate-logo-oficial.png) — logo oficial.
 
 ## Regra de precedência
 

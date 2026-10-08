@@ -11,6 +11,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+DOCUMENTATION_FILES = (
+    "README.md",
+    "admin-apex-central.md",
+    "apexs-forge.md",
+    "backend-apex-combate.md",
+    "compatibilidade-apex-combate.md",
+    "documentacao-mestre-apex-combate.md",
+    "identidade-visual-apex-combate.md",
+    "perfis-e-permissoes-apex-combate.md",
+    "plano-produto-apex-combate.md",
+    "registro-de-decisoes-apex-combate.md",
+    "sistema-login-apex-combate.md",
+)
+
 REQUIRED_FILES = (
     "apex-combate.html",
     "index.html",
@@ -18,11 +32,10 @@ REQUIRED_FILES = (
     "apex_db.py",
     "manifest.webmanifest",
     "apex-sw.js",
-    "documentacao-mestre-apex-combate.md",
-    "registro-de-decisoes-apex-combate.md",
     "README.md",
     ".gitignore",
     "Dockerfile",
+    *(f"docs/{name}" for name in DOCUMENTATION_FILES),
 )
 
 
@@ -35,6 +48,10 @@ def check_required_files() -> None:
     missing = [name for name in REQUIRED_FILES if not (ROOT / name).is_file()]
     if missing:
         fail("arquivos obrigatórios ausentes: " + ", ".join(missing))
+    legacy_root_docs = ("README-APEX-COMBATE.md", *DOCUMENTATION_FILES[1:])
+    misplaced = [name for name in legacy_root_docs if (ROOT / name).exists()]
+    if misplaced:
+        fail("documentação complementar deve permanecer em docs/: " + ", ".join(misplaced))
 
 
 def check_python() -> None:
@@ -114,7 +131,7 @@ def check_manifest() -> None:
 
 
 def check_master_document() -> None:
-    master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
+    master = (ROOT / "docs/documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
     for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
@@ -123,14 +140,15 @@ def check_master_document() -> None:
 
 
 def check_readme_links() -> None:
-    content = (ROOT / "README.md").read_text(encoding="utf-8")
-    links = re.findall(r"\[[^\]]+\]\(([^)]+)\)", content)
-    for link in links:
-        if link.startswith(("http://", "https://", "mailto:", "#")):
-            continue
-        target = link.split("#", 1)[0]
-        if target and not (ROOT / target).exists():
-            fail(f"link local quebrado no README: {link}")
+    for readme_path in (ROOT / "README.md", ROOT / "docs/README.md"):
+        content = readme_path.read_text(encoding="utf-8")
+        links = re.findall(r"\[[^\]]+\]\(([^)]+)\)", content)
+        for link in links:
+            if link.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            target = link.split("#", 1)[0]
+            if target and not (readme_path.parent / target).exists():
+                fail(f"link local quebrado em {readme_path.relative_to(ROOT)}: {link}")
 
 
 def main() -> None:

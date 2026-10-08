@@ -162,11 +162,13 @@ Consulte [SECURITY.md](SECURITY.md) para reporte responsável.
 
 ## Documentação
 
-- [Documento mestre](documentacao-mestre-apex-combate.md)
-- [Índice documental](README-APEX-COMBATE.md)
-- [Registro de decisões](registro-de-decisoes-apex-combate.md)
-- [Compatibilidade](compatibilidade-apex-combate.md)
-- [Apex’s Forge](apexs-forge.md)
+Toda a documentação complementar está organizada em [`docs/`](docs/README.md), mantendo a raiz do repositório focada na aplicação e na publicação.
+
+- [Índice documental](docs/README.md)
+- [Documento mestre](docs/documentacao-mestre-apex-combate.md)
+- [Registro de decisões](docs/registro-de-decisoes-apex-combate.md)
+- [Compatibilidade](docs/compatibilidade-apex-combate.md)
+- [Apex’s Forge](docs/apexs-forge.md)
 
 ## Licença
 

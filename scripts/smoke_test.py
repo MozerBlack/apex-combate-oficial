@@ -95,7 +95,7 @@ def main() -> None:
     assert club_dashboard["classes"], "turmas do clube ausentes"
     assert club_dashboard["delegations"], "delegação do clube ausente"
 
-    for protected_path in ("/data/.jwt-secret", "/server.py", "/.env", "/documentacao-mestre-apex-combate.md"):
+    for protected_path in ("/data/.jwt-secret", "/server.py", "/.env", "/documentacao-mestre-apex-combate.md", "/docs/documentacao-mestre-apex-combate.md"):
         status, _, _ = request(protected_path)
         assert status == 404, f"arquivo sensível exposto: {protected_path} ({status})"
 
