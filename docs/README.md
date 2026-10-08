@@ -3,7 +3,7 @@
 ## Índice da Documentação
 
 **Proprietário:** Mozer  
-**Versão atual:** v45
+**Versão atual:** v44
 
 A documentação complementar fica concentrada nesta pasta para manter a raiz do repositório objetiva. Para visão geral, execução e publicação, consulte o [`README.md` principal](../README.md).
 

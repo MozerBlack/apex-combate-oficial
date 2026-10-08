@@ -6,7 +6,7 @@
 **Produto principal:** Apex Combate  
 **Produto comercial conectado:** Apex’s Forge  
 **Central proprietária futura:** Apex Central  
-**Versão documentada:** v45
+**Versão documentada:** v44
 **Data de consolidação:** 7 de outubro de 2026
 **Status:** documento único oficial do ecossistema  
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
@@ -14,11 +14,8 @@
 
 > Este arquivo reúne em um único lugar todas as definições de produto, identidade, autenticação, perfis, permissões, governança, arquitetura, APIs, compatibilidade, aplicativo comercial e decisões oficiais. Em caso de divergência, prevalece a instrução mais recente e explícita de Mozer.
 
-### Entrega funcional v45
+### Entrega funcional v44
 
-- controle acessível no cabeçalho para recolher e restaurar por completo a navegação lateral autenticada em notebooks, PCs, monitores grandes e TVs;
-- redistribuição do conteúdo no espaço liberado, inclusive nos painéis de gestão de clube, técnico e federação;
-- preferência visual do menu preservada no dispositivo, sem alteração da navegação móvel até 820 px;
 - controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento seguro da sessão antes do retorno à abertura pública, com remoção de tokens, perfil, escopos e caches locais relacionados;
 - rótulo textual em telas amplas, ícone de início acessível em telas compactas, alvo de toque ampliado e escala própria para TVs;
@@ -257,7 +254,7 @@ Nenhuma funcionalidade principal poderá depender exclusivamente de um tamanho d
 **Proprietário:** Mozer  
 **Produto:** Apex Combate  
 **Posicionamento:** Tudo em um para o ecossistema das artes marciais  
-**Versão documentada:** v45
+**Versão documentada:** v44
 **Data de consolidação:** 7 de outubro de 2026
 **Status:** protótipo funcional com backend local persistente
 
@@ -656,7 +653,7 @@ O produto foi estruturado para:
 - APIs fora do cache HTTP;
 - modo offline da área técnica com dados locais e fila de sincronização.
 
-A versão atual de cache é `apex-combate-v45`.
+A versão atual de cache é `apex-combate-v44`.
 
 ---
 
@@ -820,14 +817,10 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 ---
 
-### 16. Estado da versão v45
+### 16. Estado da versão v44
 
 #### Validado
 
-- navegação lateral autenticada totalmente recolhível e restaurável em telas a partir de 821 px;
-- botão de menu mantido no cabeçalho depois do recolhimento, com rótulo, estado expandido e associação acessíveis;
-- conteúdo principal redistribuído no espaço liberado nos layouts comuns e de gestão;
-- preferência visual preservada localmente no dispositivo, sem alterar o comportamento móvel;
 - um único controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento de sessão com limpeza de tokens, perfil, escopos federativos, estado de clube/técnico e caches locais antes do retorno à abertura;
 - apresentação responsiva do controle com texto em telas amplas, ícone nomeado em telas compactas, alvo de toque e escala para TVs;
@@ -852,8 +845,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 - seleção de técnico elegível por competição;
 - bloqueio de técnico não credenciado;
 - QR Code decodificável;
-- frontend v45;
-- manifesto e Service Worker v45;
+- frontend v44;
+- manifesto e Service Worker v44;
 - sintaxe JavaScript e Python;
 - integridade do HTML;
 - limpeza de dados temporários de testes.
@@ -874,13 +867,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 | Arquivo | Finalidade |
 |---|---|
-| `apex-combate.html` | Aplicação principal v45 |
+| `apex-combate.html` | Aplicação principal v44 |
 | `index.html` | Entrada da prévia |
 | `server.py` | API, autenticação e autorização |
 | `apex_db.py` | Banco, migrações e sementes |
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
-| `apex-sw.js` | Service Worker v45 |
+| `apex-sw.js` | Service Worker v44 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `docs/backend-apex-combate.md` | Backend e APIs |
 | `docs/sistema-login-apex-combate.md` | Regras de autenticação |
@@ -929,12 +922,8 @@ Nenhuma decisão futura deve reintroduzir Supabase, um quarto perfil público, a
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v45 com navegação lateral autenticada recolhível em notebooks e telas maiores, retorno autenticado seguro ao início, tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v44 com retorno autenticado seguro ao início, tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
-
-### Entrega v45
-
-A v45 adiciona ao cabeçalho da área autenticada um controle acessível para recolher e restaurar por completo a navegação lateral em notebooks, PCs, monitores grandes e TVs. O botão permanece disponível depois do recolhimento, o conteúdo ocupa o espaço liberado inclusive nos painéis de clube, técnico e federação, e a preferência visual é preservada localmente no dispositivo. Em celulares e tablets de até 820 px, a navegação inferior e o comportamento móvel estabelecido permanecem inalterados.
 
 ### Entrega v44
 
@@ -2104,7 +2093,7 @@ Em produção, senhas deverão usar hash forte, o segredo JWT deverá ficar em c
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v45 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito. Na área autenticada, o controle compartilhado “Voltar ao início” continua encerrando a sessão com segurança, e a navegação lateral pode ser recolhida e restaurada em notebooks e telas maiores sem alterar o fluxo móvel.
+- A v44 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito. Na área autenticada, o controle compartilhado “Voltar ao início” aciona o encerramento existente, remove tokens, metadados de perfil, escopos e caches locais relacionados e retorna à abertura pública.
 
 ### Endpoints principais
 
@@ -2918,7 +2907,6 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
-| DEC-048 | Em notebooks, PCs, monitores grandes e TVs, a navegação lateral autenticada pode ser totalmente recolhida e restaurada por um controle que permanece acessível no cabeçalho; o conteúdo reutiliza o espaço liberado, os layouts de gestão são preservados, a escolha visual fica no dispositivo e a navegação móvel não é alterada. | Aprovada e implementada na v45 |
 
 ### Regras de mudança
 

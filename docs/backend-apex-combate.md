@@ -1,4 +1,4 @@
-# Backend Apex Combate — Fundação local v45
+# Backend Apex Combate — Fundação local v44
 
 ## Arquitetura atual
 
@@ -16,7 +16,7 @@
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v45 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito. Na área autenticada, o controle compartilhado “Voltar ao início” continua encerrando a sessão com segurança, e a navegação lateral pode ser recolhida e restaurada em notebooks e telas maiores sem alterar o fluxo móvel.
+- A v44 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito. Na área autenticada, o controle compartilhado “Voltar ao início” aciona o encerramento existente, remove tokens, metadados de perfil, escopos e caches locais relacionados e retorna à abertura pública.
 
 ## Endpoints principais
 

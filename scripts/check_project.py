@@ -64,7 +64,7 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=45")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=44")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
@@ -93,15 +93,6 @@ def check_html_contract() -> None:
     for contract in ('id="appReturnHome"', 'class="return-home-btn"', 'type="button"', 'data-logout', 'aria-labelledby="appReturnHomeLabel"', 'aria-label="Voltar ao início e encerrar sessão"', 'id="appReturnHomeLabel"', '>Voltar ao início</span>'):
         if contract not in topbar:
             fail(f"controle autenticado de retorno incompleto: {contract}")
-    if html.count('id="sidebarToggle"') != 1 or html.count('id="appSidebar"') != 1:
-        fail("o shell autenticado deve conter exatamente um menu lateral e um controle de alternância")
-    for contract in ('id="sidebarToggle"', 'aria-controls="appSidebar"', 'aria-expanded="true"', 'aria-label="Ocultar menu lateral"', '<use href="#i-menu"/>'):
-        if contract not in topbar:
-            fail(f"controle do menu lateral incompleto: {contract}")
-    for contract in ("@media (min-width: 821px)", "body.sidebar-collapsed .sidebar", "body.sidebar-collapsed.management-active .app-shell", "const SIDEBAR_PREFERENCE_KEY = 'apex-sidebar-collapsed';", "localStorage.setItem(SIDEBAR_PREFERENCE_KEY", "sidebarToggle.setAttribute('aria-expanded'", "desktopSidebarMedia.addEventListener('change', applySidebarPreference)"):
-        if contract not in html:
-            fail(f"alternância responsiva do menu lateral incompleta: {contract}")
-
     logout_handler = html[html.index("document.querySelectorAll('[data-logout]')"):][:2600]
     for contract in ("activeSessionToken = '';", "activeAdminToken = '';", "sessionStorage.removeItem('apex-session')", "sessionStorage.removeItem('apex-admin-jwt')", "sessionStorage.removeItem('apex-profile')", "localStorage.removeItem('apex-technician-operations-v38')", "showWelcomeScreen();"):
         if contract not in logout_handler:
@@ -128,14 +119,11 @@ def check_manifest() -> None:
         fail("nome inválido no manifesto")
     if manifest.get("display") != "standalone" or manifest.get("orientation") != "any":
         fail("configuração PWA incompleta")
-    if manifest.get("start_url") != "./apex-combate.html?v=45":
-        fail("URL inicial do manifesto não corresponde à v45")
+    if manifest.get("start_url") != "./apex-combate.html?v=44":
+        fail("URL inicial do manifesto não corresponde à v44")
     index = (ROOT / "index.html").read_text(encoding="utf-8")
-    if "apex-combate.html?v=45" not in index:
-        fail("entrada principal não aponta para a v45")
-    service_worker = (ROOT / "apex-sw.js").read_text(encoding="utf-8")
-    if "apex-combate-v45" not in service_worker:
-        fail("cache do Service Worker não corresponde à v45")
+    if "apex-combate.html?v=44" not in index:
+        fail("entrada principal não aponta para a v44")
     for icon in manifest.get("icons", []):
         icon_path = ROOT / icon.get("src", "")
         if not icon_path.is_file():
@@ -146,7 +134,7 @@ def check_master_document() -> None:
     master = (ROOT / "docs/documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 

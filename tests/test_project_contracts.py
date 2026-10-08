@@ -71,25 +71,6 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn('.return-home-btn { width: 39px; padding: 0; }', self.html)
         self.assertIn('.return-home-btn { min-width: 44px; }', self.html)
 
-    def test_authenticated_sidebar_is_toggleable_on_desktop(self):
-        self.assertEqual(self.html.count('id="sidebarToggle"'), 1)
-        self.assertEqual(self.html.count('id="appSidebar"'), 1)
-        shell_start = self.html.index('<div class="app-shell">')
-        topbar_start = self.html.index('<header class="topbar">', shell_start)
-        topbar_end = self.html.index('</header>', topbar_start)
-        topbar = self.html[topbar_start:topbar_end]
-        self.assertIn('aria-controls="appSidebar"', topbar)
-        self.assertIn('aria-expanded="true"', topbar)
-        self.assertIn('aria-label="Ocultar menu lateral"', topbar)
-        self.assertIn('<use href="#i-menu"/>', topbar)
-        self.assertIn("@media (min-width: 821px)", self.html)
-        self.assertIn("body.sidebar-collapsed .sidebar", self.html)
-        self.assertIn("body.sidebar-collapsed.management-active .app-shell", self.html)
-        self.assertIn("const SIDEBAR_PREFERENCE_KEY = 'apex-sidebar-collapsed';", self.html)
-        self.assertIn("localStorage.setItem(SIDEBAR_PREFERENCE_KEY", self.html)
-        self.assertIn("sidebarToggle.setAttribute('aria-expanded'", self.html)
-        self.assertIn("desktopSidebarMedia.addEventListener('change', applySidebarPreference)", self.html)
-
     def test_logout_returns_to_welcome_screen_and_clears_session(self):
         logout_handler = self.html[self.html.index("document.querySelectorAll('[data-logout]')"):]
         secure_handler = logout_handler[:2600]
@@ -140,7 +121,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
             self.assertIn(decision, self.master)
 
 
@@ -190,14 +171,14 @@ class PwaContractTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "Apex Combate")
         self.assertEqual(manifest["display"], "standalone")
         self.assertEqual(manifest["orientation"], "any")
-        self.assertEqual(manifest["start_url"], "./apex-combate.html?v=45")
-        self.assertIn("apex-combate.html?v=45", (ROOT / "index.html").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["start_url"], "./apex-combate.html?v=44")
+        self.assertIn("apex-combate.html?v=44", (ROOT / "index.html").read_text(encoding="utf-8"))
         sizes = {icon["sizes"] for icon in manifest["icons"]}
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=45'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v45", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

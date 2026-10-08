@@ -5,15 +5,11 @@
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v45 com navegação lateral autenticada recolhível em notebooks e telas maiores, retorno autenticado seguro ao início, tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v44 com retorno autenticado seguro ao início, tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
 
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
-
-### Entrega v45
-
-A v45 adiciona ao cabeçalho da área autenticada um controle acessível para recolher e restaurar por completo a navegação lateral em notebooks, PCs, monitores grandes e TVs. O botão permanece disponível depois do recolhimento, o conteúdo ocupa o espaço liberado inclusive nos painéis de clube, técnico e federação, e a preferência visual é preservada localmente no dispositivo. Em celulares e tablets de até 820 px, a navegação inferior e o comportamento móvel estabelecido permanecem inalterados.
 
 ### Entrega v44
 

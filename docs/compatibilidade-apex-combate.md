@@ -61,14 +61,13 @@ O aplicativo não bloqueará um aparelho apenas por ser antigo. Primeiro tentar�
 | Celular compacto | 320–359 px | Conteúdo em uma coluna, textos compactos e navegação inferior |
 | Celular | 360–700 px | Navegação inferior, cartões empilhados e modais em tela reduzida |
 | Tablet retrato | 701–820 px | Área integral, navegação inferior e cartões mais largos |
-| Tablet paisagem / notebook compacto | 821–1180 px | Barra lateral recolhível e conteúdo principal; painel auxiliar oculto |
-| Notebook / desktop | 1181–1439 px | Layout completo com três áreas quando houver espaço e barra lateral recolhível |
+| Tablet paisagem / notebook compacto | 821–1180 px | Barra lateral e conteúdo principal; painel auxiliar oculto |
+| Notebook / desktop | 1181–1439 px | Layout completo com três áreas quando houver espaço |
 | Desktop Full HD | 1440–1999 px | Mais respiro, hero ampliado e maior densidade de informações |
 | Monitor 2K/4K e TV | 2000–2560+ px | Tipografia, controles e painéis ampliados para leitura à distância |
 
 ## Recursos já adicionados ao protótipo
 
-- menu lateral autenticado recolhível a partir de 821 px, com controle permanente no cabeçalho, redistribuição do conteúdo, suporte aos layouts de gestão e preferência visual preservada no dispositivo;
 - apresentação pública anterior ao login, responsiva de celulares compactos a TVs e sem avanço automático;
 - layout responsivo de 320 px a telas 4K;
 - suporte a retrato e paisagem;
