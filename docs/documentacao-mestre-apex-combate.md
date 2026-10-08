@@ -16,6 +16,7 @@
 
 ### Entrega funcional v44
 
+- instalador acadêmico para Windows 10/11 de 64 bits, com ícone oficial, atalhos locais e execução em modo de aplicativo pelo Edge, sem Opera GX;
 - APK Android demonstrativo assinado e instalável para apresentação acadêmica, com pacote `br.com.apexcombate.app`, ícone oficial e conexão HTTPS à demonstração publicada;
 - controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento seguro da sessão antes do retorno à abertura pública, com remoção de tokens, perfil, escopos e caches locais relacionados;
@@ -822,6 +823,7 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 #### Validado
 
+- instalador acadêmico para Windows 10/11 x64 com executável PE32+, ícone oficial, atalhos na Área de Trabalho e no Menu Iniciar e abertura direta pelo Edge em modo de aplicativo;
 - APK Android demonstrativo assinado para apresentação acadêmica, com pacote `br.com.apexcombate.app`, ícone oficial, carregamento HTTPS, tratamento de reconexão e projeto reproduzível em `android-apk/`;
 - um único controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento de sessão com limpeza de tokens, perfil, escopos federativos, estado de clube/técnico e caches locais antes do retorno à abertura;
@@ -880,6 +882,9 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 | `releases/Apex-Combate-Demo-v44.apk` | APK demonstrativo assinado para apresentação acadêmica |
 | `instalar-apex-combate.html` | Página pública de instalação Android com download e QR Code |
 | `releases/QR-Instalar-Apex-Combate-v44.png` | QR Code oficial para baixar o APK em outros aparelhos |
+| `windows-app/` | Projeto-fonte e compilação do instalador Windows |
+| `releases/Instalar-Apex-Combate-Windows.exe` | Instalador acadêmico para Windows 10/11 de 64 bits |
+| `instalar-apex-combate-windows.html` | Página pública de instalação no Windows |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `docs/backend-apex-combate.md` | Backend e APIs |
 | `docs/sistema-login-apex-combate.md` | Regras de autenticação |
@@ -2313,6 +2318,14 @@ Não é tecnicamente seguro prometer compatibilidade com todo aparelho ou navega
 4. empacotar versões específicas para Android, iOS ou plataformas de TV somente se distribuição em lojas for necessária;
 5. acompanhar métricas reais de dispositivos para ajustar o suporte.
 
+### Aplicativo demonstrativo para Windows
+
+O Apex Combate dispõe de um instalador acadêmico para **Windows 10/11 de 64 bits** em `releases/Instalar-Apex-Combate-Windows.exe`. Ele copia o iniciador para o perfil local do usuário, instala o ícone oficial e cria atalhos na Área de Trabalho e no Menu Iniciar sem exigir privilégios administrativos.
+
+O iniciador chama diretamente o Microsoft Edge em modo de aplicativo, sem barra de endereços e sem utilizar o Opera GX. O Google Chrome é usado apenas como alternativa se o Edge não estiver disponível. Essa abordagem preserva a mesma interface responsiva v44, o acesso HTTPS e a sincronização com o ambiente oficial, sem duplicar o frontend.
+
+A distribuição utiliza `instalar-apex-combate-windows.html`. O executável acadêmico ainda não possui certificado comercial de assinatura de código e poderá gerar aviso do Windows SmartScreen. Uma entrega comercial futura deverá receber assinatura Authenticode pertencente ao Apex Combate.
+
 ### Entregáveis móveis finais: Android e iOS
 
 O Apex Combate terá aplicativos instaláveis para **Android e iPhone/iPad**, usando a mesma base responsiva. A versão web/PWA continuará disponível para notebooks, computadores, tablets, TVs e como alternativa em dispositivos móveis limitados.
@@ -2927,6 +2940,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
 | DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; sua distribuição direta usa página pública, botão de download e QR Code, a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
+| DEC-049 | A apresentação acadêmica dispõe de instalador para Windows 10/11 de 64 bits, com ícone oficial e atalhos locais; ele abre a interface v44 diretamente pelo Microsoft Edge em modo de aplicativo, usa Chrome apenas como alternativa, não utiliza Opera GX e deverá receber assinatura Authenticode comercial antes de uma distribuição de produção. | Aprovada e implementada na entrega Windows v44 |
 
 ### Regras de mudança
 

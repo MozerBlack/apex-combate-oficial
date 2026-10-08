@@ -115,8 +115,11 @@ class ApexHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
     def guess_type(self, path: str) -> str:
-        if path.lower().endswith(".apk"):
+        lowered = path.lower()
+        if lowered.endswith(".apk"):
             return "application/vnd.android.package-archive"
+        if lowered.endswith(".exe"):
+            return "application/vnd.microsoft.portable-executable"
         return super().guess_type(path)
 
     def end_headers(self) -> None:
@@ -127,6 +130,9 @@ class ApexHandler(SimpleHTTPRequestHandler):
         elif request_path.endswith(".apk"):
             self.send_header("Cache-Control", "public, max-age=86400")
             self.send_header("Content-Disposition", 'attachment; filename="Apex-Combate-Demo-v44.apk"')
+        elif request_path.endswith(".exe"):
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.send_header("Content-Disposition", 'attachment; filename="Instalar-Apex-Combate-Windows.exe"')
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Permissions-Policy", "camera=(self), geolocation=(), microphone=()")

@@ -36,6 +36,9 @@ A documentação complementar fica concentrada nesta pasta para manter a raiz do
 - [`android-apk/`](../android-apk/README.md) — projeto e compilação do APK demonstrativo;
 - [`instalar-apex-combate.html`](../instalar-apex-combate.html) — página pública de instalação Android com QR Code;
 - [`Apex-Combate-Demo-v44.apk`](../releases/Apex-Combate-Demo-v44.apk) — pacote Android assinado para apresentação acadêmica;
+- [`windows-app/`](../windows-app/README.md) — projeto do instalador acadêmico para Windows;
+- [`instalar-apex-combate-windows.html`](../instalar-apex-combate-windows.html) — página pública de instalação Windows;
+- [`Instalar-Apex-Combate-Windows.exe`](../releases/Instalar-Apex-Combate-Windows.exe) — instalador para Windows 10/11 de 64 bits;
 - [`assets/apex-combate-logo-oficial.png`](../assets/apex-combate-logo-oficial.png) — logo oficial.
 
 ## Regra de precedência

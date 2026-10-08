@@ -14,10 +14,10 @@ WORKDIR /app
 
 RUN groupadd --system apex && useradd --system --gid apex --home-dir /app apex
 
-COPY --chown=apex:apex server.py apex_db.py index.html apex-combate.html instalar-apex-combate.html apex-sw.js manifest.webmanifest ./
+COPY --chown=apex:apex server.py apex_db.py index.html apex-combate.html instalar-apex-combate.html instalar-apex-combate-windows.html apex-sw.js manifest.webmanifest ./
 COPY --chown=apex:apex assets ./assets
 COPY --chown=apex:apex icons ./icons
-COPY --chown=apex:apex releases/Apex-Combate-Demo-v44.apk releases/QR-Instalar-Apex-Combate-v44.png ./releases/
+COPY --chown=apex:apex releases/Apex-Combate-Demo-v44.apk releases/QR-Instalar-Apex-Combate-v44.png releases/Instalar-Apex-Combate-Windows.exe ./releases/
 
 RUN mkdir -p /app/data && chown -R apex:apex /app
 

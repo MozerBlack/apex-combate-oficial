@@ -60,6 +60,15 @@ def main() -> None:
     assert content_type == "application/vnd.android.package-archive"
     assert apk.startswith(b"PK"), "artefato APK inválido"
 
+    status, windows_installer, content_type = request("/instalar-apex-combate-windows.html")
+    assert status == 200 and b"Baixar instalador para Windows" in windows_installer
+    assert content_type == "text/html"
+
+    status, windows_executable, content_type = request("/releases/Instalar-Apex-Combate-Windows.exe")
+    assert status == 200 and len(windows_executable) > 1_000_000
+    assert content_type == "application/vnd.microsoft.portable-executable"
+    assert windows_executable.startswith(b"MZ"), "instalador Windows inválido"
+
     css = app.split(b"<style>", 1)[1].split(b"</style>", 1)[0]
     assert b"--font-micro: clamp(" in css and b"--font-body-lg: clamp(" in css
     assert css.count(b"font-size: var(--font-") >= 400

@@ -119,6 +119,14 @@ Não é tecnicamente seguro prometer compatibilidade com todo aparelho ou navega
 4. empacotar versões específicas para Android, iOS ou plataformas de TV somente se distribuição em lojas for necessária;
 5. acompanhar métricas reais de dispositivos para ajustar o suporte.
 
+## Aplicativo demonstrativo para Windows
+
+O Apex Combate dispõe de um instalador acadêmico para **Windows 10/11 de 64 bits** em `releases/Instalar-Apex-Combate-Windows.exe`. Ele copia o iniciador para o perfil local do usuário, instala o ícone oficial e cria atalhos na Área de Trabalho e no Menu Iniciar sem exigir privilégios administrativos.
+
+O iniciador chama diretamente o Microsoft Edge em modo de aplicativo, sem barra de endereços e sem utilizar o Opera GX. O Google Chrome é usado apenas como alternativa se o Edge não estiver disponível. Essa abordagem preserva a mesma interface responsiva v44, o acesso HTTPS e a sincronização com o ambiente oficial, sem duplicar o frontend.
+
+A distribuição utiliza `instalar-apex-combate-windows.html`. O executável acadêmico ainda não possui certificado comercial de assinatura de código e poderá gerar aviso do Windows SmartScreen. Uma entrega comercial futura deverá receber assinatura Authenticode pertencente ao Apex Combate.
+
 ## Entregáveis móveis finais: Android e iOS
 
 O Apex Combate terá aplicativos instaláveis para **Android e iPhone/iPad**, usando a mesma base responsiva. A versão web/PWA continuará disponível para notebooks, computadores, tablets, TVs e como alternativa em dispositivos móveis limitados.

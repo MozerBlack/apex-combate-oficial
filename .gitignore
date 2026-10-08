@@ -34,6 +34,7 @@ venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.cache/
 .coverage
 htmlcov/
 
@@ -58,11 +59,18 @@ android/app/release/
 android/app/debug/
 android/app/*.jks
 
+# Windows
+windows-app/*.syso
+
 # iOS / Xcode
 DerivedData/
 Pods/
 *.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
+
+# Ferramentas locais
+.config/go/
+/go/
 
 # Editores e sistema
 .DS_Store

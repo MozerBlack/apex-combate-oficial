@@ -55,6 +55,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
 | DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; sua distribuição direta usa página pública, botão de download e QR Code, a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
+| DEC-049 | A apresentação acadêmica dispõe de instalador para Windows 10/11 de 64 bits, com ícone oficial e atalhos locais; ele abre a interface v44 diretamente pelo Microsoft Edge em modo de aplicativo, usa Chrome apenas como alternativa, não utiliza Opera GX e deverá receber assinatura Authenticode comercial antes de uma distribuição de produção. | Aprovada e implementada na entrega Windows v44 |
 
 ## Regras de mudança
 

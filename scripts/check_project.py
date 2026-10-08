@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import py_compile
 import re
@@ -46,6 +47,15 @@ REQUIRED_FILES = (
     "releases/QR-Instalar-Apex-Combate-v44.png",
     "releases/README.md",
     "instalar-apex-combate.html",
+    "windows-app/README.md",
+    "windows-app/build-windows.sh",
+    "windows-app/go.mod",
+    "windows-app/main.go",
+    "windows-app/apex.ico",
+    "windows-app/apex.manifest",
+    "releases/Instalar-Apex-Combate-Windows.exe",
+    "releases/Instalar-Apex-Combate-Windows.exe.sha256",
+    "instalar-apex-combate-windows.html",
     *(f"docs/{name}" for name in DOCUMENTATION_FILES),
 )
 
@@ -159,7 +169,7 @@ def check_android_apk() -> None:
     if "http://" in source or "onReceivedSslError" in source:
         fail("o invólucro Android contém comportamento de rede inseguro")
     installer = (ROOT / "instalar-apex-combate.html").read_text(encoding="utf-8")
-    for required in ("releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png", "Android 6.0+", "Abrir a versão web/PWA"):
+    for required in ("releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png", "Android 6.0+", "instalar-apex-combate-windows.html"):
         if required not in installer:
             fail(f"página de instalação Android incompleta: {required}")
     server = (ROOT / "server.py").read_text(encoding="utf-8")
@@ -171,11 +181,38 @@ def check_android_apk() -> None:
             fail(f"artefato Android ausente da imagem Docker: {required}")
 
 
+def check_windows_installer() -> None:
+    executable_path = ROOT / "releases/Instalar-Apex-Combate-Windows.exe"
+    executable = executable_path.read_bytes()
+    if len(executable) < 1_000_000 or not executable.startswith(b"MZ") or b"PE\x00\x00" not in executable[:1024]:
+        fail("o instalador Windows não é um executável PE64 válido")
+    expected = (ROOT / "releases/Instalar-Apex-Combate-Windows.exe.sha256").read_text(encoding="utf-8").split()[0]
+    if hashlib.sha256(executable).hexdigest() != expected:
+        fail("checksum do instalador Windows divergente")
+    source = (ROOT / "windows-app/main.go").read_text(encoding="utf-8")
+    for required in ("source=windows", "Microsoft", "Edge", "Google", "Chrome", "--app=", "createShortcuts", "LOCALAPPDATA"):
+        if required not in source:
+            fail(f"contrato do aplicativo Windows ausente: {required}")
+    if "opera.exe" in source.lower():
+        fail("o aplicativo Windows não pode executar o Opera")
+    installer = (ROOT / "instalar-apex-combate-windows.html").read_text(encoding="utf-8")
+    for required in ("releases/Instalar-Apex-Combate-Windows.exe", "Windows 10/11", "não utiliza o Opera GX"):
+        if required not in installer:
+            fail(f"página de instalação Windows incompleta: {required}")
+    server = (ROOT / "server.py").read_text(encoding="utf-8")
+    if "application/vnd.microsoft.portable-executable" not in server:
+        fail("o servidor não declara o tipo MIME do instalador Windows")
+    dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+    for required in ("instalar-apex-combate-windows.html", "releases/Instalar-Apex-Combate-Windows.exe"):
+        if required not in dockerfile:
+            fail(f"artefato Windows ausente da imagem Docker: {required}")
+
+
 def check_master_document() -> None:
     master = (ROOT / "docs/documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 
@@ -198,6 +235,7 @@ def main() -> None:
     check_html_contract()
     check_manifest()
     check_android_apk()
+    check_windows_installer()
     check_master_document()
     check_readme_links()
     print("Apex Combate: verificações estáticas concluídas com sucesso.")

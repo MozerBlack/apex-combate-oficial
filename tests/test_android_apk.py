@@ -81,7 +81,7 @@ class AndroidApkContractTests(unittest.TestCase):
         installer = (ROOT / "instalar-apex-combate.html").read_text(encoding="utf-8")
         self.assertIn("releases/Apex-Combate-Demo-v44.apk", installer)
         self.assertIn("releases/QR-Instalar-Apex-Combate-v44.png", installer)
-        self.assertIn("Abrir a versão web/PWA", installer)
+        self.assertIn("instalar-apex-combate-windows.html", installer)
         qr = (ROOT / "releases/QR-Instalar-Apex-Combate-v44.png").read_bytes()
         self.assertTrue(qr.startswith(b"\x89PNG\r\n\x1a\n"))
         server = (ROOT / "server.py").read_text(encoding="utf-8")
