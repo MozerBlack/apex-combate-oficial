@@ -54,6 +54,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
+| DEC-048 | Em notebooks, PCs, monitores grandes e TVs, a navegação lateral autenticada pode ser totalmente recolhida e restaurada por um controle que permanece acessível no cabeçalho; o conteúdo reutiliza o espaço liberado, os layouts de gestão são preservados, a escolha visual fica no dispositivo e a navegação móvel não é alterada. | Aprovada e implementada na v45 |
 
 ## Regras de mudança
 

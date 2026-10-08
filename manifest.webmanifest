@@ -3,7 +3,7 @@
   "short_name": "Apex",
   "description": "Treinos, academias, graduações e competições em uma única plataforma marcial.",
   "lang": "pt-BR",
-  "start_url": "./apex-combate.html?v=44",
+  "start_url": "./apex-combate.html?v=45",
   "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
