@@ -2,7 +2,7 @@
 
 Apex Combate é uma plataforma universal “Tudo em um” para atletas, clubes, dojôs, academias e federações de artes marciais. O produto cobre a jornada esportiva, a operação de competições e a governança multi-federação sem criar perfis públicos além de **ATLETA**, **CLUBE** e **FEDERAÇÃO**.
 
-> Estado atual: v43 demonstrativa, com apresentação pública antes do login, frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
+> Estado atual: v44 demonstrativa, com apresentação pública antes do login, retorno autenticado seguro ao início, frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
 
 - **Demonstração online:** https://apex-combate-demo.onrender.com
 - **Repositório oficial:** https://github.com/MozerBlack/apex-combate-oficial
@@ -28,7 +28,7 @@ Técnicos entram pelo perfil **CLUBE** com credenciais individuais e possuem ace
 
 ## Entrada da plataforma
 
-A v39 inicia em uma apresentação pública responsiva com boas-vindas, proposta “Uma plataforma. Todas as lutas.”, explicação do funcionamento e visão dos três grupos. O login oficial só é exibido quando a pessoa pressiona um botão **Entrar**; não existe avanço automático. Ao sair de uma conta, a aplicação retorna à apresentação. O seletor de idioma também traduz essa tela pela API existente. Na v42, a tela de login mantém somente esse tradutor como controle superior discreto; logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual foram removidos, preservando o cartão oficial de acesso. A v43 amplia a tipografia funcional com uma escala fluida em `clamp()` para celulares, tablets, notebooks, desktops e TVs, elimina textos críticos de 6–9 px e mantém controles de formulário com pelo menos 16 px em telas móveis.
+A v39 inicia em uma apresentação pública responsiva com boas-vindas, proposta “Uma plataforma. Todas as lutas.”, explicação do funcionamento e visão dos três grupos. O login oficial só é exibido quando a pessoa pressiona um botão **Entrar**; não existe avanço automático. Ao sair de uma conta, a aplicação retorna à apresentação. O seletor de idioma também traduz essa tela pela API existente. Na v42, a tela de login mantém somente esse tradutor como controle superior discreto; logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual foram removidos, preservando o cartão oficial de acesso. A v43 amplia a tipografia funcional com uma escala fluida em `clamp()` para celulares, tablets, notebooks, desktops e TVs, elimina textos críticos de 6–9 px e mantém controles de formulário com pelo menos 16 px em telas móveis. A v44 inclui no cabeçalho compartilhado da área autenticada o controle **Voltar ao início**, disponível para atleta, clube, técnico e federação; ele encerra a sessão, remove tokens, escopos e caches locais relacionados e retorna à abertura pública. Em telas compactas, o texto é recolhido visualmente e o ícone de início mantém nome acessível e alvo de toque adequado.
 
 ## Início rápido
 

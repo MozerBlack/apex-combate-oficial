@@ -6,16 +6,19 @@
 **Produto principal:** Apex Combate  
 **Produto comercial conectado:** Apex’s Forge  
 **Central proprietária futura:** Apex Central  
-**Versão documentada:** v43
-**Data de consolidação:** 6 de outubro de 2026
+**Versão documentada:** v44
+**Data de consolidação:** 7 de outubro de 2026
 **Status:** documento único oficial do ecossistema  
 **Repositório oficial:** `https://github.com/MozerBlack/apex-combate-oficial`  
 **Demonstração online:** `https://apex-combate-demo.onrender.com`
 
 > Este arquivo reúne em um único lugar todas as definições de produto, identidade, autenticação, perfis, permissões, governança, arquitetura, APIs, compatibilidade, aplicativo comercial e decisões oficiais. Em caso de divergência, prevalece a instrução mais recente e explícita de Mozer.
 
-### Entrega funcional v43
+### Entrega funcional v44
 
+- controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
+- encerramento seguro da sessão antes do retorno à abertura pública, com remoção de tokens, perfil, escopos e caches locais relacionados;
+- rótulo textual em telas amplas, ícone de início acessível em telas compactas, alvo de toque ampliado e escala própria para TVs;
 - escala tipográfica fluida e reutilizável com `clamp()`, `rem` e limites controlados;
 - textos funcionais de 6–9 px elevados a patamares legíveis em toda a plataforma;
 - formulários móveis com texto mínimo de 16 px para evitar zoom automático no iPhone;
@@ -251,8 +254,8 @@ Nenhuma funcionalidade principal poderá depender exclusivamente de um tamanho d
 **Proprietário:** Mozer  
 **Produto:** Apex Combate  
 **Posicionamento:** Tudo em um para o ecossistema das artes marciais  
-**Versão documentada:** v43
-**Data de consolidação:** 6 de outubro de 2026
+**Versão documentada:** v44
+**Data de consolidação:** 7 de outubro de 2026
 **Status:** protótipo funcional com backend local persistente
 
 > Este é o documento principal do projeto. Em caso de divergência com notas antigas, prevalecem as decisões registradas aqui e no registro de decisões.
@@ -650,7 +653,7 @@ O produto foi estruturado para:
 - APIs fora do cache HTTP;
 - modo offline da área técnica com dados locais e fila de sincronização.
 
-A versão atual de cache é `apex-combate-v43`.
+A versão atual de cache é `apex-combate-v44`.
 
 ---
 
@@ -814,10 +817,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 ---
 
-### 16. Estado da versão v43
+### 16. Estado da versão v44
 
 #### Validado
 
+- um único controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
+- encerramento de sessão com limpeza de tokens, perfil, escopos federativos, estado de clube/técnico e caches locais antes do retorno à abertura;
+- apresentação responsiva do controle com texto em telas amplas, ícone nomeado em telas compactas, alvo de toque e escala para TVs;
 - escala tipográfica fluida aplicada aos componentes funcionais;
 - antigos tamanhos críticos de 6–9 px eliminados das declarações de fonte;
 - campos móveis protegidos por mínimo de 16 px;
@@ -839,8 +845,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 - seleção de técnico elegível por competição;
 - bloqueio de técnico não credenciado;
 - QR Code decodificável;
-- frontend v43;
-- manifesto e Service Worker v43;
+- frontend v44;
+- manifesto e Service Worker v44;
 - sintaxe JavaScript e Python;
 - integridade do HTML;
 - limpeza de dados temporários de testes.
@@ -861,13 +867,13 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 | Arquivo | Finalidade |
 |---|---|
-| `apex-combate.html` | Aplicação principal v43 |
+| `apex-combate.html` | Aplicação principal v44 |
 | `index.html` | Entrada da prévia |
 | `server.py` | API, autenticação e autorização |
 | `apex_db.py` | Banco, migrações e sementes |
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
-| `apex-sw.js` | Service Worker v43 |
+| `apex-sw.js` | Service Worker v44 |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `backend-apex-combate.md` | Backend e APIs |
 | `sistema-login-apex-combate.md` | Regras de autenticação |
@@ -916,8 +922,12 @@ Nenhuma decisão futura deve reintroduzir Supabase, um quarto perfil público, a
 > **Nome definido:** Apex Combate  
 > **Proprietário:** Mozer  
 > **Conceito:** plataforma universal “Tudo em um” que conecta atletas e alunos, clubes/dojôs/academias, técnicos de competição e federações de artes marciais.  
-> **Status:** protótipo funcional v43 com tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
+> **Status:** protótipo funcional v44 com retorno autenticado seguro ao início, tipografia fluida por dispositivo, cabeçalho de login reduzido ao tradutor, abertura simplificada, apresentação pública, login em etapa separada e backend local persistente. A disponibilidade jurídica da marca, do domínio e dos identificadores sociais deverá ser verificada antes do lançamento.
 > **Fonte principal:** consulte `documentacao-mestre-apex-combate.md` para decisões vigentes.
+
+### Entrega v44
+
+A v44 adiciona um único controle **Voltar ao início** ao cabeçalho compartilhado por atleta, clube, técnico e federação. A ação reutiliza o encerramento seguro de sessão: limpa tokens ativos, perfil, escopos federativos, estado de clube/técnico e caches locais relacionados antes de devolver a pessoa à abertura pública. O rótulo permanece visível em telas amplas, torna-se um botão compacto com ícone de início em áreas menores, conserva nome acessível e respeita alvos de toque e escala para TVs.
 
 ### Entrega v43
 
@@ -2083,7 +2093,7 @@ Em produção, senhas deverão usar hash forte, o segredo JWT deverá ficar em c
 - Auditoria: ações críticas persistidas em `audit_log`.
 - Limitação básica de tentativas por IP nos endpoints de autenticação.
 - Supabase não é utilizado.
-- A v43 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito e retorno após logout.
+- A v44 preserva esse backend e mantém a apresentação pública anterior ao login; na tela de autenticação, somente o tradutor discreto permanece no topo, com avanço explícito. Na área autenticada, o controle compartilhado “Voltar ao início” aciona o encerramento existente, remove tokens, metadados de perfil, escopos e caches locais relacionados e retorna à abertura pública.
 
 ### Endpoints principais
 
@@ -2844,7 +2854,7 @@ Nenhuma dessas pendências altera a decisão principal: o Apex’s Forge será o
 **Documento de origem:** `registro-de-decisoes-apex-combate.md`
 
 **Responsável pelo produto:** Mozer  
-**Atualizado em:** 6 de outubro de 2026
+**Atualizado em:** 7 de outubro de 2026
 
 Este arquivo registra decisões vigentes para impedir regressões de escopo ou interpretações conflitantes.
 
@@ -2896,6 +2906,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-044 | A faixa superior da apresentação pública é removida; a abertura começa diretamente no hero, mantendo “Entrar no Apex” e “Como funciona” no conteúdo principal. | Aprovada e implementada na v41 |
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
+| DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
 
 ### Regras de mudança
 

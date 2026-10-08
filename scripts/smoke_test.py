@@ -46,9 +46,9 @@ def main() -> None:
     assert health["database"] == "ready"
 
     status, index, content_type = request("/")
-    assert status == 200 and b"apex-combate.html?v=43" in index and content_type == "text/html"
+    assert status == 200 and b"apex-combate.html?v=44" in index and content_type == "text/html"
 
-    status, app, content_type = request("/apex-combate.html?v=43")
+    status, app, content_type = request("/apex-combate.html?v=44")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
     css = app.split(b"<style>", 1)[1].split(b"</style>", 1)[0]
     assert b"--font-micro: clamp(" in css and b"--font-body-lg: clamp(" in css
@@ -60,6 +60,15 @@ def main() -> None:
     assert b'id="authLanguage"' in login_header
     for removed in (b'class="auth-brand', b'class="auth-nav"', b'id="authTopLogin"'):
         assert removed not in login_header
+    assert app.count(b'id="appReturnHome"') == 1
+    topbar = app.split(b'<header class="topbar">', 1)[1].split(b'</header>', 1)[0]
+    for contract in (b'id="appReturnHome"', b'class="return-home-btn"', b'type="button"', b'data-logout', b'aria-labelledby="appReturnHomeLabel"', b'aria-label="Voltar ao in\xc3\xadcio e encerrar sess\xc3\xa3o"', b'id="appReturnHomeLabel"', b'>Voltar ao in\xc3\xadcio</span>'):
+        assert contract in topbar
+    logout_handler = app.split(b"document.querySelectorAll('[data-logout]')", 1)[1][:2600]
+    for contract in (b"activeSessionToken = '';", b"activeAdminToken = '';", b"sessionStorage.removeItem('apex-session')", b"sessionStorage.removeItem('apex-admin-jwt')", b"localStorage.removeItem('apex-technician-operations-v38')", b"showWelcomeScreen();"):
+        assert contract in logout_handler
+    for contract in (b'.return-home-btn { height: 39px;', b'.return-home-btn { width: 39px; padding: 0; }', b'.return-home-btn { min-width: 44px; }', b'.location-pill, .return-home-btn, .circle-btn { height: 48px; }'):
+        assert contract in css
 
     status, body, _ = request("/api/login/atleta", payload={"documento": "529.982.247-25", "nascimento": "10/05/1998"})
     assert status == 200, body.decode("utf-8", errors="replace")

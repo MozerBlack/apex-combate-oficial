@@ -55,9 +55,37 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn("border: 0", self.html)
         self.assertIn("background: transparent", self.html)
 
-    def test_logout_returns_to_welcome_screen(self):
+    def test_authenticated_shell_has_one_secure_return_control(self):
+        self.assertEqual(self.html.count('id="appReturnHome"'), 1)
+        shell_start = self.html.index('<div class="app-shell">')
+        topbar_start = self.html.index('<header class="topbar">', shell_start)
+        topbar_end = self.html.index('</header>', topbar_start)
+        topbar = self.html[topbar_start:topbar_end]
+        self.assertIn('id="appReturnHome"', topbar)
+        self.assertIn('class="return-home-btn"', topbar)
+        self.assertIn('type="button"', topbar)
+        self.assertIn('data-logout', topbar)
+        self.assertIn('aria-labelledby="appReturnHomeLabel"', topbar)
+        self.assertIn('aria-label="Voltar ao início e encerrar sessão"', topbar)
+        self.assertIn('<span id="appReturnHomeLabel" class="return-home-label">Voltar ao início</span>', topbar)
+        self.assertIn('.return-home-btn { width: 39px; padding: 0; }', self.html)
+        self.assertIn('.return-home-btn { min-width: 44px; }', self.html)
+
+    def test_logout_returns_to_welcome_screen_and_clears_session(self):
         logout_handler = self.html[self.html.index("document.querySelectorAll('[data-logout]')"):]
-        self.assertIn("showWelcomeScreen();", logout_handler[:2200])
+        secure_handler = logout_handler[:2600]
+        for contract in (
+            "activeSessionToken = '';",
+            "activeAdminToken = '';",
+            "sessionStorage.removeItem('apex-session')",
+            "sessionStorage.removeItem('apex-admin-jwt')",
+            "sessionStorage.removeItem('apex-profile')",
+            "sessionStorage.removeItem('apex-federation-scope')",
+            "sessionStorage.removeItem('apex-club-account-type')",
+            "localStorage.removeItem('apex-technician-operations-v38')",
+            "showWelcomeScreen();",
+        ):
+            self.assertIn(contract, secure_handler)
 
     def test_club_login_contract_is_preserved(self):
         self.assertIn("perfil: 'clube'", self.html)
@@ -72,7 +100,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
             self.assertIn(decision, self.master)
 
 
@@ -122,14 +150,14 @@ class PwaContractTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "Apex Combate")
         self.assertEqual(manifest["display"], "standalone")
         self.assertEqual(manifest["orientation"], "any")
-        self.assertEqual(manifest["start_url"], "./apex-combate.html?v=43")
-        self.assertIn("apex-combate.html?v=43", (ROOT / "index.html").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["start_url"], "./apex-combate.html?v=44")
+        self.assertIn("apex-combate.html?v=44", (ROOT / "index.html").read_text(encoding="utf-8"))
         sizes = {icon["sizes"] for icon in manifest["icons"]}
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=43'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v43", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

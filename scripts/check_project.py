@@ -47,7 +47,7 @@ def check_html_contract() -> None:
     choices = re.findall(r'data-role-choice="([^"]+)"', html)
     if choices != ["athlete", "academy", "federation"]:
         fail(f"perfis públicos inesperados: {choices}")
-    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=43")
+    required = ("ATLETA", "CLUBE", "FEDERAÇÃO", "🥋", "Plataforma Universal de Artes Marciais", "welcomeScreen", "enter-apex-login", "manifest.webmanifest", "apex-sw.js?v=44")
     for value in required:
         if value not in html:
             fail(f"contrato HTML ausente: {value}")
@@ -67,6 +67,20 @@ def check_html_contract() -> None:
         if removed in header:
             fail(f"controle superior obsoleto no login: {removed}")
 
+    if html.count('id="appReturnHome"') != 1:
+        fail("o shell autenticado deve conter exatamente um controle Voltar ao início")
+    shell_start = html.index('<div class="app-shell">')
+    topbar_start = html.index('<header class="topbar">', shell_start)
+    topbar_end = html.index('</header>', topbar_start)
+    topbar = html[topbar_start:topbar_end]
+    for contract in ('id="appReturnHome"', 'class="return-home-btn"', 'type="button"', 'data-logout', 'aria-labelledby="appReturnHomeLabel"', 'aria-label="Voltar ao início e encerrar sessão"', 'id="appReturnHomeLabel"', '>Voltar ao início</span>'):
+        if contract not in topbar:
+            fail(f"controle autenticado de retorno incompleto: {contract}")
+    logout_handler = html[html.index("document.querySelectorAll('[data-logout]')"):][:2600]
+    for contract in ("activeSessionToken = '';", "activeAdminToken = '';", "sessionStorage.removeItem('apex-session')", "sessionStorage.removeItem('apex-admin-jwt')", "sessionStorage.removeItem('apex-profile')", "localStorage.removeItem('apex-technician-operations-v38')", "showWelcomeScreen();"):
+        if contract not in logout_handler:
+            fail(f"encerramento seguro da sessão incompleto: {contract}")
+
     css = html.split("<style>", 1)[1].split("</style>", 1)[0]
     for token in ("--font-micro: clamp(", "--font-caption: clamp(", "--font-small: clamp(", "--font-label: clamp(", "--font-body: clamp(", "--font-body-lg: clamp("):
         if token not in css:
@@ -77,6 +91,9 @@ def check_html_contract() -> None:
         fail("a interface ainda contém texto funcional crítico entre 6 e 9 px")
     if not re.search(r"input,\s*select,\s*textarea\s*\{\s*font-size:\s*16px\s*!important;", css):
         fail("controles de formulário móveis não possuem mínimo de 16 px")
+    for contract in (".return-home-btn { height: 39px;", ".return-home-btn { width: 39px; padding: 0; }", ".return-home-btn { min-width: 44px; }", ".location-pill, .return-home-btn, .circle-btn { height: 48px; }"):
+        if contract not in css:
+            fail(f"responsividade do retorno autenticado ausente: {contract}")
 
 
 def check_manifest() -> None:
@@ -85,11 +102,11 @@ def check_manifest() -> None:
         fail("nome inválido no manifesto")
     if manifest.get("display") != "standalone" or manifest.get("orientation") != "any":
         fail("configuração PWA incompleta")
-    if manifest.get("start_url") != "./apex-combate.html?v=43":
-        fail("URL inicial do manifesto não corresponde à v43")
+    if manifest.get("start_url") != "./apex-combate.html?v=44":
+        fail("URL inicial do manifesto não corresponde à v44")
     index = (ROOT / "index.html").read_text(encoding="utf-8")
-    if "apex-combate.html?v=43" not in index:
-        fail("entrada principal não aponta para a v43")
+    if "apex-combate.html?v=44" not in index:
+        fail("entrada principal não aponta para a v44")
     for icon in manifest.get("icons", []):
         icon_path = ROOT / icon.get("src", "")
         if not icon_path.is_file():
@@ -100,7 +117,7 @@ def check_master_document() -> None:
     master = (ROOT / "documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 
