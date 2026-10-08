@@ -7,6 +7,7 @@ import json
 import py_compile
 import re
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +36,14 @@ REQUIRED_FILES = (
     "README.md",
     ".gitignore",
     "Dockerfile",
+    "android-apk/README.md",
+    "android-apk/build-apk.sh",
+    "android-apk/src/main/AndroidManifest.xml",
+    "android-apk/src/main/java/br/com/apexcombate/app/MainActivity.java",
+    "android-apk/src/main/res/drawable/apex_icon.png",
+    "releases/Apex-Combate-Demo-v44.apk",
+    "releases/Apex-Combate-Demo-v44.apk.sha256",
+    "releases/README.md",
     *(f"docs/{name}" for name in DOCUMENTATION_FILES),
 )
 
@@ -130,11 +139,30 @@ def check_manifest() -> None:
             fail(f"ícone PWA ausente: {icon_path.relative_to(ROOT)}")
 
 
+def check_android_apk() -> None:
+    namespace = "{http://schemas.android.com/apk/res/android}"
+    manifest_path = ROOT / "android-apk/src/main/AndroidManifest.xml"
+    manifest = ET.parse(manifest_path).getroot()
+    if manifest.get("package") != "br.com.apexcombate.app":
+        fail("identificador Android inválido")
+    if manifest.get(namespace + "versionCode") != "44" or manifest.get(namespace + "versionName") != "44.0-demo":
+        fail("versão do APK demonstrativo inválida")
+    application = manifest.find("application")
+    if application is None or application.get(namespace + "usesCleartextTraffic") != "false":
+        fail("o APK Android deve bloquear tráfego sem criptografia")
+    source = (ROOT / "android-apk/src/main/java/br/com/apexcombate/app/MainActivity.java").read_text(encoding="utf-8")
+    for required in ("https://apex-combate-demo.onrender.com", "MIXED_CONTENT_NEVER_ALLOW", "setSafeBrowsingEnabled(true)", "setWebContentsDebuggingEnabled(false)"):
+        if required not in source:
+            fail(f"contrato Android ausente: {required}")
+    if "http://" in source or "onReceivedSslError" in source:
+        fail("o invólucro Android contém comportamento de rede inseguro")
+
+
 def check_master_document() -> None:
     master = (ROOT / "docs/documentacao-mestre-apex-combate.md").read_text(encoding="utf-8")
     if master.count("## Parte ") != 10:
         fail("o documento mestre deve manter exatamente 10 partes")
-    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047"):
+    for term in ("Apex Combate", "Apex’s Forge", "Apex Central", "Plataforma Universal de Artes Marciais", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048"):
         if term not in master:
             fail(f"documento mestre sem termo obrigatório: {term}")
 
@@ -156,6 +184,7 @@ def main() -> None:
     check_python()
     check_html_contract()
     check_manifest()
+    check_android_apk()
     check_master_document()
     check_readme_links()
     print("Apex Combate: verificações estáticas concluídas com sucesso.")

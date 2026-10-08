@@ -2,7 +2,7 @@
 
 Apex Combate é uma plataforma universal “Tudo em um” para atletas, clubes, dojôs, academias e federações de artes marciais. O produto cobre a jornada esportiva, a operação de competições e a governança multi-federação sem criar perfis públicos além de **ATLETA**, **CLUBE** e **FEDERAÇÃO**.
 
-> Estado atual: v44 demonstrativa, com apresentação pública antes do login, retorno autenticado seguro ao início, frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
+> Estado atual: v44 demonstrativa, com APK Android assinado para apresentação acadêmica, apresentação pública antes do login, retorno autenticado seguro ao início, frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
 
 - **Demonstração online:** https://apex-combate-demo.onrender.com
 - **Repositório oficial:** https://github.com/MozerBlack/apex-combate-oficial
@@ -122,13 +122,19 @@ O workflow `.github/workflows/ci.yml` verifica automaticamente:
 - PWA e fluxos críticos offline;
 - modo leve planejado para versões móveis antigas.
 
-Entregas planejadas:
+Entrega Android disponível:
 
-- APK/AAB para Android;
+- [`Apex-Combate-Demo-v44.apk`](releases/Apex-Combate-Demo-v44.apk) — APK demonstrativo assinado para instalação direta;
+- [`android-apk/`](android-apk/README.md) — projeto Android, instruções e script reproduzível de compilação;
+- identificador `br.com.apexcombate.app`, Android 6.0 ou superior e acesso à demonstração oficial por HTTPS.
+
+Entregas seguintes:
+
+- AAB de produção para a Google Play;
 - TestFlight/App Store para iPhone e iPad;
-- web/PWA para acesso universal.
+- manutenção do acesso web/PWA universal.
 
-A instalação do APK não é obrigatória para utilizar a plataforma.
+A instalação do APK não é obrigatória para utilizar a plataforma. O APK demonstrativo requer internet e não substitui a futura versão de produção assinada para loja.
 
 ## Arquitetura atual
 

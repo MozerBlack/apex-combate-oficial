@@ -46,10 +46,12 @@ out/
 .vite/
 coverage/
 *.apk
+!releases/Apex-Combate-Demo-v44.apk
 *.aab
 *.ipa
 
 # Android / Capacitor
+.android/
 android/.gradle/
 android/local.properties
 android/app/release/

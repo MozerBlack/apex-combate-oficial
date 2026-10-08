@@ -132,6 +132,18 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 - **AAB de produção:** publicação na Google Play Store;
 - **PWA:** alternativa universal e fallback para aparelhos não compatíveis com o pacote Android.
 
+### APK demonstrativo disponível
+
+- artefato: `releases/Apex-Combate-Demo-v44.apk`;
+- projeto-fonte: `android-apk/`;
+- identificador: `br.com.apexcombate.app`;
+- versão: `44.0-demo` (`versionCode` 44);
+- compatibilidade mínima: Android 6.0 / API 23;
+- funcionamento: contêiner Android nativo com `WebView` seguro apontando para a demonstração oficial por HTTPS;
+- proteções: tráfego HTTP e conteúdo misto bloqueados, depuração do `WebView` desativada, Safe Browsing quando suportado e assinatura RSA exclusiva de demonstração;
+- limitações: exige internet, depende do Android System WebView e ainda não é o pacote de produção da Google Play;
+- assinatura: chave local preservada fora do Git para permitir futuras atualizações com a mesma identidade.
+
 ### Formatos iPhone e iPad
 
 - **build de desenvolvimento:** testes em simuladores e aparelhos autorizados;
@@ -153,7 +165,7 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 ### Identidade prevista
 
 - nome público: **Apex Combate**;
-- identificador Android sugerido: `br.com.apexcombate.app`;
+- identificador Android oficial: `br.com.apexcombate.app`;
 - Bundle ID iOS sugerido: `br.com.apexcombate.app`;
 - ícone: logotipo oficial;
 - orientação: livre;

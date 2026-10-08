@@ -33,6 +33,8 @@ A documentação complementar fica concentrada nesta pasta para manter a raiz do
 - [`apex_db.py`](../apex_db.py) — persistência e migrações;
 - [`manifest.webmanifest`](../manifest.webmanifest) — instalação PWA;
 - [`apex-sw.js`](../apex-sw.js) — cache e modo offline;
+- [`android-apk/`](../android-apk/README.md) — projeto e compilação do APK demonstrativo;
+- [`Apex-Combate-Demo-v44.apk`](../releases/Apex-Combate-Demo-v44.apk) — pacote Android assinado para apresentação acadêmica;
 - [`assets/apex-combate-logo-oficial.png`](../assets/apex-combate-logo-oficial.png) — logo oficial.
 
 ## Regra de precedência

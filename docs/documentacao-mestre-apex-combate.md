@@ -16,6 +16,7 @@
 
 ### Entrega funcional v44
 
+- APK Android demonstrativo assinado e instalável para apresentação acadêmica, com pacote `br.com.apexcombate.app`, ícone oficial e conexão HTTPS à demonstração publicada;
 - controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento seguro da sessão antes do retorno à abertura pública, com remoção de tokens, perfil, escopos e caches locais relacionados;
 - rótulo textual em telas amplas, ícone de início acessível em telas compactas, alvo de toque ampliado e escala própria para TVs;
@@ -821,6 +822,7 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 
 #### Validado
 
+- APK Android demonstrativo assinado para apresentação acadêmica, com pacote `br.com.apexcombate.app`, ícone oficial, carregamento HTTPS, tratamento de reconexão e projeto reproduzível em `android-apk/`;
 - um único controle **Voltar ao início** no cabeçalho autenticado compartilhado por atleta, clube, técnico e federação;
 - encerramento de sessão com limpeza de tokens, perfil, escopos federativos, estado de clube/técnico e caches locais antes do retorno à abertura;
 - apresentação responsiva do controle com texto em telas amplas, ícone nomeado em telas compactas, alvo de toque e escala para TVs;
@@ -874,6 +876,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 | `data/apex-combate.sqlite3` | Banco local persistente |
 | `manifest.webmanifest` | Manifesto PWA |
 | `apex-sw.js` | Service Worker v44 |
+| `android-apk/` | Projeto-fonte e compilação do APK demonstrativo Android |
+| `releases/Apex-Combate-Demo-v44.apk` | APK demonstrativo assinado para apresentação acadêmica |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `docs/backend-apex-combate.md` | Backend e APIs |
 | `docs/sistema-login-apex-combate.md` | Regras de autenticação |
@@ -2320,6 +2324,18 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 - **AAB de produção:** publicação na Google Play Store;
 - **PWA:** alternativa universal e fallback para aparelhos não compatíveis com o pacote Android.
 
+#### APK demonstrativo disponível
+
+- artefato: `releases/Apex-Combate-Demo-v44.apk`;
+- projeto-fonte: `android-apk/`;
+- identificador: `br.com.apexcombate.app`;
+- versão: `44.0-demo` (`versionCode` 44);
+- compatibilidade mínima: Android 6.0 / API 23;
+- funcionamento: contêiner Android nativo com `WebView` seguro apontando para a demonstração oficial por HTTPS;
+- proteções: tráfego HTTP e conteúdo misto bloqueados, depuração do `WebView` desativada, Safe Browsing quando suportado e assinatura RSA exclusiva de demonstração;
+- limitações: exige internet, depende do Android System WebView e ainda não é o pacote de produção da Google Play;
+- assinatura: chave local preservada fora do Git para permitir futuras atualizações com a mesma identidade.
+
 #### Formatos iPhone e iPad
 
 - **build de desenvolvimento:** testes em simuladores e aparelhos autorizados;
@@ -2341,7 +2357,7 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 #### Identidade prevista
 
 - nome público: **Apex Combate**;
-- identificador Android sugerido: `br.com.apexcombate.app`;
+- identificador Android oficial: `br.com.apexcombate.app`;
 - Bundle ID iOS sugerido: `br.com.apexcombate.app`;
 - ícone: logotipo oficial;
 - orientação: livre;
@@ -2907,6 +2923,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
+| DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e distribuição pela Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
 
 ### Regras de mudança
 
