@@ -114,6 +114,11 @@ class ApexHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    def guess_type(self, path: str) -> str:
+        if path.lower().endswith(".apk"):
+            return "application/vnd.android.package-archive"
+        return super().guess_type(path)
+
     def end_headers(self) -> None:
         request_path = urlsplit(self.path).path
         if request_path.endswith((".html", ".webmanifest", "apex-sw.js")) or request_path == "/":

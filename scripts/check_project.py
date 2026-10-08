@@ -162,6 +162,9 @@ def check_android_apk() -> None:
     for required in ("releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png", "Android 6.0+", "Abrir a versão web/PWA"):
         if required not in installer:
             fail(f"página de instalação Android incompleta: {required}")
+    server = (ROOT / "server.py").read_text(encoding="utf-8")
+    if "application/vnd.android.package-archive" not in server or "Content-Disposition" not in server:
+        fail("o servidor não força download Android com tipo MIME seguro")
     dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
     for required in ("instalar-apex-combate.html", "releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png"):
         if required not in dockerfile:
