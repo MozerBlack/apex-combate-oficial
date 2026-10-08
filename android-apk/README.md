@@ -46,7 +46,7 @@ Ou informe outro SDK:
 ANDROID_SDK_ROOT=/caminho/do/android-sdk ./android-apk/build-apk.sh
 ```
 
-O APK é gerado em `releases/Apex-Combate-Demo-v44.apk`.
+O APK é gerado em `releases/Apex-Combate-Demo-v44.apk`. A distribuição para vários aparelhos pode ser feita pela página pública `https://apex-combate-demo.onrender.com/instalar-apex-combate.html`, que oferece download e QR Code.
 
 ## Assinatura
 

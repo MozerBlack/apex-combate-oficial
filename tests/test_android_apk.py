@@ -77,6 +77,18 @@ class AndroidApkContractTests(unittest.TestCase):
         ).read_bytes()
         self.assertEqual(hashlib.sha256(launcher).digest(), hashlib.sha256(official).digest())
 
+    def test_distribution_page_and_qr_are_published(self):
+        installer = (ROOT / "instalar-apex-combate.html").read_text(encoding="utf-8")
+        self.assertIn("releases/Apex-Combate-Demo-v44.apk", installer)
+        self.assertIn("releases/QR-Instalar-Apex-Combate-v44.png", installer)
+        self.assertIn("Abrir a versão web/PWA", installer)
+        qr = (ROOT / "releases/QR-Instalar-Apex-Combate-v44.png").read_bytes()
+        self.assertTrue(qr.startswith(b"\x89PNG\r\n\x1a\n"))
+        dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+        self.assertIn("instalar-apex-combate.html", dockerfile)
+        self.assertIn("releases/Apex-Combate-Demo-v44.apk", dockerfile)
+        self.assertIn("releases/QR-Instalar-Apex-Combate-v44.png", dockerfile)
+
     def test_reproducible_build_script_has_required_stages(self):
         script = self.build_script_path.read_text(encoding="utf-8")
         for command in ("aapt2", "javac", "d8", "zipalign", "apksigner"):

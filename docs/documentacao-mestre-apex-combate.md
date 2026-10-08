@@ -878,6 +878,8 @@ Dados médicos devem ser excepcionais, mínimos, autorizados e restritos. O sist
 | `apex-sw.js` | Service Worker v44 |
 | `android-apk/` | Projeto-fonte e compilação do APK demonstrativo Android |
 | `releases/Apex-Combate-Demo-v44.apk` | APK demonstrativo assinado para apresentação acadêmica |
+| `instalar-apex-combate.html` | Página pública de instalação Android com download e QR Code |
+| `releases/QR-Instalar-Apex-Combate-v44.png` | QR Code oficial para baixar o APK em outros aparelhos |
 | `assets/apex-combate-logo-oficial.png` | Logo oficial |
 | `docs/backend-apex-combate.md` | Backend e APIs |
 | `docs/sistema-login-apex-combate.md` | Regras de autenticação |
@@ -2327,6 +2329,7 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 #### APK demonstrativo disponível
 
 - artefato: `releases/Apex-Combate-Demo-v44.apk`;
+- distribuição direta: página `instalar-apex-combate.html`, com botão de download, QR Code e instruções para instalação em vários aparelhos Android;
 - projeto-fonte: `android-apk/`;
 - identificador: `br.com.apexcombate.app`;
 - versão: `44.0-demo` (`versionCode` 44);
@@ -2923,7 +2926,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-045 | Na tela de login, o cabeçalho superior é reduzido ao tradutor discreto: removem-se logo auxiliar, links institucionais, botão superior “Entrar” e faixa visual; preservam-se a tradução real e o cartão central oficial. | Aprovada e implementada na v42 |
 | DEC-046 | A tipografia da plataforma cresce de forma fluida conforme a área de exibição, com `clamp()`, unidades relativas, limites controlados, eliminação de textos funcionais de 6–9 px e mínimo de 16 px nos controles de formulário móveis. | Aprovada e implementada na v43 |
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
-| DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e distribuição pela Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
+| DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; sua distribuição direta usa página pública, botão de download e QR Code, a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
 
 ### Regras de mudança
 

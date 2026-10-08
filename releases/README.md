@@ -4,6 +4,8 @@
 
 [`Apex-Combate-Demo-v44.apk`](Apex-Combate-Demo-v44.apk)
 
+Para instalar em vários aparelhos Android, abra `https://apex-combate-demo.onrender.com/instalar-apex-combate.html` em um computador e leia o QR Code com cada aparelho. O arquivo [`QR-Instalar-Apex-Combate-v44.png`](QR-Instalar-Apex-Combate-v44.png) também pode ser exibido ou enviado separadamente.
+
 - aplicativo: **Apex Combate**;
 - pacote: `br.com.apexcombate.app`;
 - versão: `44.0-demo`;

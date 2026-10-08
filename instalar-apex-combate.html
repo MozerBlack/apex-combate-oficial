@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080a0e">
+  <title>Instalar Apex Combate no Android</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 50% -10%, #47101a 0, #151016 31%, #080a0e 68%); color: #f6f7f9; }
+    main { width: min(100% - 28px, 720px); margin: 0 auto; padding: 34px 0 56px; }
+    .card { overflow: hidden; border: 1px solid #2b3039; border-radius: 28px; background: rgba(14, 18, 24, .96); box-shadow: 0 22px 70px rgba(0,0,0,.46); }
+    .hero { padding: 32px 28px 24px; text-align: center; border-bottom: 1px solid #292e36; background: linear-gradient(145deg, rgba(239,38,54,.14), transparent 48%); }
+    .logo { width: 112px; height: 112px; border-radius: 24px; object-fit: contain; filter: drop-shadow(0 10px 22px rgba(239,38,54,.22)); }
+    h1 { margin: 18px 0 8px; font-size: clamp(1.72rem, 6vw, 2.45rem); line-height: 1.08; }
+    .signature { margin: 0; color: #c8cdd6; font-size: 1.03rem; }
+    .body { padding: 28px; }
+    .android-only { margin: 0 0 22px; padding: 13px 15px; border: 1px solid #5b4721; border-radius: 14px; background: #241d10; color: #f7d887; line-height: 1.45; }
+    .download { display: flex; justify-content: center; align-items: center; min-height: 58px; width: 100%; padding: 14px 22px; border-radius: 15px; background: #ef2636; color: white; font-size: 1.08rem; font-weight: 800; text-align: center; text-decoration: none; box-shadow: 0 12px 28px rgba(239,38,54,.28); }
+    .download:focus-visible, .secondary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 15px 0 28px; color: #aeb5c0; font-size: .92rem; }
+    .meta span { padding: 6px 9px; border-radius: 999px; background: #1b2028; border: 1px solid #303641; }
+    .qr-wrap { margin: 0 auto 27px; max-width: 430px; padding: 20px; border-radius: 20px; background: white; color: #101215; text-align: center; }
+    .qr-wrap img { display: block; width: min(100%, 330px); height: auto; margin: auto; image-rendering: pixelated; }
+    .qr-wrap strong { display: block; margin-top: 12px; font-size: 1rem; }
+    h2 { margin: 26px 0 13px; font-size: 1.23rem; }
+    ol { margin: 0; padding-left: 25px; color: #d8dce3; line-height: 1.65; }
+    li + li { margin-top: 7px; }
+    .notice { margin: 22px 0 0; padding: 15px; border-radius: 14px; background: #191e26; color: #bfc5cf; line-height: 1.52; }
+    .secondary { display: block; margin-top: 16px; padding: 13px; border: 1px solid #3a414d; border-radius: 13px; color: #edf0f4; text-align: center; text-decoration: none; }
+    footer { padding: 22px 28px 27px; border-top: 1px solid #292e36; color: #89919e; text-align: center; font-size: .88rem; }
+    @media (max-width: 480px) { main { width: min(100% - 18px, 720px); padding-top: 14px; } .hero, .body { padding-left: 19px; padding-right: 19px; } .card { border-radius: 21px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <article class="card">
+      <header class="hero">
+        <img class="logo" src="icons/apex-192.png" alt="Logo oficial do Apex Combate">
+        <h1>Instalar Apex Combate</h1>
+        <p class="signature">Uma plataforma. Todas as lutas.</p>
+      </header>
+      <section class="body">
+        <p class="android-only"><strong>Instalação direta para Android.</strong> Em iPhone, iPad, notebook, computador ou TV, utilize a versão web pelo botão no final desta página.</p>
+
+        <a class="download" href="releases/Apex-Combate-Demo-v44.apk" download>Baixar APK demonstrativo v44</a>
+        <div class="meta" aria-label="Informações do aplicativo">
+          <span>Android 6.0+</span><span>Versão 44.0-demo</span><span>172 KB</span>
+        </div>
+
+        <div class="qr-wrap">
+          <img src="releases/QR-Instalar-Apex-Combate-v44.png" alt="QR Code para baixar o APK do Apex Combate">
+          <strong>Em outro Android, aponte a câmera para este QR Code.</strong>
+        </div>
+
+        <h2>Como instalar</h2>
+        <ol>
+          <li>Toque em <strong>Baixar APK</strong> ou leia o QR Code.</li>
+          <li>Abra o arquivo baixado em <strong>Downloads</strong>.</li>
+          <li>Se o Android solicitar, permita a instalação proveniente desse navegador ou gerenciador.</li>
+          <li>Toque em <strong>Instalar</strong> e depois em <strong>Abrir</strong>.</li>
+        </ol>
+
+        <p class="notice">O aviso de que o aplicativo não veio da Play Store é esperado nesta versão acadêmica. Não é necessário desativar o Google Play Protect. O APK requer internet durante a demonstração.</p>
+        <a class="secondary" href="apex-combate.html?v=44">Abrir a versão web/PWA</a>
+      </section>
+      <footer>🥋 Apex Combate — Plataforma Universal de Artes Marciais</footer>
+    </article>
+  </main>
+</body>
+</html>

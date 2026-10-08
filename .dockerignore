@@ -17,6 +17,7 @@ scripts
 *.db
 *.log
 *.apk
+!releases/Apex-Combate-Demo-v44.apk
 *.aab
 *.ipa
 android

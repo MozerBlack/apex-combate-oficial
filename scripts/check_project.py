@@ -43,7 +43,9 @@ REQUIRED_FILES = (
     "android-apk/src/main/res/drawable/apex_icon.png",
     "releases/Apex-Combate-Demo-v44.apk",
     "releases/Apex-Combate-Demo-v44.apk.sha256",
+    "releases/QR-Instalar-Apex-Combate-v44.png",
     "releases/README.md",
+    "instalar-apex-combate.html",
     *(f"docs/{name}" for name in DOCUMENTATION_FILES),
 )
 
@@ -156,6 +158,14 @@ def check_android_apk() -> None:
             fail(f"contrato Android ausente: {required}")
     if "http://" in source or "onReceivedSslError" in source:
         fail("o invólucro Android contém comportamento de rede inseguro")
+    installer = (ROOT / "instalar-apex-combate.html").read_text(encoding="utf-8")
+    for required in ("releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png", "Android 6.0+", "Abrir a versão web/PWA"):
+        if required not in installer:
+            fail(f"página de instalação Android incompleta: {required}")
+    dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+    for required in ("instalar-apex-combate.html", "releases/Apex-Combate-Demo-v44.apk", "releases/QR-Instalar-Apex-Combate-v44.png"):
+        if required not in dockerfile:
+            fail(f"artefato Android ausente da imagem Docker: {required}")
 
 
 def check_master_document() -> None:

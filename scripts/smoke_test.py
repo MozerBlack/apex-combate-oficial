@@ -50,6 +50,16 @@ def main() -> None:
 
     status, app, content_type = request("/apex-combate.html?v=44")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
+
+    status, installer, content_type = request("/instalar-apex-combate.html")
+    assert status == 200 and b"Baixar APK demonstrativo v44" in installer and content_type == "text/html"
+    assert b"releases/QR-Instalar-Apex-Combate-v44.png" in installer
+
+    status, apk, content_type = request("/releases/Apex-Combate-Demo-v44.apk")
+    assert status == 200 and len(apk) > 100_000
+    assert content_type == "application/vnd.android.package-archive"
+    assert apk.startswith(b"PK"), "artefato APK inválido"
+
     css = app.split(b"<style>", 1)[1].split(b"</style>", 1)[0]
     assert b"--font-micro: clamp(" in css and b"--font-body-lg: clamp(" in css
     assert css.count(b"font-size: var(--font-") >= 400

@@ -5,6 +5,7 @@ Apex Combate é uma plataforma universal “Tudo em um” para atletas, clubes, 
 > Estado atual: v44 demonstrativa, com APK Android assinado para apresentação acadêmica, apresentação pública antes do login, retorno autenticado seguro ao início, frontend responsivo, PWA, API Python, banco SQLite local e fluxos integrados de atleta e clube. Antes de produção serão necessários PostgreSQL, HTTPS, OTP real, armazenamento seguro, monitoramento e infraestrutura gerenciada.
 
 - **Demonstração online:** https://apex-combate-demo.onrender.com
+- **Instalação Android:** https://apex-combate-demo.onrender.com/instalar-apex-combate.html
 - **Repositório oficial:** https://github.com/MozerBlack/apex-combate-oficial
 - **Pipeline:** GitHub Actions com testes de contrato, autenticação, fluxos v38 e Docker.
 
@@ -125,6 +126,7 @@ O workflow `.github/workflows/ci.yml` verifica automaticamente:
 Entrega Android disponível:
 
 - [`Apex-Combate-Demo-v44.apk`](releases/Apex-Combate-Demo-v44.apk) — APK demonstrativo assinado para instalação direta;
+- [`instalar-apex-combate.html`](instalar-apex-combate.html) — página oficial de instalação com download, QR Code e instruções para vários aparelhos Android;
 - [`android-apk/`](android-apk/README.md) — projeto Android, instruções e script reproduzível de compilação;
 - identificador `br.com.apexcombate.app`, Android 6.0 ou superior e acesso à demonstração oficial por HTTPS.
 

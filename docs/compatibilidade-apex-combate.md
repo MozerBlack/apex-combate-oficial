@@ -135,6 +135,7 @@ A existência do APK Android é um entregável obrigatório do projeto, mas sua 
 ### APK demonstrativo disponível
 
 - artefato: `releases/Apex-Combate-Demo-v44.apk`;
+- distribuição direta: página `instalar-apex-combate.html`, com botão de download, QR Code e instruções para instalação em vários aparelhos Android;
 - projeto-fonte: `android-apk/`;
 - identificador: `br.com.apexcombate.app`;
 - versão: `44.0-demo` (`versionCode` 44);

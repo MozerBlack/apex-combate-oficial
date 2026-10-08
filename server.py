@@ -119,6 +119,9 @@ class ApexHandler(SimpleHTTPRequestHandler):
         if request_path.endswith((".html", ".webmanifest", "apex-sw.js")) or request_path == "/":
             self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
             self.send_header("Pragma", "no-cache")
+        elif request_path.endswith(".apk"):
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.send_header("Content-Disposition", 'attachment; filename="Apex-Combate-Demo-v44.apk"')
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Permissions-Policy", "camera=(self), geolocation=(), microphone=()")
