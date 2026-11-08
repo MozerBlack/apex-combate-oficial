@@ -97,6 +97,9 @@ class AthleteMultimodalityDataTests(unittest.TestCase):
             streams = db.execute(
                 "SELECT arena_label,playback_type,playback_url,status,access_level FROM competition_streams ORDER BY id"
             ).fetchall()
+            history = db.execute(
+                "SELECT athlete_name,category_code,result_status,visibility FROM authorized_competition_history ORDER BY category_code"
+            ).fetchall()
         self.assertGreaterEqual(len(categories), 3)
         self.assertTrue(all(row["publication_status"] == "published" for row in categories))
         self.assertEqual(rafael_bouts[0]["bout_number"], "128")
@@ -106,6 +109,10 @@ class AthleteMultimodalityDataTests(unittest.TestCase):
         self.assertTrue(all(row["playback_type"] == "hls" for row in streams))
         self.assertTrue(all(row["access_level"] == "authenticated" for row in streams))
         self.assertTrue(all(row["playback_url"] == "" for row in streams))
+        self.assertEqual([row["category_code"] for row in history], ["1181", "1201"])
+        self.assertTrue(all(row["athlete_name"] == "João Victor Mozer dos Santos" for row in history))
+        self.assertTrue(all(row["result_status"] == "not_reported" for row in history))
+        self.assertTrue(all(row["visibility"] == "authenticated" for row in history))
 
 
 class AthleteMultimodalityContractTests(unittest.TestCase):
@@ -131,6 +138,8 @@ class AthleteMultimodalityContractTests(unittest.TestCase):
         self.assertIn("CREATE TABLE IF NOT EXISTS competition_live_notices", self.database)
         self.assertIn("CREATE TABLE IF NOT EXISTS competition_streams", self.database)
         self.assertIn("access_level TEXT NOT NULL DEFAULT 'authenticated'", self.database)
+        self.assertIn("CREATE TABLE IF NOT EXISTS authorized_competition_history", self.database)
+        self.assertIn("visibility TEXT NOT NULL DEFAULT 'authenticated'", self.database)
         self.assertNotIn("sport TEXT NOT NULL UNIQUE", self.database)
 
     def test_backend_exposes_authenticated_modality_and_certificate_operations(self):
@@ -243,6 +252,18 @@ class AthleteMultimodalityContractTests(unittest.TestCase):
         self.assertIn("media-src 'self' blob:", self.server)
         self.assertIn("Campeonato não encontrado para este atleta", self.server)
         self.assertNotIn('elif path == "/api/athlete/live"', self.server)
+
+    def test_authorized_owner_history_is_separate_from_authenticated_athlete_results(self):
+        self.assertIn('id="authorizedHistorySection"', self.html)
+        self.assertIn('id="authorizedCompetitionHistory"', self.html)
+        self.assertIn("não altera o histórico do atleta autenticado", self.html)
+        self.assertIn("data.authorizedCompetitionHistory", self.html)
+        self.assertIn('"authorizedCompetitionHistory": [dict(row) for row in authorized_history]', self.server)
+        self.assertIn("João Victor Mozer dos Santos", self.database)
+        self.assertIn('"1181"', self.database)
+        self.assertIn('"1201"', self.database)
+        self.assertIn('"not_reported"', self.database)
+        self.assertIn("sem colocação ou medalha presumida", self.html)
 
     def test_athlete_security_has_server_revocation_rate_limits_and_idle_timeout(self):
         for contract in (

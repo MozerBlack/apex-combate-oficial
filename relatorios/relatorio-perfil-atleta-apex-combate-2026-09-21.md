@@ -317,6 +317,19 @@ A área já possui composição para:
 
 Enquanto não há fonte oficial integrada, esses campos permanecem em estado vazio. O Apex Combate não atribui resultados, pontos ou posições inventados a um atleta.
 
+### Referências históricas autorizadas
+
+A área autenticada de Resultados apresenta separadamente duas referências fornecidas e autorizadas pelo proprietário do Apex Combate:
+
+- **João Victor Mozer dos Santos** — chave 1181;
+- **João Victor Mozer dos Santos** — chave 1201;
+- evento: Primeira Etapa do Campeonato Paranaense de Karatê 2026 — Oeste;
+- modalidade: Karatê;
+- disciplina: Kumite;
+- fonte nominal: `Chave_260_Final.pdf`.
+
+Essas referências não substituem Rafael Martins como conta demonstrativa, não aparecem como resultado do usuário autenticado e não presumem adversário, vitória, colocação, pontuação ou medalha. O sistema registra apenas a participação informada e o consentimento explícito de Mozer para exibição do nome.
+
 ### Jornada da modalidade
 
 A jornada usa dados existentes para apresentar:

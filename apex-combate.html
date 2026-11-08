@@ -1339,6 +1339,27 @@
     .medal-row.gold i { color:#f5c75b; background:rgba(245,199,91,.12); }
     .medal-row.silver i { color:#c5ccd5; background:rgba(197,204,213,.1); }
     .medal-row.bronze i { color:#d68c5a; background:rgba(214,140,90,.1); }
+    .authorized-history-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .authorized-history-card { padding:17px; overflow:hidden; position:relative; border-color:rgba(97,168,255,.22); background:linear-gradient(135deg,rgba(97,168,255,.06),transparent 48%),var(--surface); }
+    .authorized-history-card::after { content:attr(data-key); position:absolute; right:-5px; bottom:-27px; color:rgba(255,255,255,.025); font-size:82px; font-weight:950; pointer-events:none; }
+    .authorized-history-head { position:relative; z-index:1; display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .authorized-history-head span,.authorized-history-head strong { display:block; }
+    .authorized-history-head span { color:var(--blue); font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .authorized-history-head strong { margin-top:5px; font-size:15px; }
+    .authorized-history-event { position:relative; z-index:1; margin:11px 0; color:var(--muted); font-size:10px; line-height:1.5; }
+    .authorized-history-bracket { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) 74px; align-items:center; }
+    .authorized-history-athlete { min-width:0; padding:11px; border:1px solid rgba(239,38,54,.30); border-radius:9px 0 0 9px; background:rgba(239,38,54,.07); }
+    .authorized-history-athlete strong,.authorized-history-athlete span { display:block; }
+    .authorized-history-athlete strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
+    .authorized-history-athlete span { margin-top:4px; color:var(--muted); font-size:10px; }
+    .authorized-history-result { min-height:54px; display:grid; place-items:center; border-left:2px solid #4a515c; color:var(--muted); font-size:10px; text-align:center; }
+    .authorized-history-meta { position:relative; z-index:1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; margin-top:10px; }
+    .authorized-history-meta div { padding:8px; border:1px solid var(--line-soft); border-radius:8px; background:#0b0e13; }
+    .authorized-history-meta span,.authorized-history-meta strong { display:block; }
+    .authorized-history-meta span { color:var(--muted); font-size:10px; }
+    .authorized-history-meta strong { margin-top:4px; font-size:11px; }
+    .authorized-history-note { position:relative; z-index:1; display:flex; align-items:flex-start; gap:7px; margin-top:10px; color:#9da5af; font-size:10px; line-height:1.45; }
+    @media(max-width:760px) { .authorized-history-grid { grid-template-columns:1fr; } }
     .athlete-profile-cover { justify-content:space-between; }
     .profile-edit { position:relative; z-index:1; }
     .athlete-profile-layout { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -2148,6 +2169,7 @@
         <div class="management-kpis athlete-result-kpis"><article class="card metric-card"><div class="metric-top"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-award"/></svg></div><span class="metric-delta" id="athletePodiumsDelta">Aguardando dados</span></div><strong id="athletePodiumsTotal">—</strong><span>Pódios conquistados</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><span class="metric-delta" id="athleteWinsRate">Aguardando dados</span></div><strong id="athleteWinsTotal">—</strong><span>Vitórias oficiais</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-target"/></svg></div><span class="metric-delta" id="athleteRankingDelta">Aguardando dados</span></div><strong id="athleteRankingPosition">—</strong><span>Ranking estadual</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon"><svg class="icon sm"><use href="#i-bolt"/></svg></div><span class="metric-delta" id="athleteRankingSeason">Temporada atual</span></div><strong id="athleteRankingPoints">—</strong><span>Pontos no ranking</span></article></div>
         <section class="section"><article class="card dash-panel"><div class="panel-head"><div><h3>Medalhas oficiais</h3><p>Somente pódios homologados pela entidade responsável</p></div></div><div class="medal-stack" id="athleteMedalStack"><div class="technician-empty">Nenhuma medalha oficial integrada.</div></div></article></section>
         <section class="section"><div class="section-head"><div><h3>Jornada na modalidade</h3><p id="athleteJourneySummary">Sincronizando treinos, presença e marcos esportivos</p></div></div><article class="card dash-panel"><div class="compact-list" id="athleteJourneyTimeline"><div class="technician-empty">Carregando jornada esportiva…</div></div></article></section>
+        <section class="section" id="authorizedHistorySection"><div class="section-head"><div><h3>Chaves históricas autorizadas</h3><p>Referência do proprietário do Apex Combate; não altera o histórico do atleta autenticado</p></div><span class="status-pill">Autorizado</span></div><div class="authorized-history-grid" id="authorizedCompetitionHistory"><div class="technician-empty">Sincronizando referências autorizadas…</div></div></section>
         <section class="section"><div class="section-head"><div><h3>Histórico oficial</h3><p>Resultados homologados pela federação</p></div></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Competição</th><th>Data</th><th>Categoria</th><th>Resultado</th><th>Pontos</th><th>Súmula</th></tr></thead><tbody id="athleteResultRows"><tr><td colspan="6">Resultados oficiais ainda não integrados.</td></tr></tbody></table></div></article></section>
       </section>
 
@@ -3709,6 +3731,11 @@
       setText('athleteJourneySummary', `${(data.classes || []).length} turma(s) ativa(s) • ${(data.attendance || []).length} presença(s) recente(s) • ${certificates.length} certificado(s)`);
       const journeyTimeline = document.getElementById('athleteJourneyTimeline');
       if (journeyTimeline) journeyTimeline.innerHTML = journeyItems.map(item => `<div class="compact-item"><div class="metric-icon ${item.color}"><svg class="icon sm"><use href="#${item.icon}"/></svg></div><div class="compact-info"><strong>${safeText(item.title)}</strong><span>${safeText(item.detail)}</span></div></div>`).join('') || '<div class="technician-empty">A jornada começa com o primeiro treino ou certificado registrado nesta modalidade.</div>';
+
+      const authorizedHistory = document.getElementById('authorizedCompetitionHistory');
+      if (authorizedHistory) {
+        authorizedHistory.innerHTML = (data.authorizedCompetitionHistory || []).map(item => `<article class="card authorized-history-card" data-key="${safeText(item.category_code)}"><div class="authorized-history-head"><div><span>Chave ${safeText(item.category_code)} • ${safeText(item.discipline)}</span><strong>${safeText(item.age_group)} • ${safeText(item.gender)}</strong></div><span class="status-pill">Autorizado</span></div><p class="authorized-history-event">${safeText(item.competition_name)} • ${safeText(item.event_year)}</p><div class="authorized-history-bracket"><div class="authorized-history-athlete"><strong>${safeText(item.athlete_name)}</strong><span>Participação informada pelo próprio atleta</span></div><div class="authorized-history-result">Resultado<br>não informado</div></div><div class="authorized-history-meta"><div><span>Graduação</span><strong>${safeText(item.level_range || 'Não informada')}</strong></div><div><span>Peso</span><strong>${safeText(item.weight_class || 'Não informado')}</strong></div><div><span>Área</span><strong>${safeText(item.arena_label || 'Não informada')}</strong></div><div><span>Horário</span><strong>${safeText(item.scheduled_time || 'Não informado')}</strong></div></div><div class="authorized-history-note"><svg class="icon sm"><use href="#i-shield"/></svg><span>Referência autorizada por Mozer • fonte ${safeText(item.source_file)} • sem colocação ou medalha presumida.</span></div></article>`).join('') || '<div class="technician-empty">Nenhuma referência histórica autorizada.</div>';
+      }
 
       const certificateMarkup = certificates.map(item => `<div class="compact-item"><div class="metric-icon ${item.status === 'verified' ? 'green' : 'yellow'}"><svg class="icon sm"><use href="#i-award"/></svg></div><div class="compact-info"><strong>${safeText(item.title || item.file_name || 'Certificado')}</strong><span>${safeText(`${item.sport || athlete.sport || 'Modalidade'} • ${item.issuer || 'Emissor não informado'} • ${formatIsoDate(item.issued_at)}`)}</span><small class="certificate-code">${safeText(item.certificate_code || 'Código pendente')}</small></div><span class="status-pill ${item.status === 'verified' ? '' : item.status === 'pending' ? 'pending' : 'alert'}">${item.status === 'verified' ? 'Verificado' : item.status === 'pending' ? 'Em análise' : 'Revisar'}</span></div>`).join('') || '<div class="technician-empty">Nenhum certificado cadastrado nesta modalidade.</div>';
       ['athleteCertificateList','athleteProfileCertificateList'].forEach(id => {

@@ -440,6 +440,29 @@ def init_database() -> None:
                 updated_at TEXT NOT NULL,
                 UNIQUE(competition_id,arena_label)
             );
+            CREATE TABLE IF NOT EXISTS authorized_competition_history (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                athlete_name TEXT NOT NULL,
+                competition_name TEXT NOT NULL,
+                competition_code TEXT NOT NULL DEFAULT '',
+                event_year INTEGER NOT NULL,
+                category_code TEXT NOT NULL,
+                sport TEXT NOT NULL,
+                discipline TEXT NOT NULL,
+                age_group TEXT NOT NULL DEFAULT '',
+                gender TEXT NOT NULL DEFAULT '',
+                level_range TEXT NOT NULL DEFAULT '',
+                weight_class TEXT NOT NULL DEFAULT '',
+                arena_label TEXT NOT NULL DEFAULT '',
+                scheduled_time TEXT NOT NULL DEFAULT '',
+                participation_status TEXT NOT NULL DEFAULT 'declared',
+                result_status TEXT NOT NULL DEFAULT 'not_reported',
+                source_file TEXT NOT NULL DEFAULT '',
+                authorization_note TEXT NOT NULL DEFAULT '',
+                visibility TEXT NOT NULL DEFAULT 'authenticated',
+                created_at TEXT NOT NULL,
+                UNIQUE(athlete_name,competition_code,category_code)
+            );
             CREATE TABLE IF NOT EXISTS technician_checklists (
                 registration_id INTEGER NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
                 item_key TEXT NOT NULL,
@@ -523,6 +546,7 @@ def init_database() -> None:
             CREATE INDEX IF NOT EXISTS idx_live_bouts_registrations ON competition_bouts(red_registration_id,blue_registration_id,status);
             CREATE INDEX IF NOT EXISTS idx_live_notices_competition ON competition_live_notices(competition_id,created_at DESC);
             CREATE INDEX IF NOT EXISTS idx_live_streams_competition ON competition_streams(competition_id,status,arena_label);
+            CREATE INDEX IF NOT EXISTS idx_authorized_history_name ON authorized_competition_history(athlete_name,event_year,category_code);
             CREATE INDEX IF NOT EXISTS idx_notices_technician ON technician_notices(technician_id,created_at DESC);
             CREATE INDEX IF NOT EXISTS idx_incidents_technician ON technician_incidents(technician_id,created_at DESC);
             CREATE INDEX IF NOT EXISTS idx_support_technician ON technician_support_requests(technician_id,created_at DESC);
@@ -995,6 +1019,19 @@ def seed_database(db: sqlite3.Connection) -> None:
                    VALUES(?,?,?,?,?,?,?,?,?,?,?)""",
                 (competition[0], arena_label, title, playback_type, playback_url, fallback_url, stream_status, access_level, latency_seconds, starts_at, now),
             )
+
+    history_seeds = [
+        ("João Victor Mozer dos Santos", "Primeira Etapa do Campeonato Paranaense de Karatê 2026 — Oeste", "260", 2026, "1181", "Karatê", "Kumite", "Sub-21 • 18 a 20 anos", "Masculino", "7º kyu ao 3º kyu", "Até 75 kg • 67 a 74,9 kg", "", "", "declared", "not_reported", "Chave_260_Final.pdf", "Nome e uso nas chaves 1181 e 1201 autorizados diretamente por Mozer."),
+        ("João Victor Mozer dos Santos", "Primeira Etapa do Campeonato Paranaense de Karatê 2026 — Oeste", "260", 2026, "1201", "Karatê", "Kumite", "Sênior • 18 anos ou mais", "Masculino", "7º kyu ao 3º kyu", "Até 75 kg • 67 a 74,9 kg", "Quadra 3", "11:07", "declared", "not_reported", "Chave_260_Final.pdf", "Nome e uso nas chaves 1181 e 1201 autorizados diretamente por Mozer."),
+    ]
+    for history in history_seeds:
+        db.execute(
+            """INSERT OR IGNORE INTO authorized_competition_history
+               (athlete_name,competition_name,competition_code,event_year,category_code,sport,discipline,age_group,gender,
+                level_range,weight_class,arena_label,scheduled_time,participation_status,result_status,source_file,authorization_note,visibility,created_at)
+               VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'authenticated',?)""",
+            (*history, now),
+        )
 
     if competition and marcelo and db.execute("SELECT COUNT(*) FROM technician_notices WHERE technician_id=?", (marcelo[0],)).fetchone()[0] == 0:
         rafael_registration = db.execute(

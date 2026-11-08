@@ -659,6 +659,13 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    WHERE p.athlete_id=? ORDER BY CASE p.status WHEN 'pending' THEN 0 WHEN 'overdue' THEN 0 ELSE 1 END,p.due_date DESC,p.id DESC""",
                 (athlete_id,),
             ).fetchall()
+            authorized_history = db.execute(
+                """SELECT id,athlete_name,competition_name,competition_code,event_year,category_code,sport,discipline,
+                          age_group,gender,level_range,weight_class,arena_label,scheduled_time,participation_status,
+                          result_status,source_file,authorization_note
+                   FROM authorized_competition_history WHERE visibility='authenticated'
+                   ORDER BY event_year DESC,competition_code,category_code"""
+            ).fetchall()
         if not athlete:
             self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
             return
@@ -724,6 +731,7 @@ class ApexHandler(SimpleHTTPRequestHandler):
             "classes": class_items,
             "attendance": attendance_items,
             "payments": payment_items,
+            "authorizedCompetitionHistory": [dict(row) for row in authorized_history],
             "readiness": {
                 "documentsVerified": len(verified_documents & required_documents),
                 "documentsRequired": len(required_documents),
