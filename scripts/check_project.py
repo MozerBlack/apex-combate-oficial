@@ -114,8 +114,10 @@ def check_html_contract() -> None:
     for contract in ('id="appReturnHome"', 'class="return-home-btn"', 'type="button"', 'data-logout', 'aria-labelledby="appReturnHomeLabel"', 'aria-label="Voltar ao início e encerrar sessão"', 'id="appReturnHomeLabel"', '>Voltar ao início</span>'):
         if contract not in topbar:
             fail(f"controle autenticado de retorno incompleto: {contract}")
-    logout_handler = html[html.index("document.querySelectorAll('[data-logout]')"):][:2600]
-    for contract in ("activeSessionToken = '';", "activeAdminToken = '';", "sessionStorage.removeItem('apex-session')", "sessionStorage.removeItem('apex-admin-jwt')", "sessionStorage.removeItem('apex-profile')", "localStorage.removeItem('apex-technician-operations-v38')", "showWelcomeScreen();"):
+    logout_start = html.index("const APEX_IDLE_TIMEOUT_MS")
+    logout_end = html.index("const roleDefaultPage", logout_start)
+    logout_handler = html[logout_start:logout_end]
+    for contract in ("fetch('/api/logout'", "keepalive: true", "activeSessionToken = '';", "activeAdminToken = '';", "sessionStorage.removeItem('apex-session')", "sessionStorage.removeItem('apex-admin-jwt')", "sessionStorage.removeItem('apex-profile')", "localStorage.removeItem('apex-technician-operations-v38')", "showWelcomeScreen();", "APEX_IDLE_TIMEOUT_MS = 20 * 60 * 1000"):
         if contract not in logout_handler:
             fail(f"encerramento seguro da sessão incompleto: {contract}")
 

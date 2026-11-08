@@ -164,6 +164,26 @@ def init_database() -> None:
                 status TEXT NOT NULL DEFAULT 'active',
                 created_at TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS athlete_modalities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                athlete_id INTEGER NOT NULL REFERENCES athletes(id) ON DELETE CASCADE,
+                club_id INTEGER REFERENCES clubs(id) ON DELETE SET NULL,
+                federation_id INTEGER REFERENCES federations(id) ON DELETE SET NULL,
+                sport TEXT NOT NULL,
+                style_name TEXT NOT NULL DEFAULT '',
+                rank_name TEXT NOT NULL DEFAULT '',
+                category TEXT NOT NULL DEFAULT '',
+                training_center_name TEXT NOT NULL DEFAULT '',
+                organization_name TEXT NOT NULL DEFAULT '',
+                instructor_name TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'active',
+                is_primary INTEGER NOT NULL DEFAULT 0,
+                public_profile INTEGER NOT NULL DEFAULT 0,
+                started_at TEXT NOT NULL DEFAULT '',
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                UNIQUE(athlete_id, sport, style_name, organization_name)
+            );
             CREATE TABLE IF NOT EXISTS athlete_documents (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 athlete_id INTEGER NOT NULL REFERENCES athletes(id) ON DELETE CASCADE,
@@ -177,6 +197,23 @@ def init_database() -> None:
                 created_at TEXT NOT NULL,
                 updated_at TEXT NOT NULL,
                 UNIQUE(athlete_id, document_type)
+            );
+            CREATE TABLE IF NOT EXISTS athlete_certificates (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                athlete_id INTEGER NOT NULL REFERENCES athletes(id) ON DELETE CASCADE,
+                modality_id INTEGER NOT NULL REFERENCES athlete_modalities(id) ON DELETE CASCADE,
+                certificate_type TEXT NOT NULL DEFAULT 'graduation',
+                title TEXT NOT NULL,
+                issuer TEXT NOT NULL,
+                certificate_code TEXT NOT NULL,
+                file_name TEXT NOT NULL DEFAULT '',
+                issued_at TEXT NOT NULL DEFAULT '',
+                expires_at TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'pending',
+                verification_url TEXT NOT NULL DEFAULT '',
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                UNIQUE(athlete_id, certificate_code)
             );
             CREATE TABLE IF NOT EXISTS athlete_guardians (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -306,6 +343,26 @@ def init_database() -> None:
                 created_at TEXT NOT NULL,
                 UNIQUE(competition_id, athlete_id)
             );
+            CREATE TABLE IF NOT EXISTS athlete_payments (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                athlete_id INTEGER NOT NULL REFERENCES athletes(id) ON DELETE CASCADE,
+                club_id INTEGER REFERENCES clubs(id) ON DELETE SET NULL,
+                registration_id INTEGER REFERENCES registrations(id) ON DELETE SET NULL,
+                competition_id INTEGER REFERENCES competitions(id) ON DELETE SET NULL,
+                payment_type TEXT NOT NULL,
+                reference_key TEXT NOT NULL,
+                description TEXT NOT NULL,
+                amount_cents INTEGER NOT NULL,
+                due_date TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'pending',
+                payment_method TEXT NOT NULL DEFAULT '',
+                transaction_reference TEXT NOT NULL DEFAULT '',
+                receipt_code TEXT NOT NULL DEFAULT '',
+                paid_at TEXT NOT NULL DEFAULT '',
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                UNIQUE(athlete_id,payment_type,reference_key)
+            );
             CREATE TABLE IF NOT EXISTS competition_operations (
                 registration_id INTEGER PRIMARY KEY REFERENCES registrations(id) ON DELETE CASCADE,
                 stage TEXT NOT NULL DEFAULT 'confirmed',
@@ -320,6 +377,68 @@ def init_database() -> None:
                 result TEXT NOT NULL DEFAULT '',
                 result_note TEXT NOT NULL DEFAULT '',
                 updated_at TEXT NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS competition_categories (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                competition_id INTEGER NOT NULL REFERENCES competitions(id) ON DELETE CASCADE,
+                sport TEXT NOT NULL,
+                name TEXT NOT NULL,
+                division TEXT NOT NULL DEFAULT '',
+                arena_label TEXT NOT NULL DEFAULT '',
+                bracket_size INTEGER NOT NULL DEFAULT 2,
+                status TEXT NOT NULL DEFAULT 'scheduled',
+                publication_status TEXT NOT NULL DEFAULT 'draft',
+                published_at TEXT NOT NULL DEFAULT '',
+                updated_at TEXT NOT NULL,
+                UNIQUE(competition_id,sport,name)
+            );
+            CREATE TABLE IF NOT EXISTS competition_bouts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category_id INTEGER NOT NULL REFERENCES competition_categories(id) ON DELETE CASCADE,
+                round_name TEXT NOT NULL,
+                round_order INTEGER NOT NULL DEFAULT 1,
+                bout_order INTEGER NOT NULL DEFAULT 1,
+                bout_number TEXT NOT NULL,
+                scheduled_time TEXT NOT NULL DEFAULT '',
+                estimated_time TEXT NOT NULL DEFAULT '',
+                arena_label TEXT NOT NULL DEFAULT '',
+                red_registration_id INTEGER REFERENCES registrations(id) ON DELETE SET NULL,
+                red_name TEXT NOT NULL DEFAULT '',
+                blue_registration_id INTEGER REFERENCES registrations(id) ON DELETE SET NULL,
+                blue_name TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'scheduled',
+                score_red TEXT NOT NULL DEFAULT '',
+                score_blue TEXT NOT NULL DEFAULT '',
+                winner_name TEXT NOT NULL DEFAULT '',
+                next_bout_number TEXT NOT NULL DEFAULT '',
+                updated_at TEXT NOT NULL,
+                UNIQUE(category_id,bout_number)
+            );
+            CREATE TABLE IF NOT EXISTS competition_live_notices (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                competition_id INTEGER NOT NULL REFERENCES competitions(id) ON DELETE CASCADE,
+                category_id INTEGER REFERENCES competition_categories(id) ON DELETE CASCADE,
+                registration_id INTEGER REFERENCES registrations(id) ON DELETE CASCADE,
+                kind TEXT NOT NULL DEFAULT 'info',
+                priority TEXT NOT NULL DEFAULT 'normal',
+                title TEXT NOT NULL,
+                body TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS competition_streams (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                competition_id INTEGER NOT NULL REFERENCES competitions(id) ON DELETE CASCADE,
+                arena_label TEXT NOT NULL,
+                title TEXT NOT NULL,
+                playback_type TEXT NOT NULL DEFAULT 'hls',
+                playback_url TEXT NOT NULL DEFAULT '',
+                fallback_url TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'standby',
+                access_level TEXT NOT NULL DEFAULT 'authenticated',
+                latency_seconds INTEGER NOT NULL DEFAULT 0,
+                starts_at TEXT NOT NULL DEFAULT '',
+                updated_at TEXT NOT NULL,
+                UNIQUE(competition_id,arena_label)
             );
             CREATE TABLE IF NOT EXISTS technician_checklists (
                 registration_id INTEGER NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
@@ -386,14 +505,24 @@ def init_database() -> None:
                 created_at TEXT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS idx_athletes_club ON athletes(club_id);
+            CREATE INDEX IF NOT EXISTS idx_athlete_modalities_athlete ON athlete_modalities(athlete_id,status,is_primary);
+            CREATE INDEX IF NOT EXISTS idx_athlete_modalities_club ON athlete_modalities(club_id,sport);
             CREATE INDEX IF NOT EXISTS idx_athlete_documents ON athlete_documents(athlete_id,status);
+            CREATE INDEX IF NOT EXISTS idx_athlete_certificates ON athlete_certificates(athlete_id,modality_id,status);
             CREATE INDEX IF NOT EXISTS idx_guardians_athlete ON athlete_guardians(athlete_id);
             CREATE INDEX IF NOT EXISTS idx_technicians_club ON technicians(club_id);
             CREATE INDEX IF NOT EXISTS idx_classes_club ON club_classes(club_id,weekday,start_time);
             CREATE INDEX IF NOT EXISTS idx_attendance_athlete ON attendance_records(athlete_id,checked_in_at DESC);
             CREATE INDEX IF NOT EXISTS idx_delegations_club ON delegations(club_id,competition_id);
+            CREATE INDEX IF NOT EXISTS idx_athlete_payments ON athlete_payments(athlete_id,status,due_date);
+            CREATE INDEX IF NOT EXISTS idx_payment_registration ON athlete_payments(registration_id);
             CREATE INDEX IF NOT EXISTS idx_staff_competition ON competition_staff(competition_id);
             CREATE INDEX IF NOT EXISTS idx_operations_stage ON competition_operations(stage);
+            CREATE INDEX IF NOT EXISTS idx_live_categories ON competition_categories(competition_id,publication_status,status);
+            CREATE INDEX IF NOT EXISTS idx_live_bouts_category ON competition_bouts(category_id,round_order,bout_order);
+            CREATE INDEX IF NOT EXISTS idx_live_bouts_registrations ON competition_bouts(red_registration_id,blue_registration_id,status);
+            CREATE INDEX IF NOT EXISTS idx_live_notices_competition ON competition_live_notices(competition_id,created_at DESC);
+            CREATE INDEX IF NOT EXISTS idx_live_streams_competition ON competition_streams(competition_id,status,arena_label);
             CREATE INDEX IF NOT EXISTS idx_notices_technician ON technician_notices(technician_id,created_at DESC);
             CREATE INDEX IF NOT EXISTS idx_incidents_technician ON technician_incidents(technician_id,created_at DESC);
             CREATE INDEX IF NOT EXISTS idx_support_technician ON technician_support_requests(technician_id,created_at DESC);
@@ -426,6 +555,8 @@ def migrate_schema(db: sqlite3.Connection) -> None:
     ensure_column(db, "athletes", "emergency_name", "TEXT NOT NULL DEFAULT ''")
     ensure_column(db, "athletes", "emergency_phone", "TEXT NOT NULL DEFAULT ''")
     ensure_column(db, "athletes", "profile_updated_at", "TEXT NOT NULL DEFAULT ''")
+    ensure_column(db, "athlete_modalities", "training_center_name", "TEXT NOT NULL DEFAULT ''")
+    db.execute("UPDATE athlete_modalities SET public_profile=0")
     ensure_column(db, "homologations", "federation_id", "INTEGER")
     db.execute("CREATE INDEX IF NOT EXISTS idx_clubs_federation ON clubs(federation_id)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_competitions_federation ON competitions(federation_id)")
@@ -482,6 +613,42 @@ def seed_database(db: sqlite3.Connection) -> None:
     )
     athlete_profiles = db.execute("SELECT id,document FROM athletes WHERE club_id=?", (club_id,)).fetchall()
     athlete_by_document = {row["document"]: row["id"] for row in athlete_profiles}
+
+    modality_seeds = [
+        ("52998224725", "Jiu-jítsu", "Brazilian Jiu-Jitsu", "Faixa azul • 3º grau", "Adulto • Médio • Até 82,3 kg", "Dojo Norte", "Federação Paranaense", "Marcelo Mendes", "active", 1, 0, "2018-02-10"),
+        ("52998224725", "Judô", "Kodokan", "Faixa verde", "Sênior • Meio-médio • Até 81 kg", "Dojo Norte", "Federação Paranaense", "Renata Oliveira", "active", 0, 0, "2021-03-15"),
+        ("52998224725", "Karatê", "Shotokan", "2º kyu • Faixa roxa", "Adulto • Kumite • Até 84 kg", "Academia Shotokan Curitiba", "Liga Curitibana de Karatê", "Akira Tanaka", "paused", 0, 0, "2022-08-20"),
+        ("PASSBR2026103", "Muay Thai", "Muay Thai esportivo", "Intermediário", "Adulto • Até 60 kg", "Dojo Norte", "Federação Paranaense", "Camila Souza", "active", 1, 0, "2020-06-12"),
+        ("REG002811", "Judô", "Kodokan", "Faixa amarela", "Infantil • Até 46 kg", "Dojo Norte", "Federação Paranaense", "Renata Oliveira", "active", 1, 0, "2024-02-01"),
+    ]
+    for athlete_document, sport, style_name, rank_name, category, training_center_name, organization_name, instructor_name, status, is_primary, public_profile, started_at in modality_seeds:
+        athlete_id = athlete_by_document.get(athlete_document)
+        if athlete_id:
+            db.execute(
+                """INSERT OR IGNORE INTO athlete_modalities
+                   (athlete_id,club_id,federation_id,sport,style_name,rank_name,category,training_center_name,organization_name,instructor_name,status,is_primary,public_profile,started_at,created_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (athlete_id, club_id if training_center_name == "Dojo Norte" else None, federation_id, sport, style_name, rank_name, category, training_center_name, organization_name, instructor_name, status, is_primary, public_profile, started_at, now, now),
+            )
+            db.execute(
+                """UPDATE athlete_modalities SET training_center_name=?,club_id=?
+                   WHERE athlete_id=? AND sport=? AND style_name=? AND training_center_name=''""",
+                (training_center_name, club_id if training_center_name == "Dojo Norte" else None, athlete_id, sport, style_name),
+            )
+
+    # Existing installations are upgraded without duplicating the athlete/person account.
+    db.execute(
+        """INSERT OR IGNORE INTO athlete_modalities
+           (athlete_id,club_id,federation_id,sport,rank_name,category,training_center_name,organization_name,status,is_primary,public_profile,created_at,updated_at)
+           SELECT a.id,a.club_id,c.federation_id,a.sport,a.rank_name,a.current_category,COALESCE(c.name,''),
+                  COALESCE(f.name,''),'active',1,0,?,?
+             FROM athletes a
+             LEFT JOIN clubs c ON c.id=a.club_id
+             LEFT JOIN federations f ON f.id=c.federation_id
+            WHERE NOT EXISTS (SELECT 1 FROM athlete_modalities am WHERE am.athlete_id=a.id)""",
+        (now, now),
+    )
+
     document_seeds = [
         ("52998224725", "identity", "identidade-rafael.pdf", "verified", "2026-01-12", "2032-01-12", "Federação Paranaense", "Documento validado"),
         ("52998224725", "medical_certificate", "atestado-rafael.pdf", "verified", "2026-03-15", "2027-03-15", "Dojo Norte", "Apto para competição"),
@@ -500,6 +667,27 @@ def seed_database(db: sqlite3.Connection) -> None:
                    VALUES(?,?,?,?,?,?,?,?,?,?)""",
                 (athlete_id, document_type, file_name, status, issued_at, expires_at, reviewed_by, notes, now, now),
             )
+
+    certificate_seeds = [
+        ("52998224725", "Jiu-jítsu", "graduation", "Faixa azul • 3º grau", "Federação Paranaense", "FPAM-BJJ-2025-1842", "graduacao-bjj-rafael.pdf", "2025-12-06", "", "verified"),
+        ("52998224725", "Judô", "graduation", "Faixa verde", "Federação Paranaense", "FPAM-JUD-2026-1842", "graduacao-judo-rafael.pdf", "2026-06-14", "", "verified"),
+        ("52998224725", "Karatê", "graduation", "2º kyu • Faixa roxa", "Liga Curitibana de Karatê", "LCK-2024-1842", "graduacao-karate-rafael.pdf", "2024-11-23", "", "pending"),
+        ("PASSBR2026103", "Muay Thai", "graduation", "Nível intermediário", "Federação Paranaense", "FPAM-MT-2026-2103", "nivel-muay-thai-beatriz.pdf", "2026-04-20", "", "verified"),
+    ]
+    for athlete_document, sport, certificate_type, title, issuer, certificate_code, file_name, issued_at, expires_at, status in certificate_seeds:
+        athlete_id = athlete_by_document.get(athlete_document)
+        modality = db.execute(
+            "SELECT id FROM athlete_modalities WHERE athlete_id=? AND sport=? ORDER BY is_primary DESC,id LIMIT 1",
+            (athlete_id, sport),
+        ).fetchone() if athlete_id else None
+        if modality:
+            db.execute(
+                """INSERT OR IGNORE INTO athlete_certificates
+                   (athlete_id,modality_id,certificate_type,title,issuer,certificate_code,file_name,issued_at,expires_at,status,verification_url,created_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (athlete_id, modality["id"], certificate_type, title, issuer, certificate_code, file_name, issued_at, expires_at, status, f"https://apexcombate.com/verificar/{certificate_code}", now, now),
+            )
+
     enzo_id = athlete_by_document.get("REG002811")
     if enzo_id:
         db.execute(
@@ -625,6 +813,43 @@ def seed_database(db: sqlite3.Connection) -> None:
             (marcelo[0], competition[0], beatriz[0]),
         )
 
+    payment_seeds = [
+        ("52998224725", "club_membership", "membership:2026-09", "Mensalidade Dojo Norte • Setembro/2026", 18900, "2026-09-10", "paid", "pix", "PAY-DEMO-RAFA-SEP", "REC-DEMO-RAFA-SEP", "2026-09-08T14:20:00+00:00"),
+        ("52998224725", "club_membership", "membership:2026-10", "Mensalidade Dojo Norte • Outubro/2026", 18900, "2026-10-10", "pending", "", "", "", ""),
+        ("PASSBR2026103", "club_membership", "membership:2026-09", "Mensalidade Dojo Norte • Setembro/2026", 16900, "2026-09-10", "paid", "card", "PAY-DEMO-BEA-SEP", "REC-DEMO-BEA-SEP", "2026-09-09T17:35:00+00:00"),
+        ("PASSBR2026103", "club_membership", "membership:2026-10", "Mensalidade Dojo Norte • Outubro/2026", 16900, "2026-10-10", "pending", "", "", "", ""),
+        ("REG002811", "club_membership", "membership:2026-09", "Mensalidade Dojo Norte • Setembro/2026", 12900, "2026-09-10", "paid", "pix", "PAY-DEMO-ENZO-SEP", "REC-DEMO-ENZO-SEP", "2026-09-07T10:00:00+00:00"),
+    ]
+    for athlete_document, payment_type, reference_key, description, amount_cents, due_date, status, method, transaction_reference, receipt_code, paid_at in payment_seeds:
+        athlete_id = athlete_by_document.get(athlete_document)
+        if athlete_id:
+            db.execute(
+                """INSERT OR IGNORE INTO athlete_payments
+                   (athlete_id,club_id,payment_type,reference_key,description,amount_cents,due_date,status,payment_method,transaction_reference,receipt_code,paid_at,created_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (athlete_id, club_id, payment_type, reference_key, description, amount_cents, due_date, status, method, transaction_reference, receipt_code, paid_at, now, now),
+            )
+    if competition:
+        competition_row = db.execute("SELECT id,name,fee_cents,registration_deadline FROM competitions WHERE id=?", (competition[0],)).fetchone()
+        for athlete_document in ("52998224725", "PASSBR2026103"):
+            athlete_id = athlete_by_document.get(athlete_document)
+            registration = db.execute(
+                "SELECT id,payment_status FROM registrations WHERE competition_id=? AND athlete_id=?",
+                (competition[0], athlete_id),
+            ).fetchone() if athlete_id else None
+            if registration:
+                db.execute(
+                    """INSERT OR IGNORE INTO athlete_payments
+                       (athlete_id,club_id,registration_id,competition_id,payment_type,reference_key,description,amount_cents,due_date,status,payment_method,transaction_reference,receipt_code,paid_at,created_at,updated_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (athlete_id, club_id, registration["id"], competition[0], "competition_fee", f"registration:{registration['id']}",
+                     f"Inscrição • {competition_row['name']}", competition_row["fee_cents"], competition_row["registration_deadline"],
+                     registration["payment_status"], "pix" if registration["payment_status"] == "paid" else "",
+                     f"PAY-DEMO-COMP-{registration['id']}" if registration["payment_status"] == "paid" else "",
+                     f"REC-DEMO-COMP-{registration['id']}" if registration["payment_status"] == "paid" else "",
+                     "2026-09-12T11:30:00+00:00" if registration["payment_status"] == "paid" else "", now, now),
+                )
+
     if competition:
         db.execute(
             """INSERT OR IGNORE INTO delegations(club_id,competition_id,name,status,deadline,notes,created_at)
@@ -679,6 +904,96 @@ def seed_database(db: sqlite3.Connection) -> None:
             db.execute(
                 "INSERT OR IGNORE INTO technician_checklists(registration_id,item_key,label,completed,updated_at) VALUES(?,?,?,?,?)",
                 (registration[0], item_key, label, completed, now),
+            )
+
+    # Chaves, categorias e chamadas publicadas para o acompanhamento autenticado do atleta.
+    if competition:
+        rafael_registration = db.execute(
+            """SELECT r.id FROM registrations r JOIN athletes a ON a.id=r.athlete_id
+               WHERE r.competition_id=? AND a.document='52998224725'""",
+            (competition[0],),
+        ).fetchone()
+        beatriz_registration = db.execute(
+            """SELECT r.id FROM registrations r JOIN athletes a ON a.id=r.athlete_id
+               WHERE r.competition_id=? AND a.document='PASSBR2026103'""",
+            (competition[0],),
+        ).fetchone()
+        live_category_seeds = [
+            ("Jiu-jítsu", "Adulto • Médio • Faixa azul", "Masculino • 18+ • até 82,3 kg", "Tatame 3", 8, "calling"),
+            ("Muay Thai", "Adulto • Até 60 kg • Intermediário", "Feminino • Classe B • até 60 kg", "Ringue 1", 4, "scheduled"),
+            ("Jiu-jítsu", "Adulto • Leve • Faixa roxa", "Masculino • 18+ • até 76 kg", "Tatame 2", 4, "in_progress"),
+        ]
+        for sport, name, division, arena_label, bracket_size, category_status in live_category_seeds:
+            db.execute(
+                """INSERT OR IGNORE INTO competition_categories
+                   (competition_id,sport,name,division,arena_label,bracket_size,status,publication_status,published_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?)""",
+                (competition[0], sport, name, division, arena_label, bracket_size, category_status, "published", now, now),
+            )
+        rafael_category = db.execute(
+            "SELECT id FROM competition_categories WHERE competition_id=? AND sport='Jiu-jítsu' AND name='Adulto • Médio • Faixa azul'",
+            (competition[0],),
+        ).fetchone()
+        beatriz_category = db.execute(
+            "SELECT id FROM competition_categories WHERE competition_id=? AND sport='Muay Thai' AND name='Adulto • Até 60 kg • Intermediário'",
+            (competition[0],),
+        ).fetchone()
+        roxa_category = db.execute(
+            "SELECT id FROM competition_categories WHERE competition_id=? AND sport='Jiu-jítsu' AND name='Adulto • Leve • Faixa roxa'",
+            (competition[0],),
+        ).fetchone()
+        rafael_bouts = [
+            ("Quartas de final", 1, 1, "128", "10:40", "10:46", "Tatame 3", rafael_registration[0] if rafael_registration else None, "Rafael Martins", None, "Lucas Almeida", "calling", "", "", "", "136"),
+            ("Quartas de final", 1, 2, "129", "10:48", "10:53", "Tatame 3", None, "Bruno Ribeiro", None, "Caio Moreira", "on_deck", "", "", "", "136"),
+            ("Quartas de final", 1, 3, "130", "10:56", "11:02", "Tatame 3", None, "Diego Santos", None, "Felipe Rocha", "scheduled", "", "", "", "137"),
+            ("Quartas de final", 1, 4, "131", "11:04", "11:10", "Tatame 3", None, "André Lima", None, "Matheus Oliveira", "scheduled", "", "", "", "137"),
+            ("Semifinal", 2, 1, "136", "11:32", "11:38", "Tatame 3", None, "Vencedor da luta 128", None, "Vencedor da luta 129", "scheduled", "", "", "", "142"),
+            ("Semifinal", 2, 2, "137", "11:40", "11:46", "Tatame 3", None, "Vencedor da luta 130", None, "Vencedor da luta 131", "scheduled", "", "", "", "142"),
+            ("Final", 3, 1, "142", "12:12", "12:18", "Tatame 3", None, "Vencedor da luta 136", None, "Vencedor da luta 137", "scheduled", "", "", "", ""),
+        ]
+        beatriz_bouts = [
+            ("Semifinal", 1, 1, "146", "11:20", "11:25", "Ringue 1", beatriz_registration[0] if beatriz_registration else None, "Beatriz Nunes", None, "Mariana Souza", "scheduled", "", "", "", "152"),
+            ("Semifinal", 1, 2, "147", "11:32", "11:38", "Ringue 1", None, "Camila Rocha", None, "Ana Ferreira", "scheduled", "", "", "", "152"),
+            ("Final", 2, 1, "152", "12:24", "12:30", "Ringue 1", None, "Vencedora da luta 146", None, "Vencedora da luta 147", "scheduled", "", "", "", ""),
+        ]
+        roxa_bouts = [
+            ("Semifinal", 1, 1, "117", "10:18", "10:22", "Tatame 2", None, "Gustavo Alves", None, "João Carvalho", "completed", "2", "0", "Gustavo Alves", "123"),
+            ("Semifinal", 1, 2, "118", "10:26", "10:30", "Tatame 2", None, "Pedro Martins", None, "Leandro Silva", "in_progress", "0", "0", "", "123"),
+            ("Final", 2, 1, "123", "11:05", "11:10", "Tatame 2", None, "Gustavo Alves", None, "Vencedor da luta 118", "scheduled", "", "", "", ""),
+        ]
+        for category_row, bout_seeds in ((rafael_category, rafael_bouts), (beatriz_category, beatriz_bouts), (roxa_category, roxa_bouts)):
+            if not category_row:
+                continue
+            for bout in bout_seeds:
+                db.execute(
+                    """INSERT OR IGNORE INTO competition_bouts
+                       (category_id,round_name,round_order,bout_order,bout_number,scheduled_time,estimated_time,arena_label,
+                        red_registration_id,red_name,blue_registration_id,blue_name,status,score_red,score_blue,winner_name,next_bout_number,updated_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (category_row[0], *bout, now),
+                )
+        if db.execute("SELECT COUNT(*) FROM competition_live_notices WHERE competition_id=?", (competition[0],)).fetchone()[0] == 0:
+            db.executemany(
+                """INSERT INTO competition_live_notices
+                   (competition_id,category_id,registration_id,kind,priority,title,body,created_at)
+                   VALUES(?,?,?,?,?,?,?,?)""",
+                [
+                    (competition[0], rafael_category[0] if rafael_category else None, rafael_registration[0] if rafael_registration else None, "call", "urgent", "Apresente-se na área de chamada", "Luta 128 no Tatame 3. Confirme documento, faixa e equipamento antes da entrada.", now),
+                    (competition[0], rafael_category[0] if rafael_category else None, None, "bracket", "normal", "Chave publicada", "A chave Adulto • Médio • Faixa azul está disponível e será atualizada pela organização.", now),
+                    (competition[0], None, None, "arena", "high", "Atenção às áreas", "Acompanhe a área indicada em cada chamada; alterações oficiais aparecem nesta central.", now),
+                ],
+            )
+        stream_seeds = [
+            ("Tatame 3", "Tatame 3 • Chave principal", "hls", "", "", "standby", "authenticated", 5, "2026-10-18T10:30:00-03:00"),
+            ("Tatame 2", "Tatame 2 • Categorias avançadas", "hls", "", "", "standby", "authenticated", 5, "2026-10-18T10:00:00-03:00"),
+            ("Ringue 1", "Ringue 1 • Lutas em pé", "hls", "", "", "standby", "authenticated", 5, "2026-10-18T11:00:00-03:00"),
+        ]
+        for arena_label, title, playback_type, playback_url, fallback_url, stream_status, access_level, latency_seconds, starts_at in stream_seeds:
+            db.execute(
+                """INSERT OR IGNORE INTO competition_streams
+                   (competition_id,arena_label,title,playback_type,playback_url,fallback_url,status,access_level,latency_seconds,starts_at,updated_at)
+                   VALUES(?,?,?,?,?,?,?,?,?,?,?)""",
+                (competition[0], arena_label, title, playback_type, playback_url, fallback_url, stream_status, access_level, latency_seconds, starts_at, now),
             )
 
     if competition and marcelo and db.execute("SELECT COUNT(*) FROM technician_notices WHERE technician_id=?", (marcelo[0],)).fetchone()[0] == 0:

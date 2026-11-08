@@ -2886,7 +2886,7 @@ Nenhuma dessas pendências altera a decisão principal: o Apex’s Forge será o
 **Documento de origem:** `registro-de-decisoes-apex-combate.md`
 
 **Responsável pelo produto:** Mozer  
-**Atualizado em:** 7 de outubro de 2026
+**Atualizado em:** 15 de outubro de 2026
 
 Este arquivo registra decisões vigentes para impedir regressões de escopo ou interpretações conflitantes.
 
@@ -2941,12 +2941,76 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-047 | A área autenticada compartilha um único controle “Voltar ao início” para atleta, clube, técnico e federação; sua ativação encerra a sessão com limpeza de tokens, perfil, escopos e caches locais relacionados antes de retornar à abertura pública, com apresentação responsiva e acessível. | Aprovada e implementada na v44 |
 | DEC-048 | A apresentação acadêmica dispõe de APK Android demonstrativo assinado, identificado como `br.com.apexcombate.app`, compatível a partir do Android 6.0 e conectado por HTTPS à demonstração oficial; sua distribuição direta usa página pública, botão de download e QR Code, a chave de demonstração permanece fora do Git, e AAB, assinatura de loja e Google Play continuam como etapa de produção. | Aprovada e implementada na entrega Android v44 |
 | DEC-049 | A apresentação acadêmica dispõe de instalador para Windows 10/11 de 64 bits, com ícone oficial e atalhos locais; ele abre a interface v44 diretamente pelo Microsoft Edge em modo de aplicativo, usa Chrome apenas como alternativa, não utiliza Opera GX e deverá receber assinatura Authenticode comercial antes de uma distribuição de produção. | Aprovada e implementada na entrega Windows v44 |
+| DEC-050 | A organização e conclusão do Apex Combate será executada perfil por perfil, começando pelo ATLETA com revisão completa, integração dos dados autenticados e persistência em sequência segura, sem alterar a composição visual aprovada da v44; somente após a aprovação do atleta o trabalho avança para clube, técnico e federação, e o Apex’s Forge permanece pausado. | Aprovada; bloco 1 do atleta em revisão local |
+| DEC-051 | Um atleta mantém uma única pessoa, identidade, conta, login e conjunto de documentos pessoais mesmo quando pratica várias artes marciais; cada modalidade possui contexto esportivo próprio de graduação, categoria, clube, professor/técnico, federação/organização, situação, privacidade e certificados. Após o login: zero modalidades abre o cadastro da primeira; uma entra diretamente; duas ou mais abrem a seleção de modalidade. Modalidades arquivadas não contam para esse direcionamento. | Aprovada e implementada localmente; publicação pendente de revisão |
+| DEC-052 | O perfil do ATLETA deve conter somente o necessário para identificação, prática, documentação, participação em competições, acompanhamento oficial e segurança. A revisão deve simultaneamente remover ações futuras ou simuladas sem operação real e completar itens indispensáveis, incluindo responsável legal do menor, sem permitir troca manual de perfil ou permissão após o login. | Aprovada e implementada localmente; publicação pendente de revisão |
+| DEC-053 | A segurança mínima da área autenticada inclui isolamento por atleta e permissão, limite de tentativas por IP e identidade, erros de acesso sem revelar existência da conta, sessão temporária, revogação do token no logout, encerramento após 20 minutos de inatividade, limpeza de dados locais, auditoria, política de conteúdo do navegador e validação de tipo e datas dos documentos. Documento e nascimento continuam como identificação de entrada da demonstração; a segunda etapa de autenticação para produção deverá ser definida antes de operar dados reais. | Aprovada e implementada localmente na base demonstrativa; segundo fator de produção pendente de definição |
+| DEC-054 | O percentual de completude do perfil do atleta não será exibido nem calculado. Permanecem apenas os indicadores operacionais necessários para documentação e preparação de uma inscrição. | Aprovada e implementada localmente |
+| DEC-055 | O gráfico de desempenho da área do atleta será removido. Resultados permanecem em formato objetivo, oficial e homologado, sem visualização gráfica vazia ou estimada. | Aprovada e implementada localmente |
+| DEC-056 | A opção “Perfil esportivo público” será removida da área do atleta e do cadastro de modalidade. Modalidades existentes e novas ficam privadas por padrão; a API não aceita reativação dessa exposição. | Aprovada e implementada localmente; opção visual removida do público no commit `d44ab59` |
+| DEC-057 | O atleta terá uma central de pagamentos dentro de Competições, reunindo taxas de inscrição, mensalidades do clube, valores, vencimentos, situações e comprovantes. A demonstração confirma operações sem cobrança real e não coleta dados bancários ou de cartão; a produção usará gateway certificado. | Aprovada e implementada localmente; operação financeira real pendente de gateway |
+| DEC-058 | A validade automática seria removida da carteirinha e do quadro de validação da entidade responsável. | Substituída pela DEC-059 após revisão do proprietário |
+| DEC-059 | A validade permanece na carteirinha digital e no quadro de validação federativa, junto da última validação. A demonstração usa o encerramento do ano corrente. | Aprovada, implementada e publicada |
+| DEC-060 | O atleta terá, dentro de Competições, uma central autenticada de campeonato ao vivo para acompanhar sua próxima luta, chave, categorias publicadas, adversário, área, número da luta, horário, quantidade de lutas anteriores, fila de chamadas, resultados da chave e avisos oficiais. A consulta é somente leitura, isolada pelas inscrições do atleta e atualizada automaticamente. | Aprovada e implementada localmente; publicação pendente de autorização |
+| DEC-061 | A central de campeonato ao vivo terá player de vídeo por tatame, ringue ou área e modo de filtragem por busca, modalidade, categoria, área, situação e luta do próprio atleta. A demonstração não exibirá luta falsa: o player ficará preparado para HLS autenticado e só reproduzirá fonte autorizada. Origens externas exigem allowlist explícita, URL temporária e autorização de imagem. | Aprovada e implementada localmente; fonte real e publicação pendentes de provedor e autorização |
 
 ### Regras de mudança
 
 - Somente uma instrução explícita de Mozer pode substituir uma decisão aprovada.
 - Uma decisão substituída deve permanecer no histórico com indicação da nova decisão.
 - Mudanças de autenticação, perfis, governança, técnico ou comércio devem atualizar a documentação mestre e os documentos específicos.
+
+---
+
+### Atualização operacional de 15 de outubro de 2026 — revisão completa do ATLETA
+
+A organização do produto passou a ser executada perfil por perfil, começando pelo ATLETA e mantendo a composição visual aprovada da v44.
+
+O diagnóstico integral está em `../relatorios/revisao-completa-atleta-apex-combate-v44.md`. O primeiro bloco local, ainda sem publicação, passou a ligar a identidade autenticada ao dashboard, barra lateral, carteirinha, perfil, painel lateral, catálogo e inscrições; valores pessoais sem fonte oficial deixaram de ser exibidos como se pertencessem a qualquer atleta.
+
+A sequência aprovada permanece:
+
+1. identidade autenticada e integridade do dashboard;
+2. perfil, documentos, responsáveis e privacidade;
+3. agenda, turmas, presença, check-in, treinos e metas;
+4. competições, inscrições, técnico e prontidão;
+5. resultados, ranking, certificados e carteirinha verificável;
+6. testes, acessibilidade, segurança, offline e documentação;
+7. aprovação do atleta antes de clube, técnico e federação.
+
+O Apex’s Forge continua pausado até a organização do Apex Combate ser concluída e autorizada por Mozer.
+
+---
+
+### Atualização operacional de 21 de setembro de 2026 — perfil multimodal do ATLETA
+
+A área do atleta passa a tratar a pessoa e as modalidades em camadas distintas:
+
+- **conta pessoal única:** login, nome, documento, nascimento, contato, emergência e documentos pessoais;
+- **modalidades vinculadas:** arte marcial, estilo/vertente, graduação, categoria, clube, professor/técnico, federação ou organização, data de início e situação;
+- **certificados por modalidade:** graduação, filiação, curso/formação, instrutor/professor e arbitragem, com emissor, código, emissão, validade e situação de validação;
+- **contexto selecionado:** dashboard, carteirinha, competições, inscrições, resultados, certificados e dados esportivos usam a modalidade ativa sem duplicar a pessoa;
+- **direcionamento após o login:** zero modalidade abre o cadastro inicial, uma modalidade entra diretamente e duas ou mais modalidades não arquivadas exibem o seletor.
+
+A implementação local adiciona as tabelas `athlete_modalities` e `athlete_certificates`, migração sem duplicação de contas, APIs autenticadas, isolamento por `athlete_id`, dados de demonstração multimodais, seletor responsivo e gerenciamento no perfil. Documentos de identificação, atestados, termos e autorizações permanecem pessoais; certificados esportivos ficam ligados à modalidade correspondente.
+
+A alteração preserva a composição v44, o tema escuro, o logo oficial, as permissões vigentes e o estado vazio para resultados oficiais ainda não integrados.
+
+Na revisão de necessidade aprovada por Mozer, a área do atleta também foi enxugada e completada: saíram Comunidade/Desafios, botões de carteira, PDF, calendário, exportação, comprovante e filtros ainda sem operação; a troca manual de perfil autenticado foi desativada; permaneceram somente Dashboard, Carteirinha, Competições, Resultados e Perfil. Para menores, foi incluído o cadastro do responsável legal, sem transformar a atualização dos dados em autorização automática — a participação continua dependente da validação documental pelo clube ou federação.
+
+A proteção demonstrativa passou a incluir revogação do token no servidor ao sair, bloqueio de token revogado, encerramento automático após 20 minutos de inatividade, aviso prévio, limites de tentativa por IP e identidade, mensagem genérica no acesso inválido, política de segurança de conteúdo no navegador, referência sem vazamento, validação de arquivo e validade documental, auditoria e encerramento automático quando a API rejeitar a sessão. O login atual por documento e nascimento continua sendo o identificador da demonstração; antes de operar dados reais em produção será obrigatório definir e implementar a segunda etapa de autenticação do atleta.
+
+Por decisão de Mozer, o percentual de completude do perfil foi removido da tela e da resposta do backend. A preparação operacional para competição continua separada, baseada apenas em inscrição, pagamento, documentos e técnico responsável. O gráfico de desempenho do atleta também foi removido; resultados permanecem objetivos e só aparecem quando forem oficiais e homologados. A opção “Perfil esportivo público” foi retirada da tela, do cadastro de modalidade e das operações aceitas pela API; todas as modalidades ficam privadas.
+
+A central de pagamentos necessária ao atleta foi incluída dentro de Competições. Ela reúne taxas de inscrição, mensalidades do clube, valores, vencimentos, estados pendente/vencido/pago/isento/estornado, forma utilizada e comprovante. Novas inscrições geram a cobrança correspondente sem aceitar valor enviado pelo cliente. A confirmação demonstrativa atualiza pagamento, inscrição e delegação, mas informa explicitamente que não movimenta dinheiro e não solicita número de cartão, CVV, senha bancária ou chave pessoal. A etapa real dependerá de gateway certificado.
+
+A validade permanece na carteirinha e no quadro de validação da entidade responsável, junto da última validação. Na demonstração, ela acompanha o encerramento do ano corrente; documentos e certificados continuam usando seus próprios prazos oficiais.
+
+A área de Competições também inclui a central “Campeonato ao vivo”. O atleta autenticado acompanha sua próxima luta e todas as categorias publicadas do campeonato em que está inscrito, com chave por rodada, fila das áreas, adversários, chamada, horário previsto, quantidade de lutas anteriores e avisos oficiais. A API é de leitura, confirma a inscrição antes de liberar o evento, não permite consultar um campeonato alheio e atualiza a tela automaticamente a cada 30 segundos. A demonstração usa dados operacionais identificados como simulados até a integração com a mesa oficial da organização.
+
+A central possui player de vídeo selecionável por área e modo de filtro para busca, modalidade, área, situação e “somente minha luta”. O player aceita fonte HLS autorizada quando o navegador possui suporte nativo e usa fonte alternativa progressiva quando configurada. Nenhuma luta falsa é reproduzida: sem câmera ou provedor conectado, a interface informa que a transmissão ainda não começou. As URLs externas só são liberadas quando sua origem HTTPS consta em `APEX_STREAM_ORIGINS`; o navegador mantém `media-src` e `connect-src` restritos pela política de conteúdo. Em produção, a API deve entregar URL assinada de curta duração e respeitar direitos de transmissão, consentimento de imagem, proteção de menores e prazo de retenção.
+
+A publicação continua pendente de revisão e autorização do conjunto completo do atleta.
 
 ---
 

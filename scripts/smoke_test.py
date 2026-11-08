@@ -50,6 +50,8 @@ def main() -> None:
 
     status, app, content_type = request("/apex-combate.html?v=44")
     assert status == 200 and b"Apex Combate" in app and content_type == "text/html"
+    for contract in (b'id="athleteLiveCenter"', b'id="athleteLiveVideo"', b'id="athleteLiveFilterPanel"', b'id="athletePaymentsSection"'):
+        assert contract in app, f"módulo autenticado ausente: {contract!r}"
 
     status, installer, content_type = request("/instalar-apex-combate.html")
     assert status == 200 and b"Baixar APK demonstrativo v44" in installer and content_type == "text/html"
@@ -83,8 +85,8 @@ def main() -> None:
     topbar = app.split(b'<header class="topbar">', 1)[1].split(b'</header>', 1)[0]
     for contract in (b'id="appReturnHome"', b'class="return-home-btn"', b'type="button"', b'data-logout', b'aria-labelledby="appReturnHomeLabel"', b'aria-label="Voltar ao in\xc3\xadcio e encerrar sess\xc3\xa3o"', b'id="appReturnHomeLabel"', b'>Voltar ao in\xc3\xadcio</span>'):
         assert contract in topbar
-    logout_handler = app.split(b"document.querySelectorAll('[data-logout]')", 1)[1][:2600]
-    for contract in (b"activeSessionToken = '';", b"activeAdminToken = '';", b"sessionStorage.removeItem('apex-session')", b"sessionStorage.removeItem('apex-admin-jwt')", b"localStorage.removeItem('apex-technician-operations-v38')", b"showWelcomeScreen();"):
+    logout_handler = app.split(b"const APEX_IDLE_TIMEOUT_MS", 1)[1].split(b"const roleDefaultPage", 1)[0]
+    for contract in (b"fetch('/api/logout'", b"keepalive: true", b"activeSessionToken = '';", b"activeAdminToken = '';", b"sessionStorage.removeItem('apex-session')", b"sessionStorage.removeItem('apex-admin-jwt')", b"localStorage.removeItem('apex-technician-operations-v38')", b"showWelcomeScreen();"):
         assert contract in logout_handler
     for contract in (b'.return-home-btn { height: 39px;', b'.return-home-btn { width: 39px; padding: 0; }', b'.return-home-btn { min-width: 44px; }', b'.location-pill, .return-home-btn, .circle-btn { height: 48px; }'):
         assert contract in css
@@ -100,7 +102,24 @@ def main() -> None:
     assert dashboard["ok"] is True
     assert dashboard["documents"], "documentos do atleta ausentes"
     assert dashboard["classes"], "turmas do atleta ausentes"
+    assert dashboard["registrations"], "inscrições do atleta ausentes"
     assert "readiness" in dashboard
+    registration = dashboard["registrations"][0]
+    for field in ("competition_id", "sport", "venue", "created_at"):
+        assert field in registration, f"campo ausente na inscrição autenticada: {field}"
+    assert dashboard["athlete"]["club_city"], "cidade do clube ausente na identidade autenticada"
+    assert dashboard["payments"], "central de pagamentos do atleta ausente"
+
+    status, body, _ = request("/api/athlete/live", token=login["token"])
+    assert status == 200, body.decode("utf-8", errors="replace")
+    live = json.loads(body)
+    assert live["scope"] == "authenticated-athlete-read-only"
+    assert live["myBout"]["bout_number"] == "128"
+    assert live["categories"] and live["filterBouts"] and live["streams"]
+    assert all(stream["access_level"] == "authenticated" for stream in live["streams"])
+
+    status, body, _ = request("/api/athlete/live?competitionId=999999", token=login["token"])
+    assert status == 404, body.decode("utf-8", errors="replace")
 
     status, body, _ = request("/api/login", payload={"usuario": "RYUZOKAN", "senha": "2026", "perfil": "clube"})
     assert status == 200, body.decode("utf-8", errors="replace")

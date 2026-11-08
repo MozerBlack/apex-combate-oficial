@@ -1216,6 +1216,121 @@
     .competition-content > p { margin:0; display:flex; align-items:center; gap:5px; color:var(--muted); font-size: 11px; font-size: var(--font-caption, 11px); }
     .competition-stats { display:flex; gap:15px; margin-top:10px; color:#858d99; font-size: 11px; font-size: var(--font-caption, 11px); }
     .competition-action { justify-self:end; }
+
+    .athlete-live-shortcut { display:block; margin-top:9px; padding:0; }
+    .athlete-live-center { margin-bottom:28px; padding:20px; overflow:hidden; border:1px solid rgba(239,38,54,.23); border-radius:18px; background:radial-gradient(circle at 96% 0,rgba(239,38,54,.10),transparent 28%),#0a0d12; box-shadow:var(--shadow); }
+    .athlete-live-head { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-bottom:16px; }
+    .athlete-live-head h3 { margin:7px 0 5px; font-size:23px; letter-spacing:-.035em; }
+    .athlete-live-head p { margin:0; color:var(--muted); font-size:12px; font-size:var(--font-small,12px); }
+    .athlete-live-eyebrow { display:flex; align-items:center; gap:8px; color:#d5d9df; font-size:10px; font-size:var(--font-micro,10px); font-weight:900; letter-spacing:.14em; text-transform:uppercase; }
+    .athlete-live-eyebrow i,.live-dot-label i { width:8px; height:8px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 5px rgba(239,38,54,.12); animation:livePulse 1.8s ease-in-out infinite; }
+    @keyframes livePulse { 50% { opacity:.45; transform:scale(.82); } }
+    .athlete-live-sync { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:11px; font-size:var(--font-caption,11px); }
+    .athlete-live-filters { display:grid; grid-template-columns:minmax(220px,1.1fr) minmax(220px,1fr) auto; align-items:end; gap:10px; margin-bottom:13px; padding:12px; border:1px solid var(--line-soft); border-radius:13px; background:rgba(255,255,255,.018); }
+    .athlete-live-filters label span { display:block; margin-bottom:6px; color:var(--muted); font-size:10px; font-weight:900; letter-spacing:.12em; }
+    .athlete-live-filters select { width:100%; height:42px; padding:0 12px; border:1px solid var(--line); border-radius:10px; color:var(--text); background:#10141b; font:inherit; font-size:12px; }
+    .athlete-live-readonly { min-height:42px; display:flex; align-items:center; justify-content:center; gap:7px; padding:0 12px; border:1px solid rgba(97,168,255,.16); border-radius:10px; color:var(--blue); background:rgba(97,168,255,.06); font-size:11px; font-weight:850; }
+    .athlete-live-filter-panel { margin-bottom:13px; padding:14px; border:1px solid rgba(97,168,255,.17); border-radius:13px; background:rgba(97,168,255,.035); }
+    .athlete-live-filter-panel[hidden] { display:none; }
+    .athlete-live-filter-title { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    .athlete-live-filter-title strong,.athlete-live-filter-title span { display:block; }
+    .athlete-live-filter-title strong { font-size:13px; }
+    .athlete-live-filter-title span { margin-top:3px; color:var(--muted); font-size:10px; }
+    .athlete-live-filter-grid { display:grid; grid-template-columns:minmax(190px,1.25fr) repeat(3,minmax(130px,.75fr)); align-items:end; gap:9px; }
+    .athlete-live-filter-grid label > span { display:block; margin-bottom:6px; color:var(--muted); font-size:10px; font-weight:900; letter-spacing:.09em; }
+    .athlete-live-filter-grid select,.athlete-live-filter-search { width:100%; height:40px; border:1px solid var(--line); border-radius:9px; color:var(--text); background:#10141b; }
+    .athlete-live-filter-grid select { padding:0 10px; font:inherit; font-size:11px; }
+    .athlete-live-filter-search { display:flex; align-items:center; gap:7px; padding:0 10px; }
+    .athlete-live-filter-search input { width:100%; min-width:0; border:0; outline:0; color:var(--text); background:transparent; font:inherit; font-size:11px; }
+    .athlete-live-mine-filter { min-height:40px; display:flex; align-items:center; gap:8px; padding:0 10px; border:1px solid var(--line); border-radius:9px; background:#10141b; }
+    .athlete-live-mine-filter input { accent-color:var(--accent-2); }
+    .athlete-live-mine-filter > span { margin:0!important; color:#d7dbe1!important; font-size:11px!important; font-weight:700!important; letter-spacing:0!important; }
+    .athlete-live-filter-grid > strong { align-self:center; color:var(--blue); font-size:11px; text-align:right; }
+    .athlete-live-video-section { margin-bottom:13px; padding:18px; border:1px solid var(--line-soft); border-radius:15px; background:var(--surface); }
+    .athlete-live-video-layout { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr); gap:12px; }
+    .athlete-live-player-card { min-width:0; }
+    .athlete-live-player-shell { position:relative; overflow:hidden; aspect-ratio:16/9; border:1px solid #2b3038; border-radius:13px; background:#050608; }
+    .athlete-live-player-shell video { width:100%; height:100%; display:block; object-fit:contain; background:#050608; }
+    .athlete-live-player-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:7px; padding:25px; text-align:center; background:linear-gradient(rgba(5,7,10,.78),rgba(5,7,10,.90)); }
+    .athlete-live-player-overlay[hidden] { display:none; }
+    .athlete-live-player-overlay i { width:46px; height:46px; display:grid; place-items:center; border-radius:50%; color:var(--accent-2); background:rgba(239,38,54,.12); font-style:normal; }
+    .athlete-live-player-overlay strong { font-size:15px; }
+    .athlete-live-player-overlay span { max-width:430px; color:#9ea5ae; font-size:11px; line-height:1.5; }
+    .athlete-live-video-watermark { position:absolute; left:10px; top:10px; padding:5px 7px; border-radius:7px; color:#fff; background:rgba(239,38,54,.82); font-size:10px; font-weight:950; letter-spacing:.07em; pointer-events:none; }
+    .athlete-live-player-info { display:flex; align-items:center; justify-content:space-between; gap:10px; padding-top:10px; }
+    .athlete-live-player-info strong,.athlete-live-player-info span { display:block; }
+    .athlete-live-player-info strong { font-size:12px; }
+    .athlete-live-player-info span { margin-top:4px; color:var(--muted); font-size:10px; }
+    .athlete-live-stream-list { display:grid; align-content:start; gap:8px; max-height:350px; overflow:auto; }
+    .athlete-live-stream { width:100%; display:grid; grid-template-columns:37px minmax(0,1fr) auto; align-items:center; gap:9px; padding:10px; border:1px solid var(--line-soft); border-radius:10px; color:var(--text); text-align:left; background:#0b0e13; cursor:pointer; }
+    .athlete-live-stream:hover,.athlete-live-stream.active { border-color:rgba(239,38,54,.40); background:rgba(239,38,54,.06); }
+    .athlete-live-stream > i { width:35px; height:35px; display:grid; place-items:center; border-radius:9px; color:var(--blue); background:rgba(97,168,255,.08); font-style:normal; }
+    .athlete-live-stream strong,.athlete-live-stream span { display:block; }
+    .athlete-live-stream strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; }
+    .athlete-live-stream span { margin-top:3px; color:var(--muted); font-size:10px; }
+    .athlete-live-stream em { padding:4px 6px; border-radius:99px; color:var(--muted); background:var(--surface-3); font-size:10px; font-style:normal; font-weight:900; text-transform:uppercase; }
+    .athlete-live-stream em.live { color:var(--green); background:var(--green-soft); }
+    .athlete-live-layout { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(290px,.65fr); gap:13px; }
+    .athlete-live-next,.athlete-live-queue-card,.athlete-bracket-card { padding:18px; }
+    .athlete-live-next { min-width:0; background:linear-gradient(145deg,rgba(239,38,54,.08),transparent 45%),var(--surface); }
+    .athlete-live-next-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .athlete-live-kicker { color:var(--accent-2); font-size:10px; font-size:var(--font-micro,10px); font-weight:900; letter-spacing:.13em; text-transform:uppercase; }
+    .athlete-live-next h4 { margin:8px 0 5px; font-size:20px; letter-spacing:-.03em; }
+    .athlete-live-next-top p { margin:0; color:var(--muted); font-size:11px; font-size:var(--font-caption,11px); }
+    .athlete-live-opponents { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:stretch; gap:10px; margin:18px 0 12px; }
+    .athlete-live-opponents > div { min-width:0; padding:14px; border:1px solid var(--line-soft); border-radius:12px; background:#0b0e13; }
+    .athlete-live-opponents > div.is-me { border-color:rgba(239,38,54,.40); background:rgba(239,38,54,.07); }
+    .athlete-live-opponents span,.athlete-live-opponents small,.athlete-live-opponents strong { display:block; }
+    .athlete-live-opponents span { color:var(--muted); font-size:10px; font-weight:900; letter-spacing:.12em; }
+    .athlete-live-opponents strong { margin:7px 0 4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:14px; font-size:var(--font-body,14px); }
+    .athlete-live-opponents small { color:var(--muted); font-size:10px; font-size:var(--font-micro,10px); }
+    .athlete-live-opponents > b { align-self:center; color:#68707b; font-size:16px; }
+    .athlete-live-meta { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+    .athlete-live-meta > div { padding:10px; border:1px solid var(--line-soft); border-radius:10px; background:rgba(0,0,0,.14); }
+    .athlete-live-meta span,.athlete-live-meta strong { display:block; }
+    .athlete-live-meta span { color:var(--muted); font-size:10px; font-size:var(--font-micro,10px); }
+    .athlete-live-meta strong { margin-top:5px; font-size:12px; font-size:var(--font-small,12px); }
+    .athlete-live-guidance { display:flex; align-items:center; gap:9px; margin-top:12px; padding:10px; border-radius:10px; color:#d3d7dd; background:rgba(97,168,255,.07); font-size:11px; font-size:var(--font-caption,11px); }
+    .athlete-live-guidance.urgent { color:#ffd2d5; background:rgba(239,38,54,.11); }
+    .live-dot-label { display:flex; align-items:center; gap:7px; color:var(--accent-2); font-size:10px; font-weight:950; letter-spacing:.12em; }
+    .athlete-live-queue { display:grid; gap:7px; max-height:317px; overflow:auto; padding-right:2px; }
+    .athlete-live-queue-row { display:grid; grid-template-columns:40px 34px minmax(0,1fr) auto; align-items:center; gap:8px; padding:9px; border:1px solid var(--line-soft); border-radius:10px; background:#0b0e13; }
+    .athlete-live-queue-row.is-mine { border-color:rgba(239,38,54,.36); background:rgba(239,38,54,.06); }
+    .athlete-live-queue-row time { color:#e7e9ec; font-size:11px; font-weight:850; }
+    .athlete-live-queue-row > i { width:31px; height:31px; display:grid; place-items:center; border-radius:8px; color:var(--accent-2); background:rgba(239,38,54,.08); font-size:10px; font-style:normal; font-weight:900; }
+    .athlete-live-queue-row strong,.athlete-live-queue-row small { display:block; }
+    .athlete-live-queue-row strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; }
+    .athlete-live-queue-row small { margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--muted); font-size:10px; }
+    .athlete-live-queue-row em { padding:4px 6px; border-radius:99px; color:var(--muted); background:var(--surface-3); font-size:10px; font-style:normal; font-weight:900; text-transform:uppercase; }
+    .athlete-bracket-card { margin-top:13px; }
+    .athlete-bracket-scroll { overflow-x:auto; padding:3px 2px 8px; }
+    .athlete-bracket { min-width:700px; display:flex; align-items:stretch; gap:12px; }
+    .athlete-bracket-round { min-width:220px; flex:1; display:flex; flex-direction:column; gap:9px; }
+    .athlete-bracket-round > h4 { margin:0 0 2px; color:#9ea5af; font-size:10px; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .athlete-bracket-bouts { flex:1; display:flex; flex-direction:column; justify-content:space-around; gap:9px; }
+    .athlete-bracket-bout { position:relative; padding:10px; border:1px solid var(--line-soft); border-radius:10px; background:#0b0e13; }
+    .athlete-bracket-bout.is-mine { border-color:rgba(239,38,54,.45); box-shadow:inset 3px 0 0 var(--accent-2); }
+    .athlete-bracket-bout-top { display:flex; justify-content:space-between; gap:8px; margin-bottom:8px; color:var(--muted); font-size:10px; }
+    .athlete-bracket-athlete { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; padding:6px 7px; border-radius:7px; font-size:10px; }
+    .athlete-bracket-athlete + .athlete-bracket-athlete { margin-top:4px; }
+    .athlete-bracket-athlete.me { color:#fff; background:rgba(239,38,54,.10); font-weight:900; }
+    .athlete-bracket-athlete.winner { color:var(--green); }
+    .athlete-bracket-athlete span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .athlete-live-bottom { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr); gap:13px; margin-top:13px; }
+    .athlete-live-notices { display:grid; gap:8px; }
+    .athlete-live-notice { display:grid; grid-template-columns:30px minmax(0,1fr) auto; align-items:center; gap:9px; padding:10px; border:1px solid var(--line-soft); border-radius:10px; background:#0b0e13; }
+    .athlete-live-notice > i { width:29px; height:29px; display:grid; place-items:center; border-radius:8px; color:var(--blue); background:rgba(97,168,255,.08); font-style:normal; }
+    .athlete-live-notice.urgent > i { color:var(--accent-2); background:rgba(239,38,54,.09); }
+    .athlete-live-notice strong,.athlete-live-notice span { display:block; }
+    .athlete-live-notice strong { font-size:11px; }
+    .athlete-live-notice span,.athlete-live-notice time { margin-top:3px; color:var(--muted); font-size:10px; }
+    .athlete-live-rules ul { margin:0; padding-left:17px; display:grid; gap:7px; color:#c8cdd4; font-size:11px; line-height:1.45; }
+    .athlete-live-rules > small { display:block; margin-top:12px; color:var(--muted); font-size:10px; }
+
+    @media(max-width:980px) { .athlete-live-layout,.athlete-live-bottom,.athlete-live-video-layout { grid-template-columns:1fr; }.athlete-live-filters { grid-template-columns:1fr 1fr; }.athlete-live-readonly { grid-column:1/-1; }.athlete-live-filter-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.athlete-live-filter-grid > strong { text-align:left; } }
+    @media(max-width:650px) { .athlete-live-center { margin-inline:-4px; padding:14px; }.athlete-live-head { flex-direction:column; }.athlete-live-sync { width:100%; justify-content:flex-start; flex-wrap:wrap; }.athlete-live-sync > span { width:100%; }.athlete-live-filters,.athlete-live-filter-grid { grid-template-columns:1fr; }.athlete-live-readonly { grid-column:auto; }.athlete-live-filter-title { flex-direction:column; }.athlete-live-opponents { grid-template-columns:1fr; }.athlete-live-opponents > b { justify-self:center; }.athlete-live-meta { grid-template-columns:repeat(2,1fr); }.athlete-live-queue-row { grid-template-columns:38px 31px minmax(0,1fr); }.athlete-live-queue-row em { grid-column:3; justify-self:start; }.athlete-live-next-top { flex-direction:column; }.athlete-bracket { min-width:640px; }.athlete-live-notice { grid-template-columns:30px minmax(0,1fr); }.athlete-live-notice time { grid-column:2; }.athlete-live-video-section { padding:13px; }.athlete-live-player-info { align-items:flex-start; flex-direction:column; }.athlete-live-player-info .btn-small { width:100%; }.athlete-live-stream-list { max-height:none; } }
+    @media(prefers-reduced-motion:reduce) { .athlete-live-eyebrow i,.live-dot-label i { animation:none; } }
+
     .medal-stack { display:grid; gap:10px; }
     .medal-row { display:grid; grid-template-columns:35px 1fr auto; align-items:center; gap:11px; padding:12px; border:1px solid var(--line-soft); border-radius:11px; background:#0b0e13; }
     .medal-row i { width:31px; height:31px; display:grid; place-items:center; border-radius:50%; font-size: 13px; font-size: var(--font-label, 13px); font-style:normal; font-weight:900; }
@@ -1582,6 +1697,65 @@
     @media (min-width: 2000px) {
       body { line-height: 1.35; }
     }
+
+    .payment-kpis { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-bottom: 14px; }
+    .payment-safety-note { display: flex; align-items: center; gap: 9px; margin-top: 14px; padding: 12px 14px; border: 1px solid rgba(71,179,255,.2); border-radius: 12px; background: rgba(71,179,255,.06); color: var(--muted); font-size: var(--font-small); line-height: 1.45; }
+    .payment-safety-note svg { flex: 0 0 auto; color: var(--blue); }
+    .payment-action { min-width: 82px; }
+    @media (max-width: 820px) { .payment-kpis { grid-template-columns: 1fr; } }
+
+    /* Perfil multimodal do atleta */
+    .athlete-modality-switch { min-width: 190px; height: 39px; display: inline-flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--muted); }
+    .athlete-modality-switch[hidden] { display: none !important; }
+    .athlete-modality-switch select { min-width: 128px; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-weight: 750; }
+    .athlete-modality-switch option { background: #12151c; color: #f7f8fb; }
+    .modality-gate { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 22px; background: rgba(5,7,10,.88); backdrop-filter: blur(14px); }
+    .modality-gate[hidden] { display: none !important; }
+    .modality-gate-card { width: min(920px,100%); max-height: min(760px,calc(100vh - 44px)); overflow: auto; padding: clamp(24px,4vw,42px); border: 1px solid rgba(130,91,255,.34); border-radius: 24px; background: linear-gradient(145deg,rgba(30,24,54,.98),rgba(13,15,21,.99) 48%); box-shadow: 0 28px 90px rgba(0,0,0,.55); }
+    .modality-gate-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .modality-gate-brand img { width: 46px; height: 46px; object-fit: contain; }
+    .modality-gate-brand span { display: block; color: var(--muted); font-size: var(--font-caption); }
+    .modality-gate-card h2 { margin: 0 0 8px; font-size: clamp(24px,4vw,38px); letter-spacing: -.04em; }
+    .modality-gate-card > p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .modality-choice-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 26px; }
+    .modality-choice { position: relative; min-height: 185px; padding: 22px; text-align: left; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.035); color: var(--text); transition: .2s ease; }
+    .modality-choice:hover,.modality-choice:focus-visible { transform: translateY(-3px); border-color: var(--accent); background: rgba(126,82,255,.12); outline: 0; }
+    .modality-choice-icon { display: grid; width: 42px; height: 42px; place-items: center; margin-bottom: 20px; border-radius: 12px; background: rgba(126,82,255,.16); color: #bba6ff; }
+    .modality-choice strong { display: block; font-size: var(--font-body-lg); }
+    .modality-choice small { display: block; margin-top: 5px; color: var(--muted); line-height: 1.45; }
+    .modality-choice .status-pill { position: absolute; top: 18px; right: 18px; }
+    .modality-gate-actions { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .modality-gate-actions p { margin: 0; color: var(--muted); font-size: var(--font-small); }
+    .athlete-modality-list { display: grid; gap: 10px; margin: 14px 0; }
+    .athlete-modality-item { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
+    .athlete-modality-item.selected { border-color: rgba(126,82,255,.58); background: rgba(126,82,255,.08); }
+    .athlete-modality-item .metric-icon { width: 38px; height: 38px; }
+    .athlete-modality-copy strong,.athlete-modality-copy span { display: block; }
+    .athlete-modality-copy span { margin-top: 3px; color: var(--muted); font-size: var(--font-small); line-height: 1.4; }
+    .athlete-modality-actions { display: flex; align-items: center; gap: 7px; }
+    .athlete-modality-actions button { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--muted); }
+    .athlete-modality-actions button:hover { border-color: var(--accent); color: var(--text); }
+    .modality-context-note { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px; padding: 12px 14px; border: 1px solid rgba(71,179,255,.24); border-radius: 12px; background: rgba(71,179,255,.07); color: var(--muted); font-size: var(--font-small); line-height: 1.5; }
+    .modality-context-note svg { flex: 0 0 auto; margin-top: 2px; color: var(--blue); }
+    .certificate-list-profile { margin-bottom: 14px; }
+    .certificate-code { display: block; margin-top: 3px; color: var(--muted); font-family: ui-monospace,SFMono-Regular,Menlo,monospace; font-size: var(--font-micro); }
+    .identity-lock { color: var(--muted); font-size: var(--font-micro); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    @media (max-width: 980px) {
+      .modality-choice-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .athlete-modality-switch { min-width: 150px; }
+    }
+    @media (max-width: 620px) {
+      .modality-gate { padding: 10px; align-items: end; }
+      .modality-gate-card { max-height: calc(100vh - 20px); padding: 24px 18px; border-radius: 22px 22px 12px 12px; }
+      .modality-choice-grid { grid-template-columns: 1fr; }
+      .modality-choice { min-height: 138px; }
+      .modality-gate-actions { align-items: stretch; flex-direction: column; }
+      .modality-gate-actions .wide-btn { width: 100%; }
+      .athlete-modality-switch { order: 5; width: 100%; }
+      .athlete-modality-switch select { flex: 1; }
+      .athlete-modality-item { grid-template-columns: auto minmax(0,1fr); }
+      .athlete-modality-actions { grid-column: 1 / -1; justify-content: flex-end; }
+    }
 </style>
 </head>
 <body class="prelogin-active auth-active">
@@ -1801,6 +1975,16 @@
     </div>
   </div>
 
+  <section class="modality-gate" id="athleteModalityGate" aria-labelledby="athleteModalityGateTitle" hidden>
+    <div class="modality-gate-card">
+      <div class="modality-gate-brand"><img src="assets/apex-combate-logo-oficial.png" alt=""><div><strong>Apex Combate</strong><span>Uma plataforma. Todas as lutas.</span></div></div>
+      <h2 id="athleteModalityGateTitle">Qual modalidade você quer acessar?</h2>
+      <p id="athleteModalityGateDescription">Escolha um perfil esportivo. Seus dados pessoais e sua conta continuam sendo os mesmos.</p>
+      <div class="modality-choice-grid" id="athleteModalityChoices"></div>
+      <div class="modality-gate-actions"><p id="athleteModalityGateHelp">Você poderá alternar entre modalidades no topo do painel.</p><button class="wide-btn" type="button" id="athleteFirstModalityButton" hidden><svg class="icon sm"><use href="#i-plus"/></svg>Cadastrar primeira modalidade</button></div>
+    </div>
+  </section>
+
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand brand--official">
@@ -1816,34 +2000,28 @@
         <button class="nav-btn" data-page-target="profile" data-athlete-page="profile" data-club-anchor="club-finance" data-federation-anchor="federation-compliance" data-technician-anchor="technician-alerts"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button>
       </nav>
 
-      <div class="nav-label" style="margin-top:28px">Comunidade</div>
-      <nav class="nav">
-        <button class="nav-btn" data-toast="Comunidade será liberada na próxima fase"><span class="nav-icon"><svg class="icon"><use href="#i-bolt"/></svg></span>Desafios<span class="nav-badge">3</span></button>
-        <button class="nav-btn" data-toast="Agenda de eventos em preparação"><span class="nav-icon"><svg class="icon"><use href="#i-calendar"/></svg></span>Eventos</button>
-      </nav>
-
       <div class="side-spacer"></div>
       <div class="side-card">
         <div class="side-card-head"><span>Status do atleta</span><i class="live-dot"></i></div>
-        <div style="font-size:11px;font-weight:750">Semana ativa</div>
-        <div style="font-size:9px;color:var(--muted);margin-top:5px;line-height:1.45">Falta 1 treino para concluir sua meta.</div>
+        <div id="athleteSidebarStatus" style="font-size:11px;font-weight:750">Perfil sincronizado</div>
+        <div id="athleteSidebarStatusDetail" style="font-size:10px;color:var(--muted);margin-top:5px;line-height:1.45">Carregando situação da documentação.</div>
       </div>
       <div class="profile-mini">
-        <div class="avatar">RM</div>
-        <div class="profile-mini-copy"><strong>Rafael Martins</strong><span id="currentRoleLabel">Atleta • Curitiba</span></div>
+        <div class="avatar" id="sidebarProfileAvatar">AC</div>
+        <div class="profile-mini-copy"><strong id="sidebarProfileName">Atleta autenticado</strong><span id="currentRoleLabel">Atleta • sessão segura</span></div>
         <button class="icon-ghost" data-page-target="profile"><svg class="icon sm"><use href="#i-more"/></svg></button>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
-        <div><h1 id="pageTitle">Visão geral</h1><p id="pageSubtitle">Segunda-feira, 21 de setembro</p></div>
+        <div><h1 id="pageTitle">Visão geral</h1><p id="pageSubtitle">Painel autenticado</p></div>
         <div class="top-actions">
           <button id="appReturnHome" class="return-home-btn" type="button" data-logout aria-labelledby="appReturnHomeLabel" aria-label="Voltar ao início e encerrar sessão" title="Voltar ao início e encerrar sessão"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span id="appReturnHomeLabel" class="return-home-label">Voltar ao início</span></button>
           <label class="app-language-control" title="Selecionar idioma"><span id="appLanguageCode">PT</span><select id="appLanguage" aria-label="Selecionar idioma"></select></label>
-          <label class="role-control" title="Alternar dashboard"><svg class="icon sm"><use href="#i-shield"/></svg><select id="dashboardRole" aria-label="Perfil do dashboard"><option value="athlete">Atletas e alunos</option><option value="academy">Clubes/academias • Professores/técnicos</option><option value="federation">Federações</option></select></label>
-          <button class="location-pill" data-page-target="explore"><svg class="icon sm"><use href="#i-pin"/></svg><span>Curitiba, PR</span></button>
-          <button class="circle-btn" data-toast="Você tem 2 novos avisos" aria-label="Notificações"><svg class="icon sm"><use href="#i-bell"/></svg><i class="notif"></i></button>
+          <label class="athlete-modality-switch" id="athleteModalitySwitchWrap" title="Alternar modalidade" hidden><svg class="icon sm"><use href="#i-award"/></svg><select id="athleteModalitySwitch" aria-label="Modalidade ativa"></select></label>
+          <label class="role-control" title="Perfil autenticado" hidden><svg class="icon sm"><use href="#i-shield"/></svg><select id="dashboardRole" aria-label="Perfil do dashboard" disabled><option value="athlete">Atletas e alunos</option><option value="academy">Clubes/academias • Professores/técnicos</option><option value="federation">Federações</option></select></label>
+          <button class="location-pill" data-page-target="profile"><svg class="icon sm"><use href="#i-pin"/></svg><span id="authenticatedLocation">Curitiba, PR</span></button>
         </div>
       </header>
 
@@ -1851,106 +2029,143 @@
       <section class="page active" id="page-home">
         <article class="card athlete-command-card">
           <div class="athlete-command-content">
-            <div class="athlete-status-line"><span class="status-pill">Registro ativo</span><span>AC-2026-001842</span></div>
+            <div class="athlete-status-line"><span class="status-pill" id="athleteHomeStatus">Sincronizando</span><span id="athleteHomeRegistration">Registro autenticado</span></div>
             <div class="eyebrow">Área do atleta</div>
-            <h2>Olá, Rafael.<br><span>Sua próxima conquista começa aqui.</span></h2>
+            <h2><span id="athleteHomeGreeting">Olá, atleta.</span><br><span>Sua próxima conquista começa aqui.</span></h2>
             <p>Acompanhe inscrições, documentos, pesagem, chamadas e resultados em uma única jornada.</p>
             <div class="dash-actions athlete-hero-actions"><button class="dash-action primary" data-page-target="training"><svg class="icon sm"><use href="#i-calendar"/></svg>Ver competições</button><button class="dash-action" data-page-target="explore"><svg class="icon sm"><use href="#i-award"/></svg>Carteirinha digital</button></div>
           </div>
-          <div class="athlete-hero-number"><span>Ranking estadual</span><strong>#18</strong><small>Jiu-jítsu • Adulto</small></div>
+          <div class="athlete-hero-number"><span>Ranking estadual</span><strong id="athleteHomeRanking">—</strong><small id="athleteHomeRankingContext">Ranking não integrado</small></div>
         </article>
 
         <div class="athlete-glance-grid">
-          <article class="card athlete-glance"><div class="metric-icon"><svg class="icon sm"><use href="#i-calendar"/></svg></div><div><span>Próximo evento</span><strong>18 OUT</strong><small>Curitiba Open 2026</small></div></article>
-          <article class="card athlete-glance"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-target"/></svg></div><div><span>Categoria</span><strong>Adulto • Médio</strong><small>Até 82,3 kg</small></div></article>
-          <article class="card athlete-glance"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><span>Documentação</span><strong>Verificada</strong><small>Atualizada em setembro</small></div></article>
-          <article class="card athlete-glance"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-award"/></svg></div><div><span>Graduação</span><strong>Faixa azul</strong><small>3º grau • Dojo Norte</small></div></article>
+          <article class="card athlete-glance"><div class="metric-icon"><svg class="icon sm"><use href="#i-calendar"/></svg></div><div><span>Próximo evento</span><strong id="athleteNextEventDate">—</strong><small id="athleteNextEventName">Carregando inscrições</small></div></article>
+          <article class="card athlete-glance"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-target"/></svg></div><div><span>Categoria</span><strong id="athleteHomeCategory">Carregando categoria</strong><small id="athleteHomeCategoryDetail">Dados autenticados</small></div></article>
+          <article class="card athlete-glance"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><span>Documentação</span><strong id="athleteHomeDocuments">Sincronizando</strong><small id="athleteHomeDocumentsDetail">Aguardando API</small></div></article>
+          <article class="card athlete-glance"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-award"/></svg></div><div><span>Graduação</span><strong id="athleteHomeRank">Sincronizando</strong><small id="athleteHomeRankDetail">Aguardando perfil</small></div></article>
         </div>
 
         <div class="dash-grid athlete-dashboard-grid">
           <article class="card athlete-event-focus">
-            <div class="event-focus-top"><div><div class="eyebrow">Inscrição confirmada</div><h3>Curitiba Open de Artes Marciais</h3><p>18 de outubro • Ginásio Tarumã • Curitiba, PR</p></div><span class="event-countdown"><strong>21</strong>dias</span></div>
-            <div class="event-focus-meta"><div><span>Modalidade</span><strong>Jiu-jítsu</strong></div><div><span>Categoria</span><strong>Adulto • Médio</strong></div><div><span>Faixa</span><strong>Azul</strong></div><div><span>Status</span><strong class="green-text">Confirmado</strong></div></div>
-            <div class="event-focus-footer"><button class="btn-small" data-page-target="training">Ver detalhes</button><button class="btn-accent" data-toast="Comprovante preparado para download">Baixar comprovante</button></div>
+            <div class="event-focus-top"><div><div class="eyebrow" id="athleteFocusEyebrow">Sincronizando inscrição</div><h3 id="athleteFocusEventName">Carregando próximo evento</h3><p id="athleteFocusEventLocation">Aguardando dados autenticados</p></div><span class="event-countdown"><strong id="athleteFocusCountdown">—</strong>dias</span></div>
+            <div class="event-focus-meta"><div><span>Modalidade</span><strong id="athleteFocusSport">—</strong></div><div><span>Categoria</span><strong id="athleteFocusCategory">—</strong></div><div><span>Faixa</span><strong id="athleteFocusRank">—</strong></div><div><span>Status</span><strong class="green-text" id="athleteFocusStatus">Carregando</strong></div></div>
+            <div class="event-focus-footer"><button class="btn-small" data-page-target="training">Ver detalhes da inscrição</button></div>
           </article>
           <article class="card dash-panel athlete-checklist">
-            <div class="panel-head"><div><h3>Preparação para o evento</h3><p>3 de 4 etapas concluídas</p></div><strong class="checklist-percent">75%</strong></div>
-            <div class="checklist-items">
-              <div class="checklist-item done"><i>✓</i><span><strong>Inscrição</strong><small>Pagamento confirmado</small></span></div>
-              <div class="checklist-item done"><i>✓</i><span><strong>Documentos</strong><small>Validados pela organização</small></span></div>
-              <div class="checklist-item done"><i>✓</i><span><strong>Categoria</strong><small>Adulto • Médio • Azul</small></span></div>
-              <div class="checklist-item"><i>4</i><span><strong>Pesagem</strong><small>Disponível em 17 de outubro</small></span></div>
+            <div class="panel-head"><div><h3>Preparação para o evento</h3><p id="athleteReadinessSummary">Sincronizando etapas</p></div><strong class="checklist-percent" id="athleteReadinessPercent">—</strong></div>
+            <div class="checklist-items" id="athleteReadinessItems">
+              <div class="checklist-item"><i>…</i><span><strong>Carregando preparação</strong><small>Aguardando dados autenticados.</small></span></div>
             </div>
           </article>
         </div>
 
         <div class="dash-grid equal">
           <article class="card dash-panel">
-            <div class="panel-head"><div><h3>Próxima chamada</h3><p>Atualização em tempo real no dia do evento</p></div><span class="status-pill pending">Aguardando chave</span></div>
-            <div class="call-preview"><div class="call-arena"><span>Área</span><strong>—</strong></div><div><strong>Chave ainda não publicada</strong><p>Você receberá uma notificação quando o confronto e o horário forem definidos.</p></div></div>
+            <div class="panel-head"><div><h3>Próxima chamada</h3><p>Atualização automática da organização</p></div><span class="status-pill pending" id="athleteHomeLiveStatus">Sincronizando</span></div>
+            <div class="call-preview"><div class="call-arena"><span>Área</span><strong id="athleteHomeLiveArena">—</strong></div><div><strong id="athleteHomeLiveTitle">Consultando chave e categoria</strong><p id="athleteHomeLiveDetail">Aguarde a sincronização da chamada oficial.</p><button class="text-btn athlete-live-shortcut" type="button" data-athlete-live-open>Ver campeonato ao vivo</button></div></div>
           </article>
           <article class="card dash-panel">
             <div class="panel-head"><div><h3>Atividade recente</h3><p>Últimas atualizações da sua conta</p></div></div>
-            <div class="compact-list"><div class="compact-item"><div class="metric-icon green" style="width:31px;height:31px"><svg class="icon sm"><use href="#i-check"/></svg></div><div class="compact-info"><strong>Documento aprovado</strong><span>Federação • Hoje, 09:42</span></div></div><div class="compact-item"><div class="metric-icon blue" style="width:31px;height:31px"><svg class="icon sm"><use href="#i-calendar"/></svg></div><div class="compact-info"><strong>Inscrição confirmada</strong><span>Curitiba Open • Ontem</span></div></div><div class="compact-item"><div class="metric-icon" style="width:31px;height:31px"><svg class="icon sm"><use href="#i-award"/></svg></div><div class="compact-info"><strong>Ranking atualizado</strong><span>Você subiu 3 posições</span></div></div></div>
+            <div class="compact-list" id="athleteRecentActivity"><div class="compact-item"><div class="metric-icon blue" style="width:31px;height:31px"><svg class="icon sm"><use href="#i-clock"/></svg></div><div class="compact-info"><strong>Sincronizando atividade</strong><span>Aguarde os dados autenticados.</span></div></div></div>
           </article>
         </div>
       </section>
 
       <!-- CARTEIRINHA DIGITAL -->
       <section class="page" id="page-explore">
-        <div class="dash-welcome"><div><h2>Carteirinha digital</h2><p>Sua identificação esportiva verificável dentro e fora das competições.</p></div><div class="dash-actions"><button class="dash-action" data-toast="Carteirinha adicionada à carteira do dispositivo"><svg class="icon sm"><use href="#i-plus"/></svg>Adicionar à carteira</button><button class="dash-action primary" data-toast="Carteirinha preparada para download"><svg class="icon sm"><use href="#i-bolt"/></svg>Baixar PDF</button></div></div>
+        <div class="dash-welcome"><div><h2>Carteirinha digital</h2><p>Sua identificação esportiva verificável dentro e fora das competições.</p></div></div>
         <div class="athlete-id-layout">
           <article class="digital-athlete-id">
             <div class="digital-id-header"><img src="assets/apex-combate-logo-oficial.png" alt="Apex Combate"><span>IDENTIFICAÇÃO OFICIAL</span></div>
-            <div class="digital-id-body"><div class="id-avatar">RM</div><div class="id-main"><span>Atleta</span><h3>Rafael Martins</h3><p>Registro AC-2026-001842</p></div><div class="id-valid"><span>Situação</span><strong>ATIVO</strong></div></div>
-            <div class="digital-id-data"><div><span>Modalidade</span><strong>Jiu-jítsu</strong></div><div><span>Graduação</span><strong>Faixa azul • 3º grau</strong></div><div><span>Clube</span><strong>Dojo Norte</strong></div><div><span>Federação</span><strong>Federação Paranaense</strong></div><div><span>Nascimento</span><strong>10/05/1998</strong></div><div><span>Validade</span><strong>31/12/2026</strong></div></div>
-            <div class="digital-id-footer"><div class="mini-qr" aria-label="QR Code de validação"><svg viewBox="0 0 84 84"><rect width="84" height="84" fill="#fff"/><g fill="#080a0e"><path d="M6 6h24v24H6zM12 12h12v12H12zM54 6h24v24H54zM60 12h12v12H60zM6 54h24v24H6zM12 60h12v12H12z" fill-rule="evenodd"/><path d="M36 6h6v6h-6zM42 12h6v12h-6zM36 24h12v6H36zM36 36h6v6h-6zM48 36h12v6H48zM66 36h12v6H66zM30 42h12v6H30zM48 48h6v12h-6zM60 48h18v6H60zM36 54h6v18h-6zM54 60h12v6H54zM72 60h6v18h-6zM48 72h18v6H48z"/></g></svg></div><div><strong>Escaneie para validar</strong><span>apexcombate.com/id/AC-2026-001842</span></div><i class="verified-seal"><svg class="icon"><use href="#i-shield"/></svg></i></div>
+            <div class="digital-id-body"><div class="id-avatar" id="athleteCardAvatar">AC</div><div class="id-main"><span>Atleta</span><h3 id="athleteCardName">Atleta autenticado</h3><p id="athleteCardRegistration">Registro em sincronização</p></div><div class="id-valid"><span>Situação</span><strong id="athleteCardStatus">—</strong></div></div>
+            <div class="digital-id-data"><div><span>Modalidade</span><strong id="athleteCardSport">—</strong></div><div><span>Graduação</span><strong id="athleteCardRank">—</strong></div><div><span>Clube</span><strong id="athleteCardClub">—</strong></div><div><span>Federação</span><strong id="athleteCardFederation">—</strong></div><div><span>Nascimento</span><strong id="athleteCardBirthDate">—</strong></div><div><span>Validade</span><strong id="athleteCardValidity">—</strong></div></div>
+            <div class="digital-id-footer"><div class="mini-qr" aria-label="QR Code de validação"><svg viewBox="0 0 84 84"><rect width="84" height="84" fill="#fff"/><g fill="#080a0e"><path d="M6 6h24v24H6zM12 12h12v12H12zM54 6h24v24H54zM60 12h12v12H60zM6 54h24v24H6zM12 60h12v12H12z" fill-rule="evenodd"/><path d="M36 6h6v6h-6zM42 12h6v12h-6zM36 24h12v6H36zM36 36h6v6h-6zM48 36h12v6H48zM66 36h12v6H66zM30 42h12v6H30zM48 48h6v12h-6zM60 48h18v6H60zM36 54h6v18h-6zM54 60h12v6H54zM72 60h6v18h-6zM48 72h18v6H48z"/></g></svg></div><div><strong>Escaneie para validar</strong><span id="athleteCardValidationUrl">apexcombate.com/id/registro</span></div><i class="verified-seal" id="athleteCardVerifiedSeal"><svg class="icon"><use href="#i-shield"/></svg></i></div>
           </article>
           <div class="id-side-stack">
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Validação federativa</h3><p>Dados confirmados pela entidade responsável</p></div><span class="status-pill">Verificado</span></div><div class="profile-stat-row"><span>Filiação</span><strong>Regular</strong></div><div class="profile-stat-row"><span>Clube atual</span><strong>Dojo Norte</strong></div><div class="profile-stat-row"><span>Última validação</span><strong>12 set 2026</strong></div><div class="profile-stat-row"><span>Validade</span><strong>31 dez 2026</strong></div></article>
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Certificados</h3><p>Documentos vinculados à carteirinha</p></div></div><div class="compact-list"><div class="compact-item"><div class="metric-icon"><svg class="icon sm"><use href="#i-award"/></svg></div><div class="compact-info"><strong>Graduação faixa azul</strong><span>Emitido em 18 mar 2026</span></div><button class="btn-small" data-toast="Certificado aberto">Abrir</button></div><div class="compact-item"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-shield"/></svg></div><div class="compact-info"><strong>Filiação 2026</strong><span>Federação Paranaense</span></div><button class="btn-small" data-toast="Certificado aberto">Abrir</button></div></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Validação federativa</h3><p>Dados confirmados pela entidade responsável</p></div><span class="status-pill" id="athleteCardVerificationBadge">Sincronizando</span></div><div class="profile-stat-row"><span>Filiação</span><strong id="athleteCardAffiliation">Sincronizando</strong></div><div class="profile-stat-row"><span>Clube atual</span><strong id="athleteCardValidationClub">—</strong></div><div class="profile-stat-row"><span>Última validação</span><strong id="athleteCardLastValidation">—</strong></div><div class="profile-stat-row"><span>Validade</span><strong id="athleteCardValidationValidity">—</strong></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Certificados</h3><p>Documentos vinculados à modalidade ativa</p></div><button class="text-btn" type="button" data-modal="athlete-certificate">Adicionar</button></div><div class="compact-list" id="athleteCertificateList"><div class="technician-empty">Nenhum certificado oficial integrado.</div></div></article>
           </div>
         </div>
       </section>
 
       <!-- COMPETIÇÕES -->
       <section class="page" id="page-training">
-        <div class="dash-welcome"><div><h2>Competições</h2><p>Encontre eventos, faça sua inscrição e acompanhe cada etapa.</p></div><div class="dash-actions"><button class="dash-action" data-toast="Calendário sincronizado"><svg class="icon sm"><use href="#i-calendar"/></svg>Sincronizar calendário</button></div></div>
-        <div class="search-row"><div class="search-box"><svg class="icon"><use href="#i-search"/></svg><input id="competitionSearch" type="search" placeholder="Buscar campeonato, cidade ou modalidade"></div><button class="filter-btn" data-toast="Filtros avançados em preparação"><svg class="icon"><use href="#i-sliders"/></svg></button></div>
+        <div class="dash-welcome"><div><h2>Competições</h2><p>Encontre eventos, faça sua inscrição e acompanhe cada etapa.</p></div></div>
+
+        <section class="athlete-live-center" id="athleteLiveCenter" aria-labelledby="athleteLiveHeading">
+          <div class="athlete-live-head"><div><div class="athlete-live-eyebrow"><i></i> Campeonato ao vivo</div><h3 id="athleteLiveHeading">Chaves, categorias e chamadas</h3><p>Acompanhe somente informações oficiais publicadas pela organização.</p></div><div class="athlete-live-sync"><span id="athleteLiveSyncStatus">Aguardando sincronização</span><button class="dash-action" id="athleteLiveFilterToggle" type="button" aria-expanded="false" aria-controls="athleteLiveFilterPanel"><svg class="icon sm"><use href="#i-sliders"/></svg>Filtrar</button><button class="dash-action" id="athleteLiveRefresh" type="button"><svg class="icon sm"><use href="#i-clock"/></svg>Atualizar</button></div></div>
+          <div class="athlete-live-filters"><label><span>CAMPEONATO</span><select id="athleteLiveCompetition"><option value="">Nenhuma inscrição sincronizada</option></select></label><label><span>CATEGORIA PUBLICADA</span><select id="athleteLiveCategory"><option value="">Aguardando publicação</option></select></label><div class="athlete-live-readonly"><svg class="icon sm"><use href="#i-lock"/></svg><span>Leitura autenticada</span></div></div>
+
+          <div class="athlete-live-filter-panel" id="athleteLiveFilterPanel" hidden>
+            <div class="athlete-live-filter-title"><div><strong>Modo filtrar</strong><span>Refine chamadas e transmissões sem alterar a chave oficial.</span></div><button class="text-btn" id="athleteLiveFilterClear" type="button">Limpar filtros</button></div>
+            <div class="athlete-live-filter-grid"><label><span>BUSCAR</span><div class="athlete-live-filter-search"><svg class="icon sm"><use href="#i-search"/></svg><input id="athleteLiveSearch" type="search" placeholder="Atleta, luta ou categoria"></div></label><label><span>MODALIDADE</span><select id="athleteLiveSportFilter"><option value="">Todas</option></select></label><label><span>ÁREA</span><select id="athleteLiveArenaFilter"><option value="">Todas</option></select></label><label><span>SITUAÇÃO</span><select id="athleteLiveStatusFilter"><option value="">Todas</option><option value="calling">Chamada</option><option value="on_deck">Na sequência</option><option value="in_progress">Em combate</option><option value="scheduled">Programada</option><option value="completed">Finalizada</option></select></label><label class="athlete-live-mine-filter"><input id="athleteLiveMineFilter" type="checkbox"><span>Mostrar somente minha luta</span></label><strong id="athleteLiveFilterCount">0 resultados</strong></div>
+          </div>
+
+          <section class="athlete-live-video-section" aria-labelledby="athleteLiveVideoHeading">
+            <div class="panel-head"><div><h3 id="athleteLiveVideoHeading">Lutas ao vivo em vídeo</h3><p>Selecione a câmera da área; o acesso depende da transmissão autorizada pela organização.</p></div><span class="status-pill pending" id="athleteLiveVideoStatus">Fonte não conectada</span></div>
+            <div class="athlete-live-video-layout"><div class="athlete-live-player-card"><div class="athlete-live-player-shell"><video id="athleteLiveVideo" controls playsinline preload="metadata" poster="assets/apex-combate-hero.jpg" aria-label="Transmissão ao vivo da área selecionada"></video><div class="athlete-live-player-overlay" id="athleteLivePlayerOverlay"><i><svg class="icon"><use href="#i-eye"/></svg></i><strong id="athleteLivePlayerMessage">Transmissão ainda não iniciada</strong><span>Quando a organização conectar a câmera autorizada, o vídeo aparecerá aqui.</span></div><span class="athlete-live-video-watermark">APEX COMBATE • AO VIVO</span></div><div class="athlete-live-player-info"><div><strong id="athleteLiveStreamTitle">Selecione uma área</strong><span id="athleteLiveStreamMeta">HLS protegido • acesso autenticado</span></div><button class="btn-small" id="athleteLiveFullscreen" type="button">Tela cheia</button></div></div><div class="athlete-live-stream-list" id="athleteLiveStreams"><div class="technician-empty">Aguardando câmeras autorizadas.</div></div></div>
+            <div class="payment-safety-note"><svg class="icon sm"><use href="#i-shield"/></svg><span>A demonstração não exibe luta real sem fonte autorizada. Em produção, o vídeo usará URL temporária, controle de acesso e consentimento de imagem.</span></div>
+          </section>
+
+          <div class="athlete-live-layout">
+            <article class="card athlete-live-next">
+              <div class="athlete-live-next-top"><div><span class="athlete-live-kicker">Minha próxima luta</span><h4 id="athleteLiveBoutTitle">Aguardando chave publicada</h4><p id="athleteLiveEventMeta">A organização informará confronto, área e horário.</p></div><span class="status-pill pending" id="athleteLiveBoutStatus">Aguardando</span></div>
+              <div class="athlete-live-opponents"><div id="athleteLiveRedSide"><span>VERMELHO</span><strong>—</strong><small>Atleta a definir</small></div><b>×</b><div id="athleteLiveBlueSide"><span>AZUL</span><strong>—</strong><small>Atleta a definir</small></div></div>
+              <div class="athlete-live-meta"><div><span>Área</span><strong id="athleteLiveArena">—</strong></div><div><span>Luta</span><strong id="athleteLiveBoutNumber">—</strong></div><div><span>Chamada</span><strong id="athleteLiveCallTime">—</strong></div><div><span>Antes de você</span><strong id="athleteLiveBoutsBefore">—</strong></div></div>
+              <div class="athlete-live-guidance" id="athleteLiveGuidance"><svg class="icon sm"><use href="#i-bell"/></svg><span>Mantenha o aplicativo aberto no dia do evento.</span></div>
+            </article>
+
+            <article class="card athlete-live-queue-card">
+              <div class="panel-head"><div><h3>Chamadas em andamento</h3><p>Todas as áreas do campeonato</p></div><span class="live-dot-label"><i></i>AO VIVO</span></div>
+              <div class="athlete-live-queue" id="athleteLiveQueue"><div class="technician-empty">Aguardando a fila oficial.</div></div>
+            </article>
+          </div>
+
+          <article class="card athlete-bracket-card">
+            <div class="panel-head"><div><h3 id="athleteBracketTitle">Chave da categoria</h3><p id="athleteBracketSubtitle">Selecione uma categoria publicada</p></div><span class="status-pill pending" id="athleteBracketStatus">Não publicada</span></div>
+            <div class="athlete-bracket-scroll"><div class="athlete-bracket" id="athleteBracket"><div class="technician-empty">A chave aparecerá quando for publicada pela organização.</div></div></div>
+          </article>
+
+          <div class="athlete-live-bottom">
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Avisos oficiais</h3><p>Mudanças de área, horário e chamada</p></div></div><div class="athlete-live-notices" id="athleteLiveNotices"><div class="technician-empty">Nenhum aviso publicado.</div></div></article>
+            <article class="card dash-panel athlete-live-rules"><div class="panel-head"><div><h3>Como acompanhar</h3><p>Informação segura para o atleta</p></div></div><ul><li>Confirme sempre a área e a luta indicadas.</li><li>Apresente-se quando o estado mudar para “Chamada”.</li><li>A chave é somente leitura para o atleta.</li><li>Em divergência, prevalece a mesa da organização.</li></ul><small>Demonstração operacional: atualização automática a cada 30 segundos.</small></article>
+          </div>
+        </section>
+
+        <div class="search-row"><div class="search-box"><svg class="icon"><use href="#i-search"/></svg><input id="competitionSearch" type="search" placeholder="Buscar campeonato, cidade ou modalidade"></div></div>
         <div class="chips" id="competitionChips"><button class="chip active" data-filter="all">Todos</button><button class="chip" data-filter="jiu-jitsu">Jiu-jítsu</button><button class="chip" data-filter="judo">Judô</button><button class="chip" data-filter="karate">Karatê</button><button class="chip" data-filter="muay-thai">Muay Thai</button><button class="chip" data-filter="open">Inscrições abertas</button></div>
         <div class="competition-grid" id="competitionList">
-          <article class="card competition-card featured" data-name="curitiba open artes marciais curitiba" data-sport="jiu-jitsu" data-status="registered"><div class="competition-date"><strong>18</strong><span>OUT</span></div><div class="competition-content"><div class="competition-tags"><span>Jiu-jítsu</span><span class="registered">Inscrito</span></div><h3>Curitiba Open de Artes Marciais</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>Ginásio Tarumã • Curitiba, PR</p><div class="competition-stats"><span>428 atletas</span><span>46 categorias</span><span>Faltam 21 dias</span></div></div><div class="competition-action"><button class="btn-accent" data-toast="Detalhes da sua inscrição abertos">Ver inscrição</button></div></article>
-          <article class="card competition-card" data-name="copa sul jiu jitsu florianopolis" data-sport="jiu-jitsu" data-status="open"><div class="competition-date"><strong>09</strong><span>NOV</span></div><div class="competition-content"><div class="competition-tags"><span>Jiu-jítsu</span><span class="open">Inscrições abertas</span></div><h3>Copa Sul de Jiu-jítsu</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>CentroSul • Florianópolis, SC</p><div class="competition-stats"><span>R$ 120</span><span>Até 30 out</span><span>Ranking estadual</span></div></div><div class="competition-action"><button class="btn-accent" data-modal="competition" data-event="Copa Sul de Jiu-jítsu">Inscrever-se</button></div></article>
-          <article class="card competition-card" data-name="festival paranaense judo londrina" data-sport="judo" data-status="open"><div class="competition-date"><strong>23</strong><span>NOV</span></div><div class="competition-content"><div class="competition-tags"><span>Judô</span><span class="open">Inscrições abertas</span></div><h3>Festival Paranaense de Judô</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>Ginásio Moringão • Londrina, PR</p><div class="competition-stats"><span>R$ 95</span><span>Até 12 nov</span><span>Oficial</span></div></div><div class="competition-action"><button class="btn-accent" data-modal="competition" data-event="Festival Paranaense de Judô">Inscrever-se</button></div></article>
-          <article class="card competition-card" data-name="karate challenge sao paulo" data-sport="karate" data-status="open"><div class="competition-date"><strong>07</strong><span>DEZ</span></div><div class="competition-content"><div class="competition-tags"><span>Karatê</span><span class="open">Inscrições abertas</span></div><h3>Brazil Karate Challenge</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>Ibirapuera • São Paulo, SP</p><div class="competition-stats"><span>R$ 140</span><span>Até 25 nov</span><span>Nacional</span></div></div><div class="competition-action"><button class="btn-accent" data-modal="competition" data-event="Brazil Karate Challenge">Inscrever-se</button></div></article>
-          <article class="card competition-card" data-name="muay thai grand prix porto alegre" data-sport="muay-thai" data-status="open"><div class="competition-date"><strong>14</strong><span>DEZ</span></div><div class="competition-content"><div class="competition-tags"><span>Muay Thai</span><span class="open">Inscrições abertas</span></div><h3>Muay Thai Grand Prix Sul</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>Ginásio Tesourinha • Porto Alegre, RS</p><div class="competition-stats"><span>R$ 130</span><span>Até 02 dez</span><span>Interestadual</span></div></div><div class="competition-action"><button class="btn-accent" data-modal="competition" data-event="Muay Thai Grand Prix Sul">Inscrever-se</button></div></article>
+          <article class="card competition-card"><div class="competition-content"><h3>Sincronizando competições</h3><p>Aguardando o calendário oficial da API.</p></div></article>
           <div class="no-results" id="competitionNoResults">Nenhuma competição encontrada.</div>
         </div>
-        <section class="section"><div class="section-head"><div><h3>Minhas inscrições</h3><p>Histórico e situação das competições</p></div></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Evento</th><th>Data</th><th>Categoria</th><th>Pagamento</th><th>Status</th></tr></thead><tbody><tr><td>Curitiba Open 2026</td><td>18 out 2026</td><td>Adulto • Médio • Azul</td><td>Pix</td><td><span class="status-pill">Confirmado</span></td></tr><tr><td>Paraná Regional</td><td>12 jul 2026</td><td>Adulto • Médio • Azul</td><td>Cartão</td><td><span class="status-pill">Concluído</span></td></tr></tbody></table></div></article></section>
+        <section class="section"><div class="section-head"><div><h3>Minhas inscrições</h3><p>Histórico e situação das competições</p></div></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Evento</th><th>Data</th><th>Categoria</th><th>Pagamento</th><th>Status</th></tr></thead><tbody id="athleteRegistrationRows"><tr><td colspan="5">Carregando inscrições…</td></tr></tbody></table></div></article></section>
+        <section class="section" id="athletePaymentsSection"><div class="section-head"><div><h3>Pagamentos</h3><p>Taxas de competição, mensalidades do clube e comprovantes</p></div></div><div class="payment-kpis"><article class="card athlete-glance"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-clock"/></svg></div><div><span>Em aberto</span><strong id="athletePaymentPendingTotal">—</strong><small id="athletePaymentPendingCount">Sincronizando cobranças</small></div></article><article class="card athlete-glance"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-calendar"/></svg></div><div><span>Próximo vencimento</span><strong id="athletePaymentNextDue">—</strong><small id="athletePaymentNextDescription">Nenhuma cobrança</small></div></article><article class="card athlete-glance"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><span>Último pagamento</span><strong id="athletePaymentLastPaid">—</strong><small id="athletePaymentLastDescription">Nenhum pagamento</small></div></article></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Descrição</th><th>Tipo</th><th>Vencimento</th><th>Valor</th><th>Situação</th><th>Ação</th></tr></thead><tbody id="athletePaymentRows"><tr><td colspan="6">Carregando pagamentos…</td></tr></tbody></table></div><div class="payment-safety-note"><svg class="icon sm"><use href="#i-lock"/></svg><span>A demonstração não realiza cobrança real nem coleta dados de cartão. A produção utilizará um gateway certificado.</span></div></article></section>
       </section>
 
       <!-- RESULTADOS -->
       <section class="page" id="page-journey">
-        <div class="dash-welcome"><div><h2>Resultados e ranking</h2><p>Sua trajetória competitiva, pódios e evolução esportiva.</p></div><div class="dash-actions"><button class="dash-action" data-toast="Relatório esportivo preparado"><svg class="icon sm"><use href="#i-award"/></svg>Exportar histórico</button></div></div>
-        <div class="management-kpis athlete-result-kpis"><article class="card metric-card"><div class="metric-top"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-award"/></svg></div><span class="metric-delta">+2 em 2026</span></div><strong>8</strong><span>Pódios conquistados</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><span class="metric-delta">68%</span></div><strong>21</strong><span>Vitórias oficiais</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-target"/></svg></div><span class="metric-delta">+3 posições</span></div><strong>#18</strong><span>Ranking estadual</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon"><svg class="icon sm"><use href="#i-bolt"/></svg></div><span class="metric-delta">Temporada</span></div><strong>420</strong><span>Pontos no ranking</span></article></div>
-        <div class="dash-grid">
-          <article class="card dash-panel"><div class="panel-head"><div><h3>Desempenho na temporada</h3><p>Pontos conquistados por competição</p></div><select class="panel-filter"><option>Temporada 2026</option><option>Temporada 2025</option></select></div><div class="chart-area"><div class="chart-bars"><div class="chart-col"><i class="chart-bar" style="--h:35%"></i><label>FEV</label></div><div class="chart-col"><i class="chart-bar accent" style="--h:69%"></i><label>MAR</label></div><div class="chart-col"><i class="chart-bar" style="--h:48%"></i><label>MAI</label></div><div class="chart-col"><i class="chart-bar accent" style="--h:91%"></i><label>JUL</label></div><div class="chart-col"><i class="chart-bar" style="--h:64%"></i><label>AGO</label></div><div class="chart-col"><i class="chart-bar accent" style="--h:78%"></i><label>SET</label></div></div></div></article>
-          <article class="card dash-panel"><div class="panel-head"><div><h3>Medalhas</h3><p>Distribuição dos seus pódios</p></div></div><div class="medal-stack"><div class="medal-row gold"><i>1</i><span>Ouro</span><strong>3</strong></div><div class="medal-row silver"><i>2</i><span>Prata</span><strong>3</strong></div><div class="medal-row bronze"><i>3</i><span>Bronze</span><strong>2</strong></div></div></article>
-        </div>
-        <section class="section"><div class="section-head"><div><h3>Histórico oficial</h3><p>Resultados homologados pela federação</p></div><button class="text-btn" data-toast="Filtros de resultados abertos">Filtrar</button></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Competição</th><th>Data</th><th>Categoria</th><th>Resultado</th><th>Pontos</th><th>Súmula</th></tr></thead><tbody><tr><td>Paraná Regional</td><td>12 jul 2026</td><td>Adulto • Médio</td><td><span class="status-pill">Ouro</span></td><td>120</td><td><button class="btn-small" data-toast="Súmula oficial aberta">Abrir</button></td></tr><tr><td>Copa Curitiba</td><td>03 mai 2026</td><td>Adulto • Médio</td><td><span class="status-pill pending">Prata</span></td><td>80</td><td><button class="btn-small" data-toast="Súmula oficial aberta">Abrir</button></td></tr><tr><td>Open Sul</td><td>16 mar 2026</td><td>Adulto • Médio</td><td><span class="status-pill alert">Bronze</span></td><td>50</td><td><button class="btn-small" data-toast="Súmula oficial aberta">Abrir</button></td></tr></tbody></table></div></article></section>
+        <div class="dash-welcome"><div><h2>Resultados e ranking</h2><p>Sua trajetória competitiva mostra somente informações oficiais homologadas.</p></div></div>
+        <div class="management-kpis athlete-result-kpis"><article class="card metric-card"><div class="metric-top"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-award"/></svg></div><span class="metric-delta" id="athletePodiumsDelta">Aguardando dados</span></div><strong id="athletePodiumsTotal">—</strong><span>Pódios conquistados</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><span class="metric-delta" id="athleteWinsRate">Aguardando dados</span></div><strong id="athleteWinsTotal">—</strong><span>Vitórias oficiais</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon blue"><svg class="icon sm"><use href="#i-target"/></svg></div><span class="metric-delta" id="athleteRankingDelta">Aguardando dados</span></div><strong id="athleteRankingPosition">—</strong><span>Ranking estadual</span></article><article class="card metric-card"><div class="metric-top"><div class="metric-icon"><svg class="icon sm"><use href="#i-bolt"/></svg></div><span class="metric-delta" id="athleteRankingSeason">Temporada atual</span></div><strong id="athleteRankingPoints">—</strong><span>Pontos no ranking</span></article></div>
+        <section class="section"><article class="card dash-panel"><div class="panel-head"><div><h3>Medalhas oficiais</h3><p>Somente pódios homologados pela entidade responsável</p></div></div><div class="medal-stack" id="athleteMedalStack"><div class="technician-empty">Nenhuma medalha oficial integrada.</div></div></article></section>
+        <section class="section"><div class="section-head"><div><h3>Jornada na modalidade</h3><p id="athleteJourneySummary">Sincronizando treinos, presença e marcos esportivos</p></div></div><article class="card dash-panel"><div class="compact-list" id="athleteJourneyTimeline"><div class="technician-empty">Carregando jornada esportiva…</div></div></article></section>
+        <section class="section"><div class="section-head"><div><h3>Histórico oficial</h3><p>Resultados homologados pela federação</p></div></div><article class="card dash-panel"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Competição</th><th>Data</th><th>Categoria</th><th>Resultado</th><th>Pontos</th><th>Súmula</th></tr></thead><tbody id="athleteResultRows"><tr><td colspan="6">Resultados oficiais ainda não integrados.</td></tr></tbody></table></div></article></section>
       </section>
 
       <!-- PERFIL E DOCUMENTOS -->
       <section class="page" id="page-profile">
-        <article class="card profile-cover athlete-profile-cover"><div class="profile-head"><div class="avatar large" id="athleteProfileAvatar">RM</div><div><h2><span id="athleteProfileName">Rafael Martins</span> <span class="verified"><svg class="icon sm"><use href="#i-shield"/></svg></span></h2><p id="athleteProfileSummary">Registro AC-2026-001842 • Dojo Norte • Curitiba, PR</p></div></div><button class="dash-action profile-edit" data-modal="athlete-profile"><svg class="icon sm"><use href="#i-edit"/></svg>Editar perfil</button></article>
+        <article class="card profile-cover athlete-profile-cover"><div class="profile-head"><div class="avatar large" id="athleteProfileAvatar">AC</div><div><h2><span id="athleteProfileName">Atleta autenticado</span> <span class="verified" id="athleteProfileVerified"><svg class="icon sm"><use href="#i-shield"/></svg></span></h2><p id="athleteProfileSummary">Sincronizando registro, clube e federação</p></div></div><button class="dash-action profile-edit" data-modal="athlete-profile"><svg class="icon sm"><use href="#i-edit"/></svg>Editar perfil</button></article>
         <div class="profile-layout athlete-profile-layout">
           <div class="profile-column">
-            <article class="card profile-stats"><div class="section-head" style="margin-bottom:4px"><div><h3>Dados esportivos</h3><p>Informações usadas nas competições</p></div></div><div class="profile-stat-row"><span>Modalidade principal</span><strong id="athleteProfileSport">Jiu-jítsu</strong></div><div class="profile-stat-row"><span>Graduação</span><strong id="athleteProfileRank">Faixa azul • 3º grau</strong></div><div class="profile-stat-row"><span>Categoria atual</span><strong id="athleteProfileCategory">Adulto • Médio</strong></div><div class="profile-stat-row"><span>Peso informado</span><strong id="athleteProfileWeight">79,8 kg</strong></div><div class="profile-stat-row"><span>Clube</span><strong id="athleteProfileClub">Dojo Norte</strong></div><div class="profile-stat-row"><span>Federação</span><strong id="athleteProfileFederation">Federação Paranaense</strong></div></article>
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Contato de emergência</h3><p>Visível somente para organização autorizada</p></div><button class="text-btn" data-modal="athlete-profile">Editar</button></div><div class="profile-stat-row"><span>Responsável</span><strong id="athleteEmergencyName">Ana Martins</strong></div><div class="profile-stat-row"><span>Telefone</span><strong id="athleteEmergencyPhone">•• •••••-4821</strong></div></article>
+            <article class="card profile-stats"><div class="section-head" style="margin-bottom:4px"><div><h3>Dados pessoais</h3><p>Identidade única para todas as modalidades</p></div><span class="identity-lock"><svg class="icon sm"><use href="#i-lock"/></svg> Protegido</span></div><div class="profile-stat-row"><span>Registro Apex</span><strong id="athleteProfileRegistration">—</strong></div><div class="profile-stat-row"><span>Nascimento</span><strong id="athleteProfileBirthDate">—</strong></div><div class="profile-stat-row"><span>Documento</span><strong id="athleteProfileDocumentMasked">—</strong></div><div class="profile-stat-row"><span>E-mail</span><strong id="athleteProfileEmailDisplay">—</strong></div><div class="profile-stat-row"><span>Telefone</span><strong id="athleteProfilePhoneDisplay">—</strong></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Minhas modalidades</h3><p>Um único perfil, várias artes marciais</p></div><button class="text-btn" type="button" data-modal="athlete-modality" data-new-athlete-modality>Adicionar</button></div><div class="athlete-modality-list" id="athleteModalityList"><div class="technician-empty">Sincronizando modalidades…</div></div></article>
+            <article class="card profile-stats"><div class="section-head" style="margin-bottom:4px"><div><h3>Dados esportivos ativos</h3><p>Contexto da modalidade selecionada</p></div><span class="status-pill" id="athleteProfileModalityStatus">—</span></div><div class="profile-stat-row"><span>Modalidade</span><strong id="athleteProfileSport">—</strong></div><div class="profile-stat-row"><span>Estilo / vertente</span><strong id="athleteProfileStyle">—</strong></div><div class="profile-stat-row"><span>Graduação</span><strong id="athleteProfileRank">—</strong></div><div class="profile-stat-row"><span>Categoria atual</span><strong id="athleteProfileCategory">—</strong></div><div class="profile-stat-row"><span>Peso informado</span><strong id="athleteProfileWeight">—</strong></div><div class="profile-stat-row"><span>Clube</span><strong id="athleteProfileClub">—</strong></div><div class="profile-stat-row"><span>Professor / técnico</span><strong id="athleteProfileInstructor">—</strong></div><div class="profile-stat-row"><span>Federação / organização</span><strong id="athleteProfileFederation">—</strong></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Contato de emergência</h3><p>Visível somente para organização autorizada</p></div><button class="text-btn" data-modal="athlete-profile">Editar</button></div><div class="profile-stat-row"><span>Contato</span><strong id="athleteEmergencyName">—</strong></div><div class="profile-stat-row"><span>Telefone</span><strong id="athleteEmergencyPhone">—</strong></div></article>
+            <article class="card dash-panel" id="athleteGuardianCard" hidden><div class="panel-head"><div><h3>Responsável legal</h3><p>Obrigatório para atleta menor de idade</p></div><div><span class="status-pill pending" id="athleteGuardianAuthorization">Verificando</span><button class="text-btn" type="button" data-modal="athlete-guardian">Atualizar</button></div></div><div class="profile-stat-row"><span>Nome</span><strong id="athleteGuardianName">—</strong></div><div class="profile-stat-row"><span>Vínculo</span><strong id="athleteGuardianRelationship">—</strong></div><div class="profile-stat-row"><span>Contato</span><strong id="athleteGuardianPhone">—</strong></div></article>
           </div>
           <div class="profile-column">
-            <article class="card dash-panel"><div class="panel-head"><div><h3>Documentos e verificações</h3><p>Situação necessária para competir</p></div><span class="status-pill" id="athleteDocumentOverall">Tudo certo</span></div><div class="document-list" id="athleteDocumentList"><div class="document-item"><div class="metric-icon green"><svg class="icon sm"><use href="#i-check"/></svg></div><div><strong>Documento de identificação</strong><span>Carregando situação…</span></div><span class="status-pill">Válido</span></div></div><button class="wide-btn" data-modal="athlete-document">Gerenciar documentos</button></article>
-            <article class="card settings-card"><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-bell"/></svg></div><div class="setting-copy"><strong>Notificações de chamada</strong><span>Avisos de pesagem, chave e luta</span></div><button class="switch on"></button></div><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-lock"/></svg></div><div class="setting-copy"><strong>Privacidade e segurança</strong><span>Sessões, dispositivos e dados</span></div><svg class="icon sm"><use href="#i-chevron"/></svg></div><div class="setting logout-setting" data-logout><div class="setting-icon"><svg class="icon sm"><use href="#i-user"/></svg></div><div class="setting-copy"><strong>Sair da conta</strong><span>Encerrar a sessão neste dispositivo</span></div><svg class="icon sm"><use href="#i-chevron"/></svg></div></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Documentos e verificações</h3><p>Documentos pessoais compartilhados pela conta</p></div><span class="status-pill pending" id="athleteDocumentOverall">Sincronizando</span></div><div class="document-list" id="athleteDocumentList"><div class="document-item"><div class="metric-icon yellow"><svg class="icon sm"><use href="#i-clock"/></svg></div><div><strong>Documentos do atleta</strong><span>Carregando situação…</span></div><span class="status-pill pending">Aguarde</span></div></div><button class="wide-btn" data-modal="athlete-document">Gerenciar documentos</button></article>
+            <article class="card dash-panel"><div class="panel-head"><div><h3>Certificados da modalidade</h3><p>Graduação, filiação e formação verificáveis</p></div><button class="text-btn" type="button" data-modal="athlete-certificate">Adicionar</button></div><div class="compact-list certificate-list-profile" id="athleteProfileCertificateList"><div class="technician-empty">Sincronizando certificados…</div></div><button class="wide-btn" type="button" data-modal="athlete-certificate">Enviar certificado</button></article>
+            <article class="card settings-card"><div class="setting"><div class="setting-icon"><svg class="icon sm"><use href="#i-lock"/></svg></div><div class="setting-copy"><strong>Sessão e dados protegidos</strong><span>Dados privados e encerramento automático após 20 minutos sem atividade</span></div><span class="status-pill">Protegido</span></div><div class="setting logout-setting" data-logout><div class="setting-icon"><svg class="icon sm"><use href="#i-user"/></svg></div><div class="setting-copy"><strong>Sair da conta</strong><span>Encerrar a sessão neste dispositivo</span></div><svg class="icon sm"><use href="#i-chevron"/></svg></div></article>
           </div>
         </div>
       </section>
@@ -2232,13 +2447,13 @@
     </main>
 
     <aside class="right-rail">
-      <div class="rail-header"><strong>Central do atleta</strong><span>Temporada 2026</span></div>
+      <div class="rail-header"><strong>Central do atleta</strong><span id="athleteRailSeason">Temporada 2026</span></div>
       <article class="card athlete-rail-card">
-        <div class="athlete-license"><div class="avatar">RM</div><div><strong>Rafael Martins</strong><span>AC-2026-001842 • Ativo</span></div><svg class="icon sm verified" style="margin-left:auto"><use href="#i-shield"/></svg></div>
-        <div class="profile-stat-row"><span>Clube</span><strong>Dojo Norte</strong></div><div class="profile-stat-row"><span>Graduação</span><strong>Faixa azul</strong></div><button class="wide-btn" data-page-target="explore">Abrir carteirinha</button>
+        <div class="athlete-license"><div class="avatar" id="athleteRailAvatar">AC</div><div><strong id="athleteRailName">Atleta autenticado</strong><span id="athleteRailRegistration">Sincronizando registro</span></div><svg class="icon sm verified" style="margin-left:auto"><use href="#i-shield"/></svg></div>
+        <div class="profile-stat-row"><span>Clube</span><strong id="athleteRailClub">—</strong></div><div class="profile-stat-row"><span>Graduação</span><strong id="athleteRailRank">—</strong></div><button class="wide-btn" data-page-target="explore">Abrir carteirinha</button>
       </article>
-      <section class="rail-section"><div class="rail-title"><strong>Próxima competição</strong><button data-page-target="training">Detalhes</button></div><article class="card next-session"><div class="overline">18 de outubro</div><h3>Curitiba Open 2026</h3><p>Ginásio Tarumã • Curitiba<br>Adulto • Médio • Faixa azul</p><div class="session-countdown"><div class="count-box"><strong>21</strong><span>dias</span></div><div class="count-box"><strong>08</strong><span>horas</span></div><div class="count-box"><strong>32</strong><span>min</span></div></div><button class="wide-btn" data-page-target="training">Acompanhar inscrição</button></article></section>
-      <section class="rail-section"><div class="rail-title"><strong>Pendências</strong><button data-page-target="profile">Ver perfil</button></div><div class="notice-list"><div class="notice"><i class="notice-dot" style="background:var(--yellow)"></i><div><p>Pesagem disponível a partir de 17 de outubro.</p><time>Próxima etapa</time></div></div><div class="notice"><i class="notice-dot blue"></i><div><p>A chave será publicada após o encerramento das inscrições.</p><time>Organização do evento</time></div></div><div class="notice"><i class="notice-dot" style="background:var(--green)"></i><div><p>Documentos e filiação estão regulares.</p><time>Verificado hoje</time></div></div></div></section>
+      <section class="rail-section"><div class="rail-title"><strong>Próxima competição</strong><button data-page-target="training">Detalhes</button></div><article class="card next-session"><div class="overline" id="athleteRailEventDate">Sem data</div><h3 id="athleteRailEventName">Carregando inscrição</h3><p id="athleteRailEventDetail">Aguardando dados autenticados</p><div class="session-countdown"><div class="count-box"><strong id="athleteRailCountdownDays">—</strong><span>dias</span></div><div class="count-box"><strong id="athleteRailCountdownHours">—</strong><span>horas</span></div><div class="count-box"><strong id="athleteRailCountdownMinutes">—</strong><span>min</span></div></div><button class="wide-btn" data-page-target="training">Acompanhar inscrição</button></article></section>
+      <section class="rail-section"><div class="rail-title"><strong>Pendências</strong><button data-page-target="profile">Ver perfil</button></div><div class="notice-list" id="athleteRailNotices"><div class="notice"><i class="notice-dot" style="background:var(--yellow)"></i><div><p>Carregando situação do atleta.</p><time>Sincronizando</time></div></div></div></section>
     </aside>
 
   </div>
@@ -2331,23 +2546,66 @@
   <!-- Edição do perfil completo do atleta -->
   <div class="modal-backdrop" id="modal-athlete-profile" role="dialog" aria-modal="true" aria-labelledby="athleteProfileModalTitle">
     <form class="modal" id="athleteProfileForm">
-      <div class="modal-head"><div><h3 id="athleteProfileModalTitle">Atualizar perfil do atleta</h3><p>Dados esportivos e contato de emergência usados nas operações autorizadas.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="modal-head"><div><h3 id="athleteProfileModalTitle">Atualizar perfil do atleta</h3><p>Contato pessoal, peso e emergência da sua conta única.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="modality-context-note"><svg class="icon sm"><use href="#i-lock"/></svg><span><strong id="athleteProfileLockedIdentity">Identidade validada</strong><br>Nome, documento e nascimento são protegidos. Correções oficiais exigem validação da entidade responsável.</span></div>
       <div class="form-field-row"><div class="form-field"><label for="athleteProfileEmail">E-MAIL</label><input id="athleteProfileEmail" type="email" required></div><div class="form-field"><label for="athleteProfilePhone">TELEFONE</label><input id="athleteProfilePhone" required></div></div>
-      <div class="form-field-row"><div class="form-field"><label for="athleteProfileWeightInput">PESO ATUAL (KG)</label><input id="athleteProfileWeightInput" inputmode="decimal" required></div><div class="form-field"><label for="athleteProfileCategoryInput">CATEGORIA ATUAL</label><input id="athleteProfileCategoryInput" required></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteProfileWeightInput">PESO ATUAL (KG)</label><input id="athleteProfileWeightInput" inputmode="decimal" required></div><div class="form-field"><label for="athleteProfileCategoryInput">CATEGORIA DA MODALIDADE ATIVA</label><input id="athleteProfileCategoryInput" required></div></div>
       <div class="form-field-row"><div class="form-field"><label for="athleteEmergencyNameInput">CONTATO DE EMERGÊNCIA</label><input id="athleteEmergencyNameInput" required></div><div class="form-field"><label for="athleteEmergencyPhoneInput">TELEFONE DE EMERGÊNCIA</label><input id="athleteEmergencyPhoneInput" required></div></div>
       <div class="technician-privacy-note">Essas informações são privadas e visíveis somente para usuários autorizados nos fluxos necessários.</div>
       <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Salvar perfil</button></div>
     </form>
   </div>
 
+  <!-- Responsável legal do atleta menor -->
+  <div class="modal-backdrop" id="modal-athlete-guardian" role="dialog" aria-modal="true" aria-labelledby="athleteGuardianModalTitle">
+    <form class="modal" id="athleteGuardianForm">
+      <div class="modal-head"><div><h3 id="athleteGuardianModalTitle">Responsável legal</h3><p>Dados necessários para o cadastro e a participação do atleta menor.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteGuardianNameInput">NOME COMPLETO</label><input id="athleteGuardianNameInput" required></div><div class="form-field"><label for="athleteGuardianRelationshipInput">VÍNCULO</label><select id="athleteGuardianRelationshipInput"><option>Mãe</option><option>Pai</option><option>Responsável legal</option><option>Tutor</option><option>Outro</option></select></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteGuardianDocumentInput">CPF OU DOCUMENTO</label><input id="athleteGuardianDocumentInput" required></div><div class="form-field"><label for="athleteGuardianPhoneInput">TELEFONE</label><input id="athleteGuardianPhoneInput" required></div></div>
+      <div class="form-field"><label for="athleteGuardianEmailInput">E-MAIL (OPCIONAL)</label><input id="athleteGuardianEmailInput" type="email"></div>
+      <div class="technician-privacy-note">Atualizar os dados não aprova automaticamente a participação. A autorização permanece pendente até a validação do documento correspondente pelo clube ou federação.</div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Salvar responsável</button></div>
+    </form>
+  </div>
+
   <!-- Central documental do atleta -->
   <div class="modal-backdrop" id="modal-athlete-document" role="dialog" aria-modal="true" aria-labelledby="athleteDocumentModalTitle">
     <form class="modal" id="athleteDocumentForm">
-      <div class="modal-head"><div><h3 id="athleteDocumentModalTitle">Enviar documento</h3><p>O arquivo ficará com status pendente até a validação do clube ou federação.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
-      <div class="form-field"><label for="athleteDocumentType">TIPO</label><select id="athleteDocumentType" required><option value="identity">Documento de identificação</option><option value="medical_certificate">Atestado médico</option><option value="responsibility_term">Termo de responsabilidade</option><option value="guardian_authorization">Autorização do responsável</option><option value="graduation_certificate">Certificado de graduação</option></select></div>
+      <div class="modal-head"><div><h3 id="athleteDocumentModalTitle">Enviar documento pessoal</h3><p>Este documento pertence à conta e vale para todas as modalidades autorizadas.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field"><label for="athleteDocumentType">TIPO</label><select id="athleteDocumentType" required><option value="identity">Documento de identificação</option><option value="medical_certificate">Atestado médico</option><option value="responsibility_term">Termo de responsabilidade</option><option value="guardian_authorization">Autorização do responsável</option></select></div>
       <div class="form-field"><label for="athleteDocumentFile">NOME DO ARQUIVO</label><input id="athleteDocumentFile" placeholder="documento.pdf" required></div>
       <div class="form-field-row"><div class="form-field"><label for="athleteDocumentIssued">EMISSÃO</label><input id="athleteDocumentIssued" type="date" required></div><div class="form-field"><label for="athleteDocumentExpires">VALIDADE</label><input id="athleteDocumentExpires" type="date"></div></div>
       <div class="technician-privacy-note">Nesta versão demonstrativa, o fluxo registra os metadados de envio. A produção utilizará armazenamento criptografado de documentos.</div>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Enviar para validação</button></div>
+    </form>
+  </div>
+
+  <!-- Cadastro e edição de modalidade do atleta -->
+  <div class="modal-backdrop" id="modal-athlete-modality" role="dialog" aria-modal="true" aria-labelledby="athleteModalityModalTitle">
+    <form class="modal" id="athleteModalityForm">
+      <input id="athleteModalityId" type="hidden">
+      <div class="modal-head"><div><h3 id="athleteModalityModalTitle">Adicionar modalidade</h3><p>A arte marcial será vinculada à mesma pessoa e conta Apex Combate.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="modality-context-note"><svg class="icon sm"><use href="#i-user"/></svg><span>Nunca criamos outra conta para uma nova modalidade. Identidade, contato e documentos pessoais continuam únicos.</span></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteModalitySport">MODALIDADE</label><select id="athleteModalitySport" required><option>Jiu-jítsu</option><option>Judô</option><option>Karatê</option><option>Muay Thai</option><option>Taekwondo</option><option>Boxe</option><option>MMA</option><option>Capoeira</option><option>Hapkido</option><option>Krav Maga</option><option>Kickboxing</option><option>Kung Fu / Wushu</option><option>Outra arte marcial</option></select></div><div class="form-field"><label for="athleteModalityStyle">ESTILO / VERTENTE</label><input id="athleteModalityStyle" placeholder="Ex.: Shotokan, Kodokan, No-Gi"></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteModalityRank">GRADUAÇÃO / NÍVEL</label><input id="athleteModalityRank" placeholder="Ex.: Faixa verde, intermediário" required></div><div class="form-field"><label for="athleteModalityCategory">CATEGORIA ATUAL</label><input id="athleteModalityCategory" placeholder="Idade, peso e classe" required></div></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteModalityTrainingCenter">CLUBE / ACADEMIA / DOJO</label><input id="athleteModalityTrainingCenter" placeholder="Local de prática"></div><div class="form-field"><label for="athleteModalityInstructor">PROFESSOR / TÉCNICO</label><input id="athleteModalityInstructor" placeholder="Nome do responsável técnico"></div></div>
+      <div class="form-field"><label for="athleteModalityOrganization">FEDERAÇÃO / ORGANIZAÇÃO</label><input id="athleteModalityOrganization" placeholder="Entidade responsável pela modalidade"></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteModalityStarted">INÍCIO NA MODALIDADE</label><input id="athleteModalityStarted" type="date"></div><div class="form-field"><label for="athleteModalityStatus">SITUAÇÃO</label><select id="athleteModalityStatus"><option value="active">Ativa</option><option value="paused">Pausada</option><option value="archived">Arquivada</option></select></div></div>
+      <label class="registration-consent"><input id="athleteModalityPrimary" type="checkbox"><span>Definir como modalidade principal da minha conta.</span></label>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Salvar modalidade</button></div>
+    </form>
+  </div>
+
+  <!-- Certificado vinculado à modalidade -->
+  <div class="modal-backdrop" id="modal-athlete-certificate" role="dialog" aria-modal="true" aria-labelledby="athleteCertificateModalTitle">
+    <form class="modal" id="athleteCertificateForm">
+      <div class="modal-head"><div><h3 id="athleteCertificateModalTitle">Enviar certificado</h3><p>Graduações e formações são vinculadas à modalidade correspondente.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteCertificateModality">MODALIDADE</label><select id="athleteCertificateModality" required></select></div><div class="form-field"><label for="athleteCertificateType">TIPO</label><select id="athleteCertificateType"><option value="graduation">Graduação</option><option value="membership">Filiação</option><option value="course">Curso / formação</option><option value="instructor">Instrutor / professor</option><option value="referee">Arbitragem</option></select></div></div>
+      <div class="form-field"><label for="athleteCertificateTitle">TÍTULO / GRADUAÇÃO</label><input id="athleteCertificateTitle" placeholder="Ex.: Faixa verde • Judô" required></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteCertificateIssuer">EMISSOR</label><input id="athleteCertificateIssuer" placeholder="Federação, clube ou entidade" required></div><div class="form-field"><label for="athleteCertificateCode">CÓDIGO (OPCIONAL)</label><input id="athleteCertificateCode" placeholder="Será gerado se ficar vazio"></div></div>
+      <div class="form-field"><label for="athleteCertificateFile">NOME DO ARQUIVO</label><input id="athleteCertificateFile" placeholder="certificado.pdf" required></div>
+      <div class="form-field-row"><div class="form-field"><label for="athleteCertificateIssued">EMISSÃO</label><input id="athleteCertificateIssued" type="date" required></div><div class="form-field"><label for="athleteCertificateExpires">VALIDADE (SE HOUVER)</label><input id="athleteCertificateExpires" type="date"></div></div>
+      <div class="technician-privacy-note">O envio inicia como pendente. A validade pública só é exibida após confirmação da entidade autorizada.</div>
       <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Enviar para validação</button></div>
     </form>
   </div>
@@ -2391,15 +2649,33 @@
   <div class="modal-backdrop" id="modal-competition" role="dialog" aria-modal="true" aria-labelledby="competitionModalTitle">
     <form class="modal" id="competitionForm">
       <div class="modal-head"><div><h3 id="competitionModalTitle">Inscrição em competição</h3><p id="competitionEventName">Confirme os dados esportivos para continuar.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
-      <div class="form-field"><label>ATLETA</label><input value="Rafael Martins • AC-2026-001842" readonly></div>
+      <div class="form-field"><label>ATLETA</label><input id="competitionAthleteIdentity" value="Atleta autenticado • Registro em sincronização" readonly></div>
       <div class="form-field"><label>MODALIDADE</label><select id="competitionSport" required><option>Jiu-jítsu</option><option>Judô</option><option>Karatê</option><option>Muay Thai</option></select></div>
-      <div class="form-field-row"><div class="form-field"><label>GRADUAÇÃO</label><select required><option>Faixa azul</option><option>Faixa branca</option><option>Faixa roxa</option></select></div><div class="form-field"><label>PESO ATUAL</label><input id="competitionWeight" value="79,8 kg" required></div></div>
-      <div class="form-field"><label>CATEGORIA SUGERIDA</label><select id="competitionCategory" required><option>Adulto • Médio • Até 82,3 kg</option><option>Adulto • Meio-pesado • Até 88,3 kg</option></select></div>
+      <div class="form-field-row"><div class="form-field"><label>GRADUAÇÃO</label><select id="competitionRank" required><option>Graduação do perfil</option></select></div><div class="form-field"><label>PESO ATUAL</label><input id="competitionWeight" placeholder="Peso do perfil" required></div></div>
+      <div class="form-field"><label>CATEGORIA SUGERIDA</label><select id="competitionCategory" required><option>Categoria do perfil</option></select></div>
       <div class="form-field"><label for="competitionTechnician">TÉCNICO DA EQUIPE</label><select id="competitionTechnician"><option value="">Definido posteriormente pelo clube</option><option value="1">Marcelo Mendes • TEC-PR-00421</option><option value="2">Camila Souza • TEC-PR-00438</option><option value="3">Renata Oliveira • TEC-PR-00452</option></select></div>
       <label class="registration-consent"><input type="checkbox" required><span>Confirmo que os dados estão corretos e aceito o regulamento da competição.</span></label>
-      <div class="registration-total"><span>Total da inscrição</span><strong>R$ 120,00</strong></div>
+      <div class="registration-total"><span>Total da inscrição</span><strong id="competitionRegistrationTotal">—</strong></div>
       <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Confirmar inscrição</button></div>
     </form>
+  </div>
+
+  <!-- Pagamento do atleta -->
+  <div class="modal-backdrop" id="modal-athlete-payment" role="dialog" aria-modal="true" aria-labelledby="athletePaymentModalTitle">
+    <form class="modal" id="athletePaymentForm">
+      <input id="athletePaymentId" type="hidden">
+      <div class="modal-head"><div><h3 id="athletePaymentModalTitle">Pagamento</h3><p id="athletePaymentDescription">Confirme a cobrança selecionada.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div>
+      <div class="registration-total"><span>Valor da cobrança</span><strong id="athletePaymentAmount">—</strong></div>
+      <div class="form-field"><label for="athletePaymentMethod">FORMA DE PAGAMENTO</label><select id="athletePaymentMethod" required><option value="pix">PIX</option><option value="card">Cartão pelo gateway</option><option value="boleto">Boleto</option></select></div>
+      <div class="payment-safety-note"><svg class="icon sm"><use href="#i-lock"/></svg><span>Fluxo demonstrativo: não informe número de cartão, senha, código bancário ou chave pessoal. Nenhuma cobrança real será realizada.</span></div>
+      <label class="registration-consent"><input type="checkbox" required><span>Confirmo que estou testando um pagamento demonstrativo sem movimentação financeira real.</span></label>
+      <div class="modal-actions"><button type="button" class="btn-secondary" data-close>Cancelar</button><button class="wide-btn" type="submit">Confirmar demonstração</button></div>
+    </form>
+  </div>
+
+  <!-- Comprovante demonstrativo -->
+  <div class="modal-backdrop" id="modal-athlete-receipt" role="dialog" aria-modal="true" aria-labelledby="athleteReceiptTitle">
+    <div class="modal"><div class="modal-head"><div><h3 id="athleteReceiptTitle">Comprovante de pagamento</h3><p>Registro demonstrativo da operação no Apex Combate.</p></div><button type="button" class="close-btn" data-close><svg class="icon sm"><use href="#i-x"/></svg></button></div><div class="modality-context-note"><svg class="icon sm"><use href="#i-check"/></svg><span>Pagamento confirmado no ambiente demonstrativo. Este comprovante não representa transação bancária real.</span></div><div class="profile-stat-row"><span>Descrição</span><strong id="athleteReceiptDescription">—</strong></div><div class="profile-stat-row"><span>Valor</span><strong id="athleteReceiptAmount">—</strong></div><div class="profile-stat-row"><span>Forma</span><strong id="athleteReceiptMethod">—</strong></div><div class="profile-stat-row"><span>Data</span><strong id="athleteReceiptDate">—</strong></div><div class="profile-stat-row"><span>Código</span><strong id="athleteReceiptCode">—</strong></div><div class="modal-actions"><button type="button" class="wide-btn" data-close>Fechar</button></div></div>
   </div>
 
   <!-- Operação individual do atleta pelo técnico -->
@@ -2432,7 +2708,15 @@
 
   <script>
     let athleteEligibleTechnicians = [];
+    let athleteCompetitionCatalog = [];
     let athleteDashboardState = null;
+    let athleteLiveState = null;
+    let athleteLivePollTimer = null;
+    let athleteLiveRequestInFlight = false;
+    let athleteLiveSelectedStreamId = null;
+    let pendingAthleteLoginData = null;
+    let selectedAthleteModalityId = null;
+    try { selectedAthleteModalityId = Number(sessionStorage.getItem('apex-athlete-modality-id') || 0) || null; } catch (_) {}
     let clubDashboardState = null;
     let clubTechnicianState = { technicians: [], assignments: [] };
 
@@ -2464,7 +2748,7 @@
     });
 
     const pageMeta = {
-      home: ['Visão geral', 'Segunda-feira, 21 de setembro'],
+      home: ['Visão geral', 'Painel do atleta sincronizado'],
       explore: ['Carteirinha digital', 'Identificação esportiva e certificados'],
       training: ['Competições', 'Inscrições, categorias e chamadas'],
       journey: ['Resultados e ranking', 'Histórico competitivo e conquistas'],
@@ -2582,7 +2866,7 @@
       this.style.background = 'var(--green)';
       setTimeout(() => {
         closeModal(document.getElementById('modal-checkin'));
-        showToast('Check-in confirmado no Dojo Norte');
+        showToast(`Check-in confirmado no ${athleteDashboardState?.athlete?.club_name || 'clube'}`);
         this.textContent = 'Simular leitura';
         this.style.background = '';
       }, 850);
@@ -2610,16 +2894,22 @@
       const button = event.submitter;
       if (button) { button.disabled = true; button.textContent = 'Enviando...'; }
       try {
-        const token = getApexToken('academy');
+        const token = getApexToken('athlete');
         const response = await fetch('/api/registrations', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({ event: document.getElementById('competitionEventName').textContent.trim(), category: document.getElementById('competitionCategory').value, sport: document.getElementById('competitionSport').value, weight: document.getElementById('competitionWeight').value, technicianId: document.getElementById('competitionTechnician').value || null })
         });
         const data = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          if (typeof endApexSession === 'function') endApexSession('Sessão inválida ou expirada; entre novamente');
+          throw new Error(data.message || 'Sessão inválida ou expirada');
+        }
         if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível concluir a inscrição');
         closeModal(document.getElementById('modal-competition'));
-        showToast('Inscrição salva e enviada para confirmação');
+        await hydrateAuthenticatedDashboard('athlete');
+        document.getElementById('athletePaymentsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('Inscrição salva; a taxa foi adicionada aos pagamentos');
       } catch (error) {
         showToast(error.message);
       } finally {
@@ -2655,6 +2945,47 @@
     }));
     if (competitionSearch) competitionSearch.addEventListener('input', filterCompetitions);
 
+    function competitionSportSlug(value = '') {
+      return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
+    function renderAthleteCompetitions(competitions = []) {
+      athleteCompetitionCatalog = competitions;
+      const list = document.getElementById('competitionList');
+      if (!list) return;
+      const selectedSport = athleteDashboardState?.selectedModality?.sport || athleteDashboardState?.athlete?.sport || '';
+      const availableCompetitions = selectedSport ? competitions.filter(item => item.sport === selectedSport) : competitions;
+      const registeredIds = new Set((athleteDashboardState?.registrations || []).map(item => Number(item.competition_id)));
+      const months = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+      list.innerHTML = availableCompetitions.map(item => {
+        const date = item.event_date ? new Date(`${item.event_date.slice(0, 10)}T12:00:00`) : null;
+        const day = date && !Number.isNaN(date.getTime()) ? String(date.getDate()).padStart(2, '0') : '—';
+        const month = date && !Number.isNaN(date.getTime()) ? months[date.getMonth()] : '—';
+        const deadline = item.registration_deadline ? formatIsoDate(item.registration_deadline) : 'A confirmar';
+        const registered = registeredIds.has(Number(item.id));
+        const open = item.status === 'open';
+        const cardStatus = registered ? 'registered' : open ? 'open' : item.status;
+        const statusText = registered ? 'Inscrito' : open ? 'Inscrições abertas' : 'Inscrições encerradas';
+        const fee = Number(item.fee || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        const action = registered
+          ? `<button class="btn-accent" data-page-target="home">Ver inscrição</button>`
+          : open
+            ? `<button class="btn-accent" data-athlete-register="${Number(item.id)}" data-event="${safeText(item.name)}">Inscrever-se</button>`
+            : '<button class="btn-small" type="button" disabled>Encerrada</button>';
+        return `<article class="card competition-card ${registered ? 'featured' : ''}" data-name="${safeText(`${item.name} ${item.city}`.toLowerCase())}" data-sport="${safeText(competitionSportSlug(item.sport))}" data-status="${safeText(cardStatus)}"><div class="competition-date"><strong>${day}</strong><span>${month}</span></div><div class="competition-content"><div class="competition-tags"><span>${safeText(item.sport)}</span><span class="${open && !registered ? 'open' : registered ? 'registered' : ''}">${safeText(statusText)}</span></div><h3>${safeText(item.name)}</h3><p><svg class="icon sm"><use href="#i-pin"/></svg>${safeText(`${item.venue} • ${item.city}, ${item.state}`)}</p><div class="competition-stats"><span>${safeText(fee)}</span><span>Até ${safeText(deadline)}</span><span>${safeText(item.level || item.organizer || 'Evento')}</span></div></div><div class="competition-action">${action}</div></article>`;
+      }).join('') + '<div class="no-results" id="competitionNoResults">Nenhuma competição encontrada.</div>';
+      list.querySelectorAll('[data-athlete-register]').forEach(button => button.addEventListener('click', () => {
+        const competition = athleteCompetitionCatalog.find(item => Number(item.id) === Number(button.dataset.athleteRegister));
+        if (!competition) return;
+        document.getElementById('competitionEventName').textContent = competition.name;
+        document.getElementById('competitionSport').value = competition.sport;
+        document.getElementById('competitionRegistrationTotal').textContent = Number(competition.fee || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        populateCompetitionTechnicians(competition.name);
+        openModal('competition', button);
+      }));
+      list.querySelectorAll('[data-page-target]').forEach(button => button.addEventListener('click', () => showPage(button.dataset.pageTarget)));
+      filterCompetitions();
+    }
 
     const ATHLETE_DOCUMENT_LABELS = {
       identity: 'Documento de identificação', medical_certificate: 'Atestado médico',
@@ -2665,28 +2996,726 @@
     function safeText(value = '') { const node = document.createElement('div'); node.textContent = String(value ?? ''); return node.innerHTML; }
     function personInitials(name = '') { return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'AC'; }
     function formatIsoDate(value) { if (!value) return 'Sem validade'; const [year,month,day] = value.slice(0,10).split('-'); return `${day}/${month}/${year}`; }
+    function formatCurrency(value = 0) { return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    const ATHLETE_PAYMENT_STATUS = { pending: 'Pendente', overdue: 'Vencido', paid: 'Pago', waived: 'Isento', refunded: 'Estornado', processing: 'Processando', cancelled: 'Cancelado' };
+    const ATHLETE_PAYMENT_TYPES = { competition_fee: 'Competição', club_membership: 'Mensalidade' };
+    const ATHLETE_PAYMENT_METHODS = { pix: 'PIX', card: 'Cartão pelo gateway', boleto: 'Boleto' };
+
+    function renderAthletePayments(payments = []) {
+      const pending = payments.filter(item => ['pending','overdue'].includes(item.status));
+      const paid = payments.filter(item => item.status === 'paid').sort((a,b) => String(b.paid_at).localeCompare(String(a.paid_at)));
+      const next = [...pending].sort((a,b) => String(a.due_date).localeCompare(String(b.due_date)))[0];
+      const setText = (id,value) => { const element = document.getElementById(id); if (element) element.textContent = value; };
+      setText('athletePaymentPendingTotal', formatCurrency(pending.reduce((sum,item) => sum + Number(item.amount || 0), 0)));
+      setText('athletePaymentPendingCount', pending.length ? `${pending.length} cobrança(s) em aberto` : 'Nenhuma cobrança em aberto');
+      setText('athletePaymentNextDue', next ? formatIsoDate(next.due_date) : 'Em dia');
+      setText('athletePaymentNextDescription', next?.description || 'Nenhuma cobrança pendente');
+      setText('athletePaymentLastPaid', paid[0] ? formatIsoDate(paid[0].paid_at) : '—');
+      setText('athletePaymentLastDescription', paid[0]?.description || 'Nenhum pagamento confirmado');
+      const rows = document.getElementById('athletePaymentRows');
+      if (!rows) return;
+      rows.innerHTML = payments.map(item => {
+        const statusClass = item.status === 'paid' || item.status === 'waived' ? '' : item.status === 'pending' || item.status === 'processing' ? 'pending' : 'alert';
+        const action = ['pending','overdue'].includes(item.status)
+          ? `<button class="btn-accent payment-action" type="button" data-pay-athlete="${Number(item.id)}">Pagar</button>`
+          : item.status === 'paid'
+            ? `<button class="btn-small payment-action" type="button" data-receipt-athlete="${Number(item.id)}">Comprovante</button>`
+            : '<span>—</span>';
+        return `<tr><td><strong>${safeText(item.description)}</strong><small>${safeText(item.competition_name || item.club_name || 'Apex Combate')}</small></td><td>${safeText(ATHLETE_PAYMENT_TYPES[item.payment_type] || item.payment_type)}</td><td>${safeText(formatIsoDate(item.due_date))}</td><td><strong>${safeText(formatCurrency(item.amount))}</strong></td><td><span class="status-pill ${statusClass}">${safeText(ATHLETE_PAYMENT_STATUS[item.status] || item.status)}</span></td><td>${action}</td></tr>`;
+      }).join('') || '<tr><td colspan="6">Nenhuma cobrança encontrada.</td></tr>';
+      rows.querySelectorAll('[data-pay-athlete]').forEach(button => button.addEventListener('click', () => {
+        const payment = payments.find(item => Number(item.id) === Number(button.dataset.payAthlete));
+        if (!payment) return;
+        document.getElementById('athletePaymentId').value = payment.id;
+        document.getElementById('athletePaymentDescription').textContent = payment.description;
+        document.getElementById('athletePaymentAmount').textContent = formatCurrency(payment.amount);
+        document.getElementById('athletePaymentForm').querySelector('input[type="checkbox"]').checked = false;
+        openModal('athlete-payment', button);
+      }));
+      rows.querySelectorAll('[data-receipt-athlete]').forEach(button => button.addEventListener('click', () => {
+        const payment = payments.find(item => Number(item.id) === Number(button.dataset.receiptAthlete));
+        if (!payment) return;
+        setText('athleteReceiptDescription', payment.description);
+        setText('athleteReceiptAmount', formatCurrency(payment.amount));
+        setText('athleteReceiptMethod', ATHLETE_PAYMENT_METHODS[payment.payment_method] || payment.payment_method || 'Não informado');
+        setText('athleteReceiptDate', formatIsoDate(payment.paid_at));
+        setText('athleteReceiptCode', payment.receipt_code || 'Código não informado');
+        openModal('athlete-receipt', button);
+      }));
+    }
+
+    const ATHLETE_LIVE_STATUS = {
+      calling: 'Chamada', on_deck: 'Na sequência', in_progress: 'Em combate', scheduled: 'Programada',
+      completed: 'Finalizada', cancelled: 'Cancelada', published: 'Publicada', confirmed: 'Confirmado',
+      accredited: 'Credenciado', weigh_in: 'Na pesagem', equipment_check: 'Conferência', warming_up: 'Aquecimento',
+      call_area: 'Área de chamada', ready: 'Pronto'
+    };
+
+    function athleteLiveStatusClass(status = '') {
+      if (['calling','in_progress','completed','published','ready'].includes(status)) return '';
+      if (['scheduled','on_deck','warming_up','weigh_in','equipment_check'].includes(status)) return 'pending';
+      return 'alert';
+    }
+
+    function athleteLiveShortArena(value = '') {
+      return String(value || '—').replace(/^Tatame\s*/i, 'T').replace(/^Ringue\s*/i, 'R').replace(/^Área\s*/i, 'A');
+    }
+
+    function athleteLiveFilterValues() {
+      return {
+        search: String(document.getElementById('athleteLiveSearch')?.value || '').trim().toLocaleLowerCase('pt-BR'),
+        sport: document.getElementById('athleteLiveSportFilter')?.value || '',
+        arena: document.getElementById('athleteLiveArenaFilter')?.value || '',
+        status: document.getElementById('athleteLiveStatusFilter')?.value || '',
+        mine: Boolean(document.getElementById('athleteLiveMineFilter')?.checked)
+      };
+    }
+
+    function selectAthleteLiveStream(streamId, { userInitiated = false } = {}) {
+      const stream = (athleteLiveState?.streams || []).find(item => Number(item.id) === Number(streamId));
+      const video = document.getElementById('athleteLiveVideo');
+      const overlay = document.getElementById('athleteLivePlayerOverlay');
+      const status = document.getElementById('athleteLiveVideoStatus');
+      if (!stream || !video || !overlay || !status) return;
+      athleteLiveSelectedStreamId = Number(stream.id);
+      document.querySelectorAll('[data-athlete-stream]').forEach(button => button.classList.toggle('active', Number(button.dataset.athleteStream) === athleteLiveSelectedStreamId));
+      setTextContentIfPresent('athleteLiveStreamTitle', stream.title || stream.arena_label);
+      setTextContentIfPresent('athleteLiveStreamMeta', `${String(stream.playback_type || 'vídeo').toUpperCase()} protegido • ${stream.arena_label} • latência estimada ${Number(stream.latency_seconds || 0) || '—'}s`);
+      const labels = { live:'Ao vivo', standby:'Aguardando câmera', offline:'Offline', ended:'Encerrada' };
+      status.textContent = labels[stream.status] || stream.status || 'Indisponível';
+      status.className = `status-pill ${stream.status === 'live' ? '' : stream.status === 'standby' ? 'pending' : 'alert'}`;
+      const hlsNative = Boolean(video.canPlayType('application/vnd.apple.mpegurl'));
+      const primary = stream.playback_url || '';
+      const fallback = stream.fallback_url || '';
+      const source = stream.playback_type === 'hls' && !hlsNative ? fallback : primary || fallback;
+      if (!stream.available || !source) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        overlay.hidden = false;
+        setTextContentIfPresent('athleteLivePlayerMessage', stream.status === 'offline' ? 'Câmera indisponível nesta área' : 'Transmissão ainda não iniciada');
+        return;
+      }
+      const absoluteSource = new URL(source, window.location.href).href;
+      if (video.src !== absoluteSource) {
+        video.src = source;
+        video.load();
+      }
+      overlay.hidden = true;
+      if (userInitiated) video.play().catch(() => showToast('Toque no botão de reprodução para iniciar o vídeo'));
+    }
+
+    function applyAthleteLiveFilters() {
+      if (!athleteLiveState) return;
+      const filters = athleteLiveFilterValues();
+      const statusText = status => ATHLETE_LIVE_STATUS[status] || status || 'Aguardando';
+      const allBouts = athleteLiveState.filterBouts || athleteLiveState.callQueue || [];
+      const bouts = allBouts.filter(item => {
+        const haystack = `${item.category_name} ${item.category_sport} ${item.arena_label} ${item.bout_number} ${item.red_name} ${item.blue_name}`.toLocaleLowerCase('pt-BR');
+        if (filters.search && !haystack.includes(filters.search)) return false;
+        if (filters.sport && item.category_sport !== filters.sport) return false;
+        if (filters.arena && item.arena_label !== filters.arena) return false;
+        if (filters.status ? item.status !== filters.status : ['completed','cancelled'].includes(item.status)) return false;
+        if (filters.mine && !item.isMine) return false;
+        return true;
+      });
+      const matchingArenas = new Set(bouts.map(item => item.arena_label));
+      const streams = (athleteLiveState.streams || []).filter(item => {
+        const haystack = `${item.title} ${item.arena_label}`.toLocaleLowerCase('pt-BR');
+        if (filters.search && !haystack.includes(filters.search) && !bouts.some(bout => bout.arena_label === item.arena_label)) return false;
+        if (filters.arena && item.arena_label !== filters.arena) return false;
+        if ((filters.sport || filters.status || filters.mine) && !matchingArenas.has(item.arena_label)) return false;
+        return true;
+      });
+      setTextContentIfPresent('athleteLiveFilterCount', `${bouts.length} luta(s) • ${streams.length} câmera(s)`);
+      const queue = document.getElementById('athleteLiveQueue');
+      if (queue) {
+        queue.innerHTML = bouts.slice(0, 20).map(item => `<div class="athlete-live-queue-row ${item.isMine ? 'is-mine' : ''}"><time>${safeText(item.estimated_time || item.scheduled_time || '—')}</time><i>${safeText(athleteLiveShortArena(item.arena_label))}</i><span><strong>${safeText(item.category_name)}</strong><small>Luta ${safeText(item.bout_number)} • ${safeText(item.red_name)} × ${safeText(item.blue_name)}</small></span><em>${safeText(item.isMine ? 'Você' : statusText(item.status))}</em></div>`).join('') || '<div class="technician-empty">Nenhuma luta corresponde aos filtros.</div>';
+      }
+      const streamList = document.getElementById('athleteLiveStreams');
+      if (streamList) {
+        const streamLabels = { live:'Ao vivo', standby:'Preparada', offline:'Offline', ended:'Encerrada' };
+        streamList.innerHTML = streams.map(item => `<button class="athlete-live-stream ${Number(item.id) === Number(athleteLiveSelectedStreamId) ? 'active' : ''}" type="button" data-athlete-stream="${Number(item.id)}"><i><svg class="icon sm"><use href="#i-eye"/></svg></i><span><strong>${safeText(item.title || item.arena_label)}</strong><span>${safeText(item.arena_label)} • ${safeText(String(item.playback_type || 'vídeo').toUpperCase())}</span></span><em class="${item.status === 'live' ? 'live' : ''}">${safeText(streamLabels[item.status] || item.status)}</em></button>`).join('') || '<div class="technician-empty">Nenhuma câmera corresponde aos filtros.</div>';
+        streamList.querySelectorAll('[data-athlete-stream]').forEach(button => button.addEventListener('click', () => selectAthleteLiveStream(button.dataset.athleteStream, { userInitiated:true })));
+      }
+      const selectedVisible = streams.some(item => Number(item.id) === Number(athleteLiveSelectedStreamId));
+      if (!selectedVisible && streams.length) {
+        const preferred = streams.find(item => item.arena_label === athleteLiveState.myBout?.arena_label) || streams[0];
+        selectAthleteLiveStream(preferred.id);
+      } else if (!streams.length) {
+        athleteLiveSelectedStreamId = null;
+        const video = document.getElementById('athleteLiveVideo');
+        if (video) { video.pause(); video.removeAttribute('src'); video.load(); }
+        const overlay = document.getElementById('athleteLivePlayerOverlay');
+        if (overlay) overlay.hidden = false;
+        setTextContentIfPresent('athleteLivePlayerMessage', 'Nenhuma câmera corresponde aos filtros');
+        setTextContentIfPresent('athleteLiveStreamTitle', 'Selecione outros filtros');
+        setTextContentIfPresent('athleteLiveStreamMeta', 'HLS protegido • acesso autenticado');
+      }
+    }
+
+    function populateAthleteLiveFilterOptions(data) {
+      const preserveOptions = (id,values,label) => {
+        const select = document.getElementById(id);
+        if (!select) return;
+        const current = select.value;
+        select.innerHTML = `<option value="">${label}</option>${[...values].filter(Boolean).sort((a,b) => a.localeCompare(b,'pt-BR')).map(value => `<option value="${safeText(value)}">${safeText(value)}</option>`).join('')}`;
+        if ([...select.options].some(option => option.value === current)) select.value = current;
+      };
+      const allBouts = data.filterBouts || data.callQueue || [];
+      preserveOptions('athleteLiveSportFilter', new Set([...(data.categories || []).map(item => item.sport), ...allBouts.map(item => item.category_sport)]), 'Todas');
+      preserveOptions('athleteLiveArenaFilter', new Set([...allBouts.map(item => item.arena_label), ...(data.streams || []).map(item => item.arena_label)]), 'Todas');
+    }
+
+    function renderAthleteLive(data) {
+      athleteLiveState = data;
+      populateAthleteLiveFilterOptions(data);
+      const registration = data.registration || {};
+      const selectedCategory = data.selectedCategory || null;
+      const myBout = data.myBout || null;
+      const statusText = status => ATHLETE_LIVE_STATUS[status] || status || 'Aguardando';
+      const setText = (id,value) => { const element = document.getElementById(id); if (element) element.textContent = value ?? '—'; };
+
+      const eventSelect = document.getElementById('athleteLiveCompetition');
+      if (eventSelect) {
+        eventSelect.innerHTML = (data.events || []).map(item => `<option value="${Number(item.competitionId)}">${safeText(item.competition)} • ${safeText(formatIsoDate(item.eventDate))}</option>`).join('') || '<option value="">Nenhuma inscrição sincronizada</option>';
+        if (registration.competition_id) eventSelect.value = String(registration.competition_id);
+      }
+      const categorySelect = document.getElementById('athleteLiveCategory');
+      if (categorySelect) {
+        categorySelect.innerHTML = (data.categories || []).map(item => `<option value="${Number(item.id)}">${item.isMine ? 'Minha categoria • ' : ''}${safeText(item.sport)} • ${safeText(item.name)}</option>`).join('') || '<option value="">Aguardando publicação</option>';
+        if (selectedCategory?.id) categorySelect.value = String(selectedCategory.id);
+      }
+
+      const syncedAt = data.serverTime ? new Date(data.serverTime) : new Date();
+      setText('athleteLiveSyncStatus', `Atualizado às ${Number.isNaN(syncedAt.getTime()) ? '—' : syncedAt.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit', second:'2-digit' })}`);
+      const bracketStatus = document.getElementById('athleteBracketStatus');
+      if (bracketStatus) {
+        bracketStatus.textContent = statusText(selectedCategory?.status || 'scheduled');
+        bracketStatus.className = `status-pill ${athleteLiveStatusClass(selectedCategory?.status || 'scheduled')}`;
+      }
+      setText('athleteBracketTitle', selectedCategory ? `Chave • ${selectedCategory.name}` : 'Chave da categoria');
+      setText('athleteBracketSubtitle', selectedCategory ? `${selectedCategory.sport} • ${selectedCategory.division || 'Divisão oficial'} • ${selectedCategory.arena_label || 'Área a definir'}` : 'Selecione uma categoria publicada');
+
+      const homeStatus = document.getElementById('athleteHomeLiveStatus');
+      if (homeStatus) {
+        homeStatus.textContent = myBout ? statusText(myBout.status) : data.myCategory ? 'Chave publicada' : 'Aguardando chave';
+        homeStatus.className = `status-pill ${athleteLiveStatusClass(myBout?.status || (data.myCategory ? 'published' : 'scheduled'))}`;
+      }
+      if (myBout) {
+        const opponent = myBout.redIsMe ? myBout.blue_name : myBout.red_name;
+        setText('athleteHomeLiveArena', athleteLiveShortArena(myBout.arena_label));
+        setText('athleteHomeLiveTitle', `Luta ${myBout.bout_number} • ${opponent || 'Adversário a definir'}`);
+        setText('athleteHomeLiveDetail', `${myBout.category_name} • ${myBout.estimated_time || myBout.scheduled_time || 'horário a definir'}${registration.bouts_before ? ` • ${registration.bouts_before} luta(s) antes` : ''}`);
+      } else {
+        setText('athleteHomeLiveArena', '—');
+        setText('athleteHomeLiveTitle', data.myCategory ? 'Categoria publicada; confronto a definir' : 'Chave ainda não publicada');
+        setText('athleteHomeLiveDetail', data.myCategory ? data.myCategory.name : 'Você receberá a chamada oficial nesta central.');
+      }
+
+      const boutStatus = document.getElementById('athleteLiveBoutStatus');
+      if (boutStatus) {
+        boutStatus.textContent = myBout ? statusText(myBout.status) : 'Aguardando';
+        boutStatus.className = `status-pill ${athleteLiveStatusClass(myBout?.status || 'scheduled')}`;
+      }
+      setText('athleteLiveBoutTitle', myBout ? `${myBout.round_name} • Luta ${myBout.bout_number}` : 'Aguardando chave publicada');
+      setText('athleteLiveEventMeta', registration.competition ? `${registration.competition} • ${registration.category}` : 'A organização informará confronto, área e horário.');
+      const renderSide = (id,name,side,isMe,score) => {
+        const element = document.getElementById(id);
+        if (!element) return;
+        element.className = isMe ? 'is-me' : '';
+        element.querySelector('span').textContent = side;
+        element.querySelector('strong').textContent = name || 'A definir';
+        element.querySelector('small').textContent = isMe ? 'VOCÊ' : score !== '' && score != null ? `Pontuação ${score}` : 'Competidor';
+      };
+      renderSide('athleteLiveRedSide', myBout?.red_name, 'VERMELHO', Boolean(myBout?.redIsMe), myBout?.score_red);
+      renderSide('athleteLiveBlueSide', myBout?.blue_name, 'AZUL', Boolean(myBout?.blueIsMe), myBout?.score_blue);
+      setText('athleteLiveArena', myBout?.arena_label || registration.arena_label || '—');
+      setText('athleteLiveBoutNumber', myBout?.bout_number ? `#${myBout.bout_number}` : registration.bout_number ? `#${registration.bout_number}` : '—');
+      setText('athleteLiveCallTime', myBout?.estimated_time || myBout?.scheduled_time || registration.call_time || '—');
+      setText('athleteLiveBoutsBefore', Number(registration.bouts_before || 0) ? `${registration.bouts_before} luta(s)` : myBout?.status === 'calling' ? 'Agora' : '—');
+      const guidance = document.getElementById('athleteLiveGuidance');
+      if (guidance) {
+        const messages = {
+          calling: 'Apresente-se agora na área de chamada com documento e equipamento.',
+          on_deck: 'Permaneça no aquecimento: sua chamada está na sequência.',
+          in_progress: 'Combate em andamento. Siga as orientações da arbitragem.',
+          scheduled: 'Acompanhe a fila; o horário pode ser ajustado pela organização.',
+          completed: 'Luta finalizada. Aguarde a homologação do resultado.'
+        };
+        guidance.className = `athlete-live-guidance ${myBout?.status === 'calling' ? 'urgent' : ''}`;
+        guidance.querySelector('span').textContent = messages[myBout?.status] || 'Mantenha o aplicativo aberto no dia do evento.';
+      }
+
+      const bracket = document.getElementById('athleteBracket');
+      if (bracket) {
+        const rounds = new Map();
+        (data.bouts || []).forEach(item => {
+          if (!rounds.has(item.round_order)) rounds.set(item.round_order, { name:item.round_name, bouts:[] });
+          rounds.get(item.round_order).bouts.push(item);
+        });
+        bracket.innerHTML = [...rounds.entries()].sort((a,b) => a[0] - b[0]).map(([,round]) => `<section class="athlete-bracket-round"><h4>${safeText(round.name)}</h4><div class="athlete-bracket-bouts">${round.bouts.sort((a,b) => a.bout_order - b.bout_order).map(item => {
+          const redWinner = item.winner_name && item.winner_name === item.red_name;
+          const blueWinner = item.winner_name && item.winner_name === item.blue_name;
+          return `<article class="athlete-bracket-bout ${item.isMine ? 'is-mine' : ''}"><div class="athlete-bracket-bout-top"><span>Luta ${safeText(item.bout_number)} • ${safeText(item.arena_label)}</span><span>${safeText(statusText(item.status))}</span></div><div class="athlete-bracket-athlete ${item.redIsMe ? 'me' : ''} ${redWinner ? 'winner' : ''}"><span>${safeText(item.red_name || 'A definir')}</span><b>${safeText(item.score_red || (redWinner ? '✓' : ''))}</b></div><div class="athlete-bracket-athlete ${item.blueIsMe ? 'me' : ''} ${blueWinner ? 'winner' : ''}"><span>${safeText(item.blue_name || 'A definir')}</span><b>${safeText(item.score_blue || (blueWinner ? '✓' : ''))}</b></div></article>`;
+        }).join('')}</div></section>`).join('') || '<div class="technician-empty">A chave aparecerá quando for publicada pela organização.</div>';
+      }
+
+      const notices = document.getElementById('athleteLiveNotices');
+      if (notices) {
+        notices.innerHTML = (data.notices || []).map(item => {
+          const created = item.created_at ? new Date(item.created_at) : null;
+          const time = created && !Number.isNaN(created.getTime()) ? created.toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : 'Agora';
+          return `<div class="athlete-live-notice ${item.priority === 'urgent' ? 'urgent' : ''}"><i><svg class="icon sm"><use href="#${item.kind === 'call' ? 'i-bell' : item.kind === 'bracket' ? 'i-target' : 'i-map'}"/></svg></i><div><strong>${safeText(item.title)}</strong><span>${safeText(item.body)}</span></div><time>${safeText(time)}</time></div>`;
+        }).join('') || '<div class="technician-empty">Nenhum aviso oficial publicado.</div>';
+      }
+      applyAthleteLiveFilters();
+    }
+
+    async function loadAthleteLive({ competitionId = null, categoryId = null, quiet = false } = {}) {
+      if (athleteLiveRequestInFlight) return;
+      const token = getApexToken('athlete');
+      if (!token) return;
+      athleteLiveRequestInFlight = true;
+      const refreshButton = document.getElementById('athleteLiveRefresh');
+      if (refreshButton) refreshButton.disabled = true;
+      try {
+        const params = new URLSearchParams();
+        if (competitionId) params.set('competitionId', competitionId);
+        if (categoryId) params.set('categoryId', categoryId);
+        const query = params.toString();
+        const response = await fetch(`/api/athlete/live${query ? `?${query}` : ''}`, { headers:{ 'Authorization':`Bearer ${token}` } });
+        const data = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          endApexSession('Sessão inválida ou expirada; entre novamente');
+          return;
+        }
+        if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível sincronizar o campeonato ao vivo');
+        renderAthleteLive(data);
+        if (!quiet) showToast('Chaves e chamadas atualizadas');
+      } catch (error) {
+        setTextContentIfPresent('athleteLiveSyncStatus', 'Falha na sincronização');
+        if (!quiet) showToast(error.message);
+      } finally {
+        athleteLiveRequestInFlight = false;
+        if (refreshButton) refreshButton.disabled = false;
+      }
+    }
+
+    function setTextContentIfPresent(id,value) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    }
+
+    function startAthleteLivePolling() {
+      if (athleteLivePollTimer) clearInterval(athleteLivePollTimer);
+      athleteLivePollTimer = setInterval(() => {
+        let activeProfile = '';
+        try { activeProfile = sessionStorage.getItem('apex-profile') || ''; } catch (_) {}
+        if (activeProfile !== 'athlete' || document.body.classList.contains('auth-active')) return;
+        loadAthleteLive({
+          competitionId: Number(document.getElementById('athleteLiveCompetition')?.value || 0) || null,
+          categoryId: Number(document.getElementById('athleteLiveCategory')?.value || 0) || null,
+          quiet: true
+        });
+      }, 30000);
+    }
+
+    function bindAthleteLiveEvents() {
+      document.getElementById('athleteLiveRefresh')?.addEventListener('click', () => loadAthleteLive({
+        competitionId: Number(document.getElementById('athleteLiveCompetition')?.value || 0) || null,
+        categoryId: Number(document.getElementById('athleteLiveCategory')?.value || 0) || null
+      }));
+      document.getElementById('athleteLiveCompetition')?.addEventListener('change', event => loadAthleteLive({ competitionId:Number(event.target.value) || null }));
+      document.getElementById('athleteLiveCategory')?.addEventListener('change', event => loadAthleteLive({
+        competitionId:Number(document.getElementById('athleteLiveCompetition')?.value || 0) || null,
+        categoryId:Number(event.target.value) || null
+      }));
+      document.getElementById('athleteLiveFilterToggle')?.addEventListener('click', event => {
+        const panel = document.getElementById('athleteLiveFilterPanel');
+        if (!panel) return;
+        panel.hidden = !panel.hidden;
+        event.currentTarget.setAttribute('aria-expanded', String(!panel.hidden));
+        if (!panel.hidden) document.getElementById('athleteLiveSearch')?.focus();
+      });
+      ['athleteLiveSportFilter','athleteLiveArenaFilter','athleteLiveStatusFilter','athleteLiveMineFilter'].forEach(id => document.getElementById(id)?.addEventListener('change', applyAthleteLiveFilters));
+      document.getElementById('athleteLiveSearch')?.addEventListener('input', applyAthleteLiveFilters);
+      document.getElementById('athleteLiveFilterClear')?.addEventListener('click', () => {
+        ['athleteLiveSearch','athleteLiveSportFilter','athleteLiveArenaFilter','athleteLiveStatusFilter'].forEach(id => { const element = document.getElementById(id); if (element) element.value = ''; });
+        const mine = document.getElementById('athleteLiveMineFilter');
+        if (mine) mine.checked = false;
+        applyAthleteLiveFilters();
+      });
+      document.getElementById('athleteLiveFullscreen')?.addEventListener('click', () => {
+        const shell = document.querySelector('.athlete-live-player-shell');
+        if (shell?.requestFullscreen) shell.requestFullscreen().catch(() => showToast('Tela cheia indisponível neste dispositivo'));
+        else showToast('Tela cheia indisponível neste dispositivo');
+      });
+      document.getElementById('athleteLiveVideo')?.addEventListener('error', () => {
+        const overlay = document.getElementById('athleteLivePlayerOverlay');
+        if (overlay) overlay.hidden = false;
+        setTextContentIfPresent('athleteLivePlayerMessage', 'Não foi possível carregar esta transmissão');
+        const status = document.getElementById('athleteLiveVideoStatus');
+        if (status) { status.textContent = 'Falha no vídeo'; status.className = 'status-pill alert'; }
+      });
+      document.querySelectorAll('[data-athlete-live-open]').forEach(button => button.addEventListener('click', () => {
+        showPage('training');
+        setTimeout(() => document.getElementById('athleteLiveCenter')?.scrollIntoView({ behavior:'smooth', block:'start' }), 60);
+      }));
+    }
+    bindAthleteLiveEvents();
+
+    function maskAthleteDocument(value = '') {
+      const clean = String(value || '');
+      if (/^\d{11}$/.test(clean)) return `***.${clean.slice(3,6)}.${clean.slice(6,9)}-**`;
+      if (clean.length <= 4) return '••••';
+      return `${clean.slice(0,2)}${'•'.repeat(Math.min(6, clean.length - 4))}${clean.slice(-2)}`;
+    }
+
+    const ATHLETE_MODALITY_STATUS = { active: 'Ativa', paused: 'Pausada', archived: 'Arquivada' };
+
+    function hideAthleteModalityGate() {
+      const gate = document.getElementById('athleteModalityGate');
+      if (gate) gate.hidden = true;
+      document.body.classList.remove('athlete-modality-gate-active');
+    }
+
+    function prepareAthleteModalityForm(modality = null) {
+      const form = document.getElementById('athleteModalityForm');
+      if (!form) return;
+      form.reset();
+      document.getElementById('athleteModalityId').value = modality?.id || '';
+      document.getElementById('athleteModalityModalTitle').textContent = modality ? 'Editar modalidade' : 'Adicionar modalidade';
+      const sport = document.getElementById('athleteModalitySport');
+      if (modality?.sport && ![...sport.options].some(option => option.value === modality.sport)) sport.add(new Option(modality.sport, modality.sport));
+      sport.value = modality?.sport || 'Jiu-jítsu';
+      document.getElementById('athleteModalityStyle').value = modality?.style_name || '';
+      document.getElementById('athleteModalityRank').value = modality?.rank_name || '';
+      document.getElementById('athleteModalityCategory').value = modality?.category || '';
+      document.getElementById('athleteModalityTrainingCenter').value = modality?.training_center_name || modality?.club_name || athleteDashboardState?.athlete?.club_name || '';
+      document.getElementById('athleteModalityOrganization').value = modality?.organization_name || '';
+      document.getElementById('athleteModalityInstructor').value = modality?.instructor_name || '';
+      document.getElementById('athleteModalityStarted').value = modality?.started_at || '';
+      document.getElementById('athleteModalityStatus').value = modality?.status || 'active';
+      document.getElementById('athleteModalityPrimary').checked = Boolean(modality?.is_primary) || !(athleteDashboardState?.modalities || []).length;
+    }
+
+    async function selectAthleteModality(modalityId) {
+      const numericId = Number(modalityId);
+      if (!numericId) return;
+      selectedAthleteModalityId = numericId;
+      try { sessionStorage.setItem('apex-athlete-modality-id', String(numericId)); } catch (_) {}
+      hideAthleteModalityGate();
+      await hydrateAuthenticatedDashboard('athlete');
+      showPage('home');
+      const modality = (athleteDashboardState?.modalities || []).find(item => Number(item.id) === numericId);
+      showToast(`${modality?.sport || 'Modalidade'} selecionada`);
+    }
+
+    function renderAthleteModalityGate(modalities = [], onboarding = false) {
+      const gate = document.getElementById('athleteModalityGate');
+      const choices = document.getElementById('athleteModalityChoices');
+      const firstButton = document.getElementById('athleteFirstModalityButton');
+      const available = modalities.filter(item => item.status !== 'archived');
+      if (!gate || !choices || !firstButton) return;
+      gate.dataset.onboarding = onboarding ? 'true' : 'false';
+      document.getElementById('athleteModalityGateTitle').textContent = onboarding ? 'Cadastre sua primeira modalidade' : 'Qual modalidade você quer acessar?';
+      document.getElementById('athleteModalityGateDescription').textContent = onboarding ? 'Sua conta pessoal está pronta. Agora adicione a primeira arte marcial para montar o perfil esportivo.' : 'Escolha um perfil esportivo. Seus dados pessoais, login e documentos continuam na mesma conta.';
+      document.getElementById('athleteModalityGateHelp').textContent = onboarding ? 'Você poderá adicionar outras artes marciais a qualquer momento no perfil.' : 'O seletor só aparece após o login quando existem duas ou mais modalidades.';
+      choices.innerHTML = available.map(item => `<button class="modality-choice" type="button" data-select-athlete-modality="${Number(item.id)}"><span class="modality-choice-icon"><svg class="icon"><use href="#i-award"/></svg></span><span class="status-pill ${item.status === 'paused' ? 'pending' : ''}">${safeText(ATHLETE_MODALITY_STATUS[item.status] || item.status)}</span><strong>${safeText(item.sport)}</strong><small>${safeText([item.style_name,item.rank_name,item.club_name || item.organization_name].filter(Boolean).join(' • '))}</small></button>`).join('');
+      choices.querySelectorAll('[data-select-athlete-modality]').forEach(button => button.addEventListener('click', () => selectAthleteModality(button.dataset.selectAthleteModality)));
+      firstButton.hidden = !onboarding;
+      gate.hidden = false;
+      document.body.classList.add('athlete-modality-gate-active');
+      setTimeout(() => (choices.querySelector('button') || firstButton)?.focus(), 40);
+    }
+
+    function renderAthleteModalities(modalities = [], selectedId = null) {
+      const selected = modalities.find(item => Number(item.id) === Number(selectedId));
+      const available = modalities.filter(item => item.status !== 'archived');
+      const switchWrap = document.getElementById('athleteModalitySwitchWrap');
+      const switchSelect = document.getElementById('athleteModalitySwitch');
+      if (switchWrap && switchSelect) {
+        switchWrap.hidden = available.length < 2;
+        switchSelect.innerHTML = available.map(item => `<option value="${Number(item.id)}">${safeText(item.sport)}${item.style_name ? ` • ${safeText(item.style_name)}` : ''}</option>`).join('');
+        if (selected) switchSelect.value = String(selected.id);
+      }
+      const list = document.getElementById('athleteModalityList');
+      if (list) {
+        list.innerHTML = modalities.map(item => `<div class="athlete-modality-item ${Number(item.id) === Number(selectedId) ? 'selected' : ''}"><div class="metric-icon ${item.status === 'active' ? 'green' : item.status === 'paused' ? 'yellow' : ''}"><svg class="icon sm"><use href="#i-award"/></svg></div><div class="athlete-modality-copy"><strong>${safeText(item.sport)}${item.is_primary ? ' • principal' : ''}</strong><span>${safeText([item.style_name,item.rank_name,item.category].filter(Boolean).join(' • '))}</span><span>${safeText([item.club_name,item.instructor_name,item.organization_name].filter(Boolean).join(' • '))}</span></div><div class="athlete-modality-actions"><span class="status-pill ${item.status === 'active' ? '' : item.status === 'paused' ? 'pending' : 'alert'}">${safeText(ATHLETE_MODALITY_STATUS[item.status] || item.status)}</span>${item.status !== 'archived' && Number(item.id) !== Number(selectedId) ? `<button type="button" data-activate-athlete-modality="${Number(item.id)}" title="Acessar modalidade"><svg class="icon sm"><use href="#i-chevron"/></svg></button>` : ''}<button type="button" data-edit-athlete-modality="${Number(item.id)}" title="Editar modalidade"><svg class="icon sm"><use href="#i-edit"/></svg></button></div></div>`).join('') || '<div class="technician-empty">Nenhuma modalidade cadastrada.</div>';
+        list.querySelectorAll('[data-activate-athlete-modality]').forEach(button => button.addEventListener('click', () => selectAthleteModality(button.dataset.activateAthleteModality)));
+        list.querySelectorAll('[data-edit-athlete-modality]').forEach(button => button.addEventListener('click', () => {
+          const modality = modalities.find(item => Number(item.id) === Number(button.dataset.editAthleteModality));
+          prepareAthleteModalityForm(modality); openModal('athlete-modality', button);
+        }));
+      }
+      const certificateSelect = document.getElementById('athleteCertificateModality');
+      if (certificateSelect) {
+        certificateSelect.innerHTML = available.map(item => `<option value="${Number(item.id)}">${safeText(item.sport)}${item.style_name ? ` • ${safeText(item.style_name)}` : ''}</option>`).join('');
+        if (selected) certificateSelect.value = String(selected.id);
+      }
+    }
 
     function renderAthleteCompleteDashboard(data) {
       athleteDashboardState = data;
       const athlete = data.athlete || {};
-      const setText = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value || '—'; };
+      const registrations = data.registrations || [];
+      const selectedModality = data.selectedModality || null;
+      if (selectedModality?.id) {
+        selectedAthleteModalityId = Number(selectedModality.id);
+        try { sessionStorage.setItem('apex-athlete-modality-id', String(selectedModality.id)); } catch (_) {}
+      }
+      renderAthleteModalities(data.modalities || [], selectedModality?.id);
+      renderAthletePayments(data.payments || []);
+      const setText = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value ?? '—'; };
+      const statusLabels = { active: 'Ativo', pending: 'Pendente', inactive: 'Inativo', suspended: 'Suspenso' };
+      const registrationLabels = { confirmed: 'Confirmado', pending: 'Pendente', cancelled: 'Cancelado', completed: 'Concluído' };
+      const paymentLabels = { paid: 'Aprovado', pending: 'Pendente', refunded: 'Estornado', waived: 'Isento' };
+      const parseEventDate = value => value ? new Date(`${String(value).slice(0, 10)}T12:00:00`) : null;
+      const validDate = value => value && !Number.isNaN(value.getTime());
+      const shortEventDate = value => validDate(parseEventDate(value)) ? parseEventDate(value).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '').toUpperCase() : '—';
+      const longEventDate = value => validDate(parseEventDate(value)) ? parseEventDate(value).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }) : 'Data a confirmar';
+      const tableEventDate = value => validDate(parseEventDate(value)) ? parseEventDate(value).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).replace('.', '') : 'A confirmar';
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const focusRegistration = registrations.find(item => {
+        const date = parseEventDate(item.event_date);
+        return validDate(date) && date >= today && item.status !== 'cancelled';
+      }) || registrations.find(item => item.status !== 'cancelled') || null;
+      const firstName = String(athlete.full_name || 'Atleta').trim().split(/\s+/)[0];
+      const categoryParts = String(athlete.current_category || 'Categoria a definir').split('•').map(item => item.trim()).filter(Boolean);
+      const categoryMain = categoryParts.slice(0, 2).join(' • ') || 'Categoria a definir';
+      const categoryDetail = categoryParts.slice(2).join(' • ') || (athlete.weight_kg ? `${String(athlete.weight_kg).replace('.', ',')} kg informados` : 'Peso a informar');
+      const athleteActive = athlete.status === 'active';
+      const identityVerified = athleteActive && Boolean(data.readiness?.ready);
+      const rankName = athlete.rank_name || 'Graduação a definir';
+      const guardian = (data.guardians || []).find(item => item.emergency_contact) || (data.guardians || [])[0];
+
+      setText('sidebarProfileAvatar', personInitials(athlete.full_name));
+      setText('sidebarProfileName', athlete.full_name || 'Atleta');
+      setText('authenticatedLocation', [athlete.club_city, athlete.club_state].filter(Boolean).join(', ') || 'Brasil');
+      setText('athleteSidebarStatus', data.readiness?.ready ? 'Documentação pronta' : 'Documentação pendente');
+      setText('athleteSidebarStatusDetail', data.readiness?.ready ? 'Perfil apto para as inscrições disponíveis.' : `${data.readiness?.documentsVerified || 0} de ${data.readiness?.documentsRequired || 3} documentos obrigatórios verificados.`);
+      setText('athleteHomeStatus', `Registro ${String(statusLabels[athlete.status] || athlete.status || 'pendente').toLowerCase()}`);
+      setText('athleteHomeRegistration', athlete.registration_code || 'Registro pendente');
+      setText('athleteHomeGreeting', `Olá, ${firstName}.`);
+      setText('athleteHomeRanking', '—');
+      setText('athleteHomeRankingContext', `${athlete.sport || 'Modalidade a definir'} • ranking não integrado`);
+      setText('athleteHomeCategory', categoryMain);
+      setText('athleteHomeCategoryDetail', categoryDetail);
+      setText('athleteHomeDocuments', data.readiness?.ready ? 'Verificada' : 'Pendente');
+      setText('athleteHomeDocumentsDetail', `${data.readiness?.documentsVerified || 0} de ${data.readiness?.documentsRequired || 3} obrigatórios verificados`);
+      setText('athleteHomeRank', rankName);
+      setText('athleteHomeRankDetail', athlete.club_name || 'Sem clube vinculado');
+
+      if (focusRegistration) {
+        const eventDate = parseEventDate(focusRegistration.event_date);
+        const countdown = validDate(eventDate) ? Math.max(0, Math.ceil((eventDate - today) / 86400000)) : '—';
+        const location = [focusRegistration.venue, [focusRegistration.city, focusRegistration.state].filter(Boolean).join('/')].filter(Boolean).join(' • ');
+        setText('athleteNextEventDate', shortEventDate(focusRegistration.event_date));
+        setText('athleteNextEventName', focusRegistration.name);
+        setText('athleteFocusEyebrow', `Inscrição ${String(registrationLabels[focusRegistration.status] || focusRegistration.status || 'pendente').toLowerCase()}`);
+        setText('athleteFocusEventName', focusRegistration.name);
+        setText('athleteFocusEventLocation', `${longEventDate(focusRegistration.event_date)}${location ? ` • ${location}` : ''}`);
+        setText('athleteFocusCountdown', countdown);
+        setText('athleteFocusSport', focusRegistration.sport || athlete.sport || 'A definir');
+        setText('athleteFocusCategory', focusRegistration.category || athlete.current_category || 'A definir');
+        setText('athleteFocusRank', rankName.replace(/^Faixa\s+/i, '').split('•')[0].trim() || rankName);
+        setText('athleteFocusStatus', registrationLabels[focusRegistration.status] || focusRegistration.status || 'Pendente');
+      } else {
+        setText('athleteNextEventDate', '—');
+        setText('athleteNextEventName', 'Nenhuma inscrição ativa');
+        setText('athleteFocusEyebrow', 'Próximo evento');
+        setText('athleteFocusEventName', 'Nenhuma inscrição ativa');
+        setText('athleteFocusEventLocation', 'Explore as competições disponíveis para começar.');
+        setText('athleteFocusCountdown', '—');
+        setText('athleteFocusSport', athlete.sport || 'A definir');
+        setText('athleteFocusCategory', athlete.current_category || 'A definir');
+        setText('athleteFocusRank', rankName);
+        setText('athleteFocusStatus', 'Aguardando');
+      }
+
+      setText('athleteRailSeason', `Temporada ${new Date().getFullYear()}`);
+      setText('athleteRailAvatar', personInitials(athlete.full_name));
+      setText('athleteRailName', athlete.full_name || 'Atleta');
+      setText('athleteRailRegistration', `${athlete.registration_code || 'Registro pendente'} • ${statusLabels[athlete.status] || athlete.status || 'Pendente'}`);
+      setText('athleteRailClub', athlete.club_name || 'Sem clube');
+      setText('athleteRailRank', rankName);
+      if (focusRegistration) {
+        const railEventDate = parseEventDate(focusRegistration.event_date);
+        const railCountdown = validDate(railEventDate) ? Math.max(0, Math.ceil((railEventDate - today) / 86400000)) : '—';
+        setText('athleteRailEventDate', longEventDate(focusRegistration.event_date));
+        setText('athleteRailEventName', focusRegistration.name);
+        setText('athleteRailEventDetail', `${[focusRegistration.venue, focusRegistration.city, focusRegistration.state].filter(Boolean).join(' • ')} • ${focusRegistration.category || 'Categoria a definir'}`);
+        setText('athleteRailCountdownDays', railCountdown);
+      } else {
+        setText('athleteRailEventDate', 'Sem data');
+        setText('athleteRailEventName', 'Nenhuma inscrição ativa');
+        setText('athleteRailEventDetail', 'Consulte as competições abertas.');
+        setText('athleteRailCountdownDays', '—');
+      }
+      setText('athleteRailCountdownHours', '—');
+      setText('athleteRailCountdownMinutes', '—');
+      const railNotices = document.getElementById('athleteRailNotices');
+      if (railNotices) {
+        const notices = [];
+        if (!data.readiness?.ready) notices.push({ color: 'var(--yellow)', text: `${Math.max(0, (data.readiness?.documentsRequired || 3) - (data.readiness?.documentsVerified || 0))} documento(s) obrigatório(s) aguardando validação.`, time: 'Documentação' });
+        if (focusRegistration && focusRegistration.payment_status !== 'paid' && focusRegistration.payment_status !== 'waived') notices.push({ color: 'var(--yellow)', text: 'Pagamento da inscrição ainda não confirmado.', time: focusRegistration.name });
+        if (focusRegistration && !focusRegistration.technician_id) notices.push({ color: 'var(--blue)', text: 'Professor ou técnico ainda não definido para a competição.', time: focusRegistration.name });
+        if (!notices.length) notices.push({ color: 'var(--green)', text: 'Cadastro, documentação e inscrição sem pendências identificadas.', time: 'Situação sincronizada' });
+        railNotices.innerHTML = notices.map(item => `<div class="notice"><i class="notice-dot" style="background:${item.color}"></i><div><p>${safeText(item.text)}</p><time>${safeText(item.time)}</time></div></div>`).join('');
+      }
+
+      const readinessChecks = [
+        { label: 'Inscrição', done: focusRegistration?.status === 'confirmed', detail: focusRegistration ? (registrationLabels[focusRegistration.status] || focusRegistration.status) : 'Nenhuma inscrição ativa' },
+        { label: 'Pagamento', done: focusRegistration?.payment_status === 'paid' || focusRegistration?.payment_status === 'waived', detail: focusRegistration ? (paymentLabels[focusRegistration.payment_status] || focusRegistration.payment_status) : 'Aguardando inscrição' },
+        { label: 'Documentos', done: Boolean(data.readiness?.ready), detail: `${data.readiness?.documentsVerified || 0}/${data.readiness?.documentsRequired || 3} obrigatórios verificados` },
+        { label: 'Professor', done: Boolean(focusRegistration?.technician_id), detail: focusRegistration?.technician_name || 'Aguardando definição' }
+      ];
+      const completedChecks = readinessChecks.filter(item => item.done).length;
+      const readinessPercent = Math.round(completedChecks * 100 / readinessChecks.length);
+      setText('athleteReadinessSummary', `${completedChecks} de ${readinessChecks.length} etapas concluídas`);
+      setText('athleteReadinessPercent', `${readinessPercent}%`);
+      const readinessItems = document.getElementById('athleteReadinessItems');
+      if (readinessItems) readinessItems.innerHTML = readinessChecks.map((item, index) => `<div class="checklist-item ${item.done ? 'done' : ''}"><i>${item.done ? '✓' : index + 1}</i><span><strong>${safeText(item.label)}</strong><small>${safeText(item.detail)}</small></span></div>`).join('');
+
       setText('athleteProfileAvatar', personInitials(athlete.full_name));
       setText('athleteProfileName', athlete.full_name);
       setText('athleteProfileSummary', `Registro ${athlete.registration_code || '—'} • ${athlete.club_name || 'Sem clube'} • ${athlete.federation_name || 'Sem federação'}`);
-      setText('athleteProfileSport', athlete.sport);
-      setText('athleteProfileRank', athlete.rank_name);
+      setText('athleteProfileRegistration', athlete.registration_code || 'Registro pendente');
+      setText('athleteProfileBirthDate', formatIsoDate(athlete.birth_date));
+      setText('athleteProfileDocumentMasked', maskAthleteDocument(athlete.document));
+      setText('athleteProfileEmailDisplay', athlete.email || 'Não informado');
+      setText('athleteProfilePhoneDisplay', athlete.phone || 'Não informado');
+      setText('athleteProfileLockedIdentity', `${athlete.full_name || 'Atleta'} • ${maskAthleteDocument(athlete.document)} • ${formatIsoDate(athlete.birth_date)}`);
+      setText('athleteProfileSport', athlete.sport || 'A definir');
+      setText('athleteProfileStyle', athlete.style_name || 'Não informado');
+      setText('athleteProfileRank', rankName);
       setText('athleteProfileCategory', athlete.current_category || 'A definir');
       setText('athleteProfileWeight', athlete.weight_kg ? `${String(athlete.weight_kg).replace('.', ',')} kg` : 'Não informado');
-      setText('athleteProfileClub', athlete.club_name);
-      setText('athleteProfileFederation', athlete.federation_name);
-      setText('athleteEmergencyName', athlete.emergency_name || 'Não informado');
-      setText('athleteEmergencyPhone', athlete.emergency_phone || 'Não informado');
+      setText('athleteProfileClub', athlete.club_name || 'Sem clube');
+      setText('athleteProfileInstructor', athlete.instructor_name || 'Não informado');
+      setText('athleteProfileFederation', athlete.organization_name || athlete.federation_name || 'Sem federação');
+      setText('athleteProfileModalityStatus', ATHLETE_MODALITY_STATUS[athlete.modality_status] || 'A definir');
+      const modalityStatus = document.getElementById('athleteProfileModalityStatus');
+      if (modalityStatus) modalityStatus.className = `status-pill ${athlete.modality_status === 'active' ? '' : athlete.modality_status === 'paused' ? 'pending' : 'alert'}`;
+      setText('athleteEmergencyName', athlete.emergency_name || guardian?.full_name || 'Não informado');
+      setText('athleteEmergencyPhone', athlete.emergency_phone || guardian?.phone || 'Não informado');
+      const birthParts = String(athlete.birth_date || '').split('-').map(Number);
+      const adultDate = birthParts.length === 3 ? new Date(birthParts[0] + 18, birthParts[1] - 1, birthParts[2], 12) : null;
+      const isMinor = Boolean(adultDate && adultDate > new Date());
+      const guardianCard = document.getElementById('athleteGuardianCard');
+      if (guardianCard) guardianCard.hidden = !isMinor && !guardian;
+      const guardianAuthorizationVerified = Boolean(guardian?.authorized_competitions && (data.documents || []).some(item => item.document_type === 'guardian_authorization' && item.status === 'verified'));
+      setText('athleteGuardianName', guardian?.full_name || 'Cadastro necessário');
+      setText('athleteGuardianRelationship', guardian?.relationship || 'Não informado');
+      setText('athleteGuardianPhone', guardian?.phone || 'Não informado');
+      setText('athleteGuardianAuthorization', guardianAuthorizationVerified ? 'Autorizado' : 'Pendente');
+      const guardianAuthorization = document.getElementById('athleteGuardianAuthorization');
+      if (guardianAuthorization) guardianAuthorization.className = `status-pill ${guardianAuthorizationVerified ? '' : 'pending'}`;
+      const guardianInputMap = {
+        athleteGuardianNameInput: guardian?.full_name,
+        athleteGuardianRelationshipInput: guardian?.relationship,
+        athleteGuardianDocumentInput: guardian?.document,
+        athleteGuardianPhoneInput: guardian?.phone,
+        athleteGuardianEmailInput: guardian?.email
+      };
+      Object.entries(guardianInputMap).forEach(([id,value]) => { const input = document.getElementById(id); if (input) input.value = value ?? ''; });
+
+      const currentYear = new Date().getFullYear();
+      const cardValidityIso = `${currentYear}-12-31`;
+      setText('athleteCardAvatar', personInitials(athlete.full_name));
+      setText('athleteCardName', athlete.full_name);
+      setText('athleteCardRegistration', `Registro ${athlete.registration_code || 'pendente'}`);
+      setText('athleteCardStatus', athleteActive ? 'ATIVO' : String(statusLabels[athlete.status] || athlete.status || 'PENDENTE').toUpperCase());
+      setText('athleteCardVerificationBadge', identityVerified ? 'Verificado' : 'Pendente');
+      ['athleteCardVerifiedSeal', 'athleteProfileVerified'].forEach(id => { const element = document.getElementById(id); if (element) element.style.display = identityVerified ? '' : 'none'; });
+      setText('athleteCardSport', athlete.sport || 'A definir');
+      setText('athleteCardRank', rankName);
+      setText('athleteCardClub', athlete.club_name || 'Sem clube');
+      setText('athleteCardFederation', athlete.federation_name || 'Sem federação');
+      setText('athleteCardBirthDate', formatIsoDate(athlete.birth_date));
+      setText('athleteCardValidity', formatIsoDate(cardValidityIso));
+      setText('athleteCardValidationUrl', `apexcombate.com/id/${athlete.registration_code || 'pendente'}`);
+      setText('athleteCardAffiliation', athleteActive ? 'Regular' : (statusLabels[athlete.status] || 'Pendente'));
+      setText('athleteCardValidationClub', athlete.club_name || 'Sem clube');
+      setText('athleteCardLastValidation', formatIsoDate(athlete.profile_updated_at || athlete.created_at));
+      setText('athleteCardValidationValidity', formatIsoDate(cardValidityIso));
+
       const inputMap = {
         athleteProfileEmail: athlete.email, athleteProfilePhone: athlete.phone,
         athleteProfileWeightInput: athlete.weight_kg, athleteProfileCategoryInput: athlete.current_category,
         athleteEmergencyNameInput: athlete.emergency_name, athleteEmergencyPhoneInput: athlete.emergency_phone
       };
       Object.entries(inputMap).forEach(([id,value]) => { const input = document.getElementById(id); if (input) input.value = value ?? ''; });
+      const competitionAthleteIdentity = document.getElementById('competitionAthleteIdentity');
+      if (competitionAthleteIdentity) competitionAthleteIdentity.value = `${athlete.full_name || 'Atleta'} • ${athlete.registration_code || 'Registro pendente'}`;
+      const competitionWeight = document.getElementById('competitionWeight');
+      if (competitionWeight) competitionWeight.value = athlete.weight_kg ? `${String(athlete.weight_kg).replace('.', ',')} kg` : '';
+      const competitionSport = document.getElementById('competitionSport');
+      if (competitionSport && athlete.sport) {
+        if (![...competitionSport.options].some(option => option.value === athlete.sport)) competitionSport.add(new Option(athlete.sport, athlete.sport));
+        competitionSport.value = athlete.sport;
+      }
+      const competitionRank = document.getElementById('competitionRank');
+      if (competitionRank) competitionRank.innerHTML = `<option>${safeText(rankName)}</option>`;
+      const competitionCategory = document.getElementById('competitionCategory');
+      if (competitionCategory && athlete.current_category) competitionCategory.innerHTML = `<option>${safeText(athlete.current_category)}</option>`;
+      setText('trialAcademy', `Escolha um horário no ${athlete.club_name || 'clube selecionado'}.`);
+
+      const registrationRows = document.getElementById('athleteRegistrationRows');
+      if (registrationRows) {
+        registrationRows.innerHTML = registrations.map(item => {
+          const status = registrationLabels[item.status] || item.status || 'Pendente';
+          const payment = paymentLabels[item.payment_status] || item.payment_status || 'Pendente';
+          const statusClass = item.status === 'confirmed' || item.status === 'completed' ? '' : item.status === 'cancelled' ? 'alert' : 'pending';
+          return `<tr><td>${safeText(item.name || 'Evento')}</td><td>${safeText(tableEventDate(item.event_date))}</td><td>${safeText(item.category || 'A definir')}</td><td>${safeText(payment)}</td><td><span class="status-pill ${statusClass}">${safeText(status)}</span></td></tr>`;
+        }).join('') || '<tr><td colspan="5">Nenhuma inscrição encontrada.</td></tr>';
+      }
+
+      const recentActivity = document.getElementById('athleteRecentActivity');
+      if (recentActivity) {
+        const activities = [
+          ...(data.documents || []).map(item => ({
+            date: item.updated_at || item.issued_at || '', icon: item.status === 'verified' ? 'i-check' : 'i-clock', color: item.status === 'verified' ? 'green' : 'yellow',
+            title: `${ATHLETE_DOCUMENT_LABELS[item.document_type] || item.document_type}: ${item.status === 'verified' ? 'verificado' : item.status === 'pending' ? 'em análise' : 'revisar'}`,
+            detail: item.updated_at ? `Atualizado em ${formatIsoDate(item.updated_at)}` : 'Documento do atleta'
+          })),
+          ...(data.certificates || []).map(item => ({
+            date: item.updated_at || item.issued_at || '', icon: 'i-award', color: item.status === 'verified' ? 'green' : 'yellow',
+            title: `${item.title || 'Certificado'}: ${item.status === 'verified' ? 'verificado' : 'em análise'}`,
+            detail: `${item.sport || athlete.sport || 'Modalidade'} • ${item.issuer || 'Emissor não informado'}`
+          })),
+          ...registrations.map(item => ({
+            date: item.created_at || item.event_date || '', icon: 'i-calendar', color: 'blue',
+            title: `Inscrição ${String(registrationLabels[item.status] || item.status || 'pendente').toLowerCase()}`,
+            detail: `${item.name || 'Competição'} • ${tableEventDate(item.event_date)}`
+          })),
+          ...(data.attendance || []).map(item => ({
+            date: item.checked_in_at || '', icon: 'i-check', color: 'green', title: 'Presença registrada',
+            detail: `${item.class_name || 'Treino'} • ${item.checked_in_at ? formatIsoDate(item.checked_in_at) : 'Data não informada'}`
+          }))
+        ].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 3);
+        recentActivity.innerHTML = activities.map(item => `<div class="compact-item"><div class="metric-icon ${item.color}" style="width:31px;height:31px"><svg class="icon sm"><use href="#${item.icon}"/></svg></div><div class="compact-info"><strong>${safeText(item.title)}</strong><span>${safeText(item.detail)}</span></div></div>`).join('') || '<div class="technician-empty">Nenhuma atividade registrada.</div>';
+      }
+
+      const certificates = data.certificates || [];
+      const journeyItems = [
+        ...(selectedModality?.started_at ? [{ icon: 'i-award', color: 'blue', title: `Início no ${selectedModality.sport}`, detail: `${selectedModality.style_name || 'Modalidade'} • ${formatIsoDate(selectedModality.started_at)}` }] : []),
+        ...certificates.map(item => ({ icon: 'i-award', color: item.status === 'verified' ? 'green' : 'yellow', title: item.title || 'Certificado esportivo', detail: `${item.status === 'verified' ? 'Verificado' : 'Em análise'} • ${formatIsoDate(item.issued_at)}` })),
+        ...(data.attendance || []).slice(0, 4).map(item => ({ icon: 'i-check', color: 'green', title: 'Presença registrada', detail: `${item.class_name || 'Treino'} • ${formatIsoDate(item.checked_in_at)}` })),
+        ...(data.classes || []).slice(0, 3).map(item => ({ icon: 'i-calendar', color: '', title: item.name || 'Turma ativa', detail: `${WEEKDAY_LABELS[item.weekday]} • ${item.start_time} • ${item.technician_name || 'Professor a definir'}` }))
+      ].slice(0, 8);
+      setText('athleteJourneySummary', `${(data.classes || []).length} turma(s) ativa(s) • ${(data.attendance || []).length} presença(s) recente(s) • ${certificates.length} certificado(s)`);
+      const journeyTimeline = document.getElementById('athleteJourneyTimeline');
+      if (journeyTimeline) journeyTimeline.innerHTML = journeyItems.map(item => `<div class="compact-item"><div class="metric-icon ${item.color}"><svg class="icon sm"><use href="#${item.icon}"/></svg></div><div class="compact-info"><strong>${safeText(item.title)}</strong><span>${safeText(item.detail)}</span></div></div>`).join('') || '<div class="technician-empty">A jornada começa com o primeiro treino ou certificado registrado nesta modalidade.</div>';
+
+      const certificateMarkup = certificates.map(item => `<div class="compact-item"><div class="metric-icon ${item.status === 'verified' ? 'green' : 'yellow'}"><svg class="icon sm"><use href="#i-award"/></svg></div><div class="compact-info"><strong>${safeText(item.title || item.file_name || 'Certificado')}</strong><span>${safeText(`${item.sport || athlete.sport || 'Modalidade'} • ${item.issuer || 'Emissor não informado'} • ${formatIsoDate(item.issued_at)}`)}</span><small class="certificate-code">${safeText(item.certificate_code || 'Código pendente')}</small></div><span class="status-pill ${item.status === 'verified' ? '' : item.status === 'pending' ? 'pending' : 'alert'}">${item.status === 'verified' ? 'Verificado' : item.status === 'pending' ? 'Em análise' : 'Revisar'}</span></div>`).join('') || '<div class="technician-empty">Nenhum certificado cadastrado nesta modalidade.</div>';
+      ['athleteCertificateList','athleteProfileCertificateList'].forEach(id => {
+        const certificateList = document.getElementById(id);
+        if (certificateList) certificateList.innerHTML = certificateMarkup;
+      });
+
       const list = document.getElementById('athleteDocumentList');
       if (list) {
         list.innerHTML = (data.documents || []).map(documentItem => {
@@ -2814,6 +3843,10 @@
     async function authenticatedPost(path, profile, payload) {
       const response = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getApexToken(profile)}` }, body: JSON.stringify(payload) });
       const data = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        if (typeof endApexSession === 'function') endApexSession('Sessão inválida ou expirada; entre novamente');
+        throw new Error(data.message || 'Sessão inválida ou expirada');
+      }
       if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível concluir a operação');
       return data;
     }
@@ -2824,10 +3857,25 @@
         await authenticatedPost('/api/athlete/profile', 'athlete', {
           email: document.getElementById('athleteProfileEmail').value.trim(), phone: document.getElementById('athleteProfilePhone').value.trim(),
           weight: document.getElementById('athleteProfileWeightInput').value.trim(), category: document.getElementById('athleteProfileCategoryInput').value.trim(),
-          emergencyName: document.getElementById('athleteEmergencyNameInput').value.trim(), emergencyPhone: document.getElementById('athleteEmergencyPhoneInput').value.trim()
+          emergencyName: document.getElementById('athleteEmergencyNameInput').value.trim(), emergencyPhone: document.getElementById('athleteEmergencyPhoneInput').value.trim(),
+          modalityId: selectedAthleteModalityId
         });
         closeModal(document.getElementById('modal-athlete-profile')); await hydrateAuthenticatedDashboard('athlete'); showToast('Perfil atualizado e sincronizado');
       } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Salvar perfil'; } }
+    });
+
+    document.getElementById('athleteGuardianForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Salvando...'; }
+      try {
+        await authenticatedPost('/api/athlete/guardian', 'athlete', {
+          name: document.getElementById('athleteGuardianNameInput').value.trim(),
+          relationship: document.getElementById('athleteGuardianRelationshipInput').value,
+          document: document.getElementById('athleteGuardianDocumentInput').value.trim(),
+          phone: document.getElementById('athleteGuardianPhoneInput').value.trim(),
+          email: document.getElementById('athleteGuardianEmailInput').value.trim()
+        });
+        closeModal(document.getElementById('modal-athlete-guardian')); await hydrateAuthenticatedDashboard('athlete'); showToast('Dados do responsável atualizados; autorização continua sujeita à validação');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Salvar responsável'; } }
     });
 
     document.getElementById('athleteDocumentForm')?.addEventListener('submit', async event => {
@@ -2838,6 +3886,82 @@
           issuedAt: document.getElementById('athleteDocumentIssued').value, expiresAt: document.getElementById('athleteDocumentExpires').value
         });
         closeModal(document.getElementById('modal-athlete-document')); event.target.reset(); await hydrateAuthenticatedDashboard('athlete'); showToast('Documento enviado para validação');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Enviar para validação'; } }
+    });
+
+    document.getElementById('athletePaymentForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Confirmando...'; }
+      try {
+        const data = await authenticatedPost('/api/athlete/payments/pay', 'athlete', {
+          paymentId: Number(document.getElementById('athletePaymentId').value),
+          method: document.getElementById('athletePaymentMethod').value
+        });
+        closeModal(document.getElementById('modal-athlete-payment'));
+        await hydrateAuthenticatedDashboard('athlete');
+        document.getElementById('athleteReceiptDescription').textContent = data.payment.description;
+        document.getElementById('athleteReceiptAmount').textContent = formatCurrency(data.payment.amount);
+        document.getElementById('athleteReceiptMethod').textContent = data.payment.method_label;
+        document.getElementById('athleteReceiptDate').textContent = formatIsoDate(data.payment.paid_at);
+        document.getElementById('athleteReceiptCode').textContent = data.payment.receipt_code;
+        openModal('athlete-receipt', button);
+        showToast(data.message);
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Confirmar demonstração'; } }
+    });
+
+    document.querySelectorAll('[data-new-athlete-modality]').forEach(button => button.addEventListener('click', () => prepareAthleteModalityForm()));
+    document.getElementById('athleteFirstModalityButton')?.addEventListener('click', () => {
+      prepareAthleteModalityForm();
+      document.getElementById('athleteModalityPrimary').checked = true;
+      openModal('athlete-modality', document.getElementById('athleteFirstModalityButton'));
+    });
+    document.getElementById('athleteModalitySwitch')?.addEventListener('change', event => selectAthleteModality(event.target.value));
+
+    document.getElementById('athleteModalityForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Salvando...'; }
+      try {
+        const data = await authenticatedPost('/api/athlete/modalities', 'athlete', {
+          id: document.getElementById('athleteModalityId').value || null,
+          sport: document.getElementById('athleteModalitySport').value,
+          styleName: document.getElementById('athleteModalityStyle').value.trim(),
+          rankName: document.getElementById('athleteModalityRank').value.trim(),
+          category: document.getElementById('athleteModalityCategory').value.trim(),
+          trainingCenterName: document.getElementById('athleteModalityTrainingCenter').value.trim(),
+          organizationName: document.getElementById('athleteModalityOrganization').value.trim(),
+          instructorName: document.getElementById('athleteModalityInstructor').value.trim(),
+          startedAt: document.getElementById('athleteModalityStarted').value,
+          status: document.getElementById('athleteModalityStatus').value,
+          isPrimary: document.getElementById('athleteModalityPrimary').checked
+        });
+        closeModal(document.getElementById('modal-athlete-modality'));
+        const archivedSelection = data.modality.status === 'archived' && Number(data.modality.id) === Number(selectedAthleteModalityId);
+        if (archivedSelection) {
+          selectedAthleteModalityId = null;
+          try { sessionStorage.removeItem('apex-athlete-modality-id'); } catch (_) {}
+        } else if (!selectedAthleteModalityId || document.getElementById('athleteModalityPrimary').checked) {
+          selectedAthleteModalityId = Number(data.modality.id);
+          try { sessionStorage.setItem('apex-athlete-modality-id', String(data.modality.id)); } catch (_) {}
+        }
+        await hydrateAuthenticatedDashboard('athlete');
+        hideAthleteModalityGate();
+        showPage('profile');
+        showToast('Modalidade salva na mesma conta do atleta');
+      } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Salvar modalidade'; } }
+    });
+
+    document.getElementById('athleteCertificateForm')?.addEventListener('submit', async event => {
+      event.preventDefault(); const button = event.submitter; if (button) { button.disabled = true; button.textContent = 'Enviando...'; }
+      try {
+        await authenticatedPost('/api/athlete/certificates', 'athlete', {
+          modalityId: Number(document.getElementById('athleteCertificateModality').value),
+          type: document.getElementById('athleteCertificateType').value,
+          title: document.getElementById('athleteCertificateTitle').value.trim(),
+          issuer: document.getElementById('athleteCertificateIssuer').value.trim(),
+          code: document.getElementById('athleteCertificateCode').value.trim(),
+          fileName: document.getElementById('athleteCertificateFile').value.trim(),
+          issuedAt: document.getElementById('athleteCertificateIssued').value,
+          expiresAt: document.getElementById('athleteCertificateExpires').value
+        });
+        closeModal(document.getElementById('modal-athlete-certificate')); event.target.reset(); await hydrateAuthenticatedDashboard('athlete'); showToast('Certificado vinculado à modalidade e enviado para validação');
       } catch (error) { showToast(error.message); } finally { if (button) { button.disabled = false; button.textContent = 'Enviar para validação'; } }
     });
 
@@ -3518,8 +4642,13 @@
       const token = getApexToken(role);
       if (!routes[role] || !token) return;
       try {
-        const response = await fetch(routes[role], { headers: { 'Authorization': `Bearer ${token}` } });
+        const route = role === 'athlete' && selectedAthleteModalityId ? `${routes[role]}?modalityId=${encodeURIComponent(selectedAthleteModalityId)}` : routes[role];
+        const response = await fetch(route, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          if (typeof endApexSession === 'function') endApexSession('Sessão inválida ou expirada; entre novamente');
+          return;
+        }
         if (!response.ok || !data.ok) throw new Error(data.message || 'Não foi possível sincronizar o painel');
         if (role === 'academy') {
           const technicianAccount = data.accountType === 'technician';
@@ -3554,6 +4683,12 @@
             athleteEligibleTechnicians = data.technicians;
             populateCompetitionTechnicians();
           }
+          await loadAthleteLive({ quiet:true });
+          startAthleteLivePolling();
+          const competitionResponse = await fetch('/api/competitions');
+          const competitionData = await competitionResponse.json().catch(() => ({}));
+          if (competitionResponse.ok && competitionData.ok) renderAthleteCompetitions(competitionData.competitions || []);
+          if (!(data.modalities || []).some(item => item.status !== 'archived')) renderAthleteModalityGate(data.modalities || [], true);
         }
       } catch (error) {
         showToast(error.message);
@@ -3569,7 +4704,17 @@
         loginSubmit.disabled = false;
         configureLoginForRole(role);
         setDashboardRole(role, true);
-        hydrateAuthenticatedDashboard(role);
+        if (typeof markApexSessionActivity === 'function') markApexSessionActivity();
+        const hydration = hydrateAuthenticatedDashboard(role);
+        if (role === 'athlete' && pendingAthleteLoginData) {
+          const loginData = pendingAthleteLoginData;
+          pendingAthleteLoginData = null;
+          hydration.finally(() => {
+            const modalities = (loginData.modalities || []).filter(item => item.status !== 'archived');
+            if (!modalities.length) renderAthleteModalityGate([], true);
+            else if (modalities.length > 1) renderAthleteModalityGate(modalities, false);
+          });
+        }
         showToast('Bem-vindo à Apex Combate');
       }, 650);
     }
@@ -3682,7 +4827,16 @@
         loginSubmit.disabled = true;
         loginSubmit.textContent = 'Localizando atleta...';
         try {
-          await authenticateAthlete(documentValue, birthISO);
+          const athleteAccess = await authenticateAthlete(documentValue, birthISO);
+          pendingAthleteLoginData = athleteAccess;
+          const availableModalities = (athleteAccess.modalities || []).filter(item => item.status !== 'archived');
+          if (availableModalities.length === 1) {
+            selectedAthleteModalityId = Number(availableModalities[0].id);
+            try { sessionStorage.setItem('apex-athlete-modality-id', String(selectedAthleteModalityId)); } catch (_) {}
+          } else {
+            selectedAthleteModalityId = null;
+            try { sessionStorage.removeItem('apex-athlete-modality-id'); } catch (_) {}
+          }
           enterApex('athlete');
         } catch (error) {
           loginSubmit.disabled = false;
@@ -3791,16 +4945,57 @@
 
     document.querySelectorAll('[data-auth-info]').forEach(button => button.addEventListener('click', () => showToast(button.dataset.authInfo)));
 
-    document.querySelectorAll('[data-logout]').forEach(button => button.addEventListener('click', () => {
+    const APEX_IDLE_TIMEOUT_MS = 20 * 60 * 1000;
+    const APEX_IDLE_WARNING_MS = 18 * 60 * 1000;
+    let apexLastActivityAt = Date.now();
+    let apexIdleWarningShown = false;
+
+    function markApexSessionActivity() {
+      apexLastActivityAt = Date.now();
+      apexIdleWarningShown = false;
+    }
+
+    function revokeCurrentSessionTokens() {
+      const tokens = [...new Set([activeSessionToken, activeAdminToken].filter(Boolean))];
+      tokens.forEach(token => fetch('/api/logout', {
+        method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, keepalive: true
+      }).catch(() => {}));
+    }
+
+    function endApexSession(message = 'Sessão encerrada com segurança') {
+      revokeCurrentSessionTokens();
       federationOtpModal.hidden = true;
       activeSessionToken = '';
       activeAdminToken = '';
+      pendingAthleteLoginData = null;
+      selectedAthleteModalityId = null;
+      athleteLiveState = null;
+      athleteLiveSelectedStreamId = null;
+      if (athleteLivePollTimer) clearInterval(athleteLivePollTimer);
+      athleteLivePollTimer = null;
+      const athleteVideo = document.getElementById('athleteLiveVideo');
+      if (athleteVideo) { athleteVideo.pause(); athleteVideo.removeAttribute('src'); athleteVideo.load(); }
+      hideAthleteModalityGate();
       document.body.classList.remove('management-active', 'technician-mode', 'club-mode');
-      try { sessionStorage.removeItem('apex-session'); sessionStorage.removeItem('apex-admin-jwt'); sessionStorage.removeItem('apex-profile'); sessionStorage.removeItem('apex-federation-scope'); sessionStorage.removeItem('apex-federation-name'); sessionStorage.removeItem('apex-federation-role'); sessionStorage.removeItem('apex-club-account-type'); sessionStorage.removeItem('apex-technician-name'); localStorage.removeItem('apex-technician-operations-v38'); localStorage.removeItem('apex-technician-offline-queue-v38'); } catch (_) {}
+      try { sessionStorage.removeItem('apex-session'); sessionStorage.removeItem('apex-admin-jwt'); sessionStorage.removeItem('apex-profile'); sessionStorage.removeItem('apex-athlete-modality-id'); sessionStorage.removeItem('apex-federation-scope'); sessionStorage.removeItem('apex-federation-name'); sessionStorage.removeItem('apex-federation-role'); sessionStorage.removeItem('apex-club-account-type'); sessionStorage.removeItem('apex-technician-name'); localStorage.removeItem('apex-technician-operations-v38'); localStorage.removeItem('apex-technician-offline-queue-v38'); } catch (_) {}
       showProfileSelection();
       showWelcomeScreen();
-      showToast('Sessão encerrada com segurança');
-    }));
+      showToast(message);
+    }
+
+    document.querySelectorAll('[data-logout]').forEach(button => button.addEventListener('click', () => endApexSession()));
+    ['pointerdown','keydown','touchstart'].forEach(eventName => window.addEventListener(eventName, markApexSessionActivity, { passive: true }));
+    setInterval(() => {
+      let authenticated = false;
+      try { authenticated = Boolean(sessionStorage.getItem('apex-profile')); } catch (_) {}
+      if (!authenticated) return;
+      const idleFor = Date.now() - apexLastActivityAt;
+      if (idleFor >= APEX_IDLE_TIMEOUT_MS) endApexSession('Sessão encerrada após 20 minutos de inatividade');
+      else if (idleFor >= APEX_IDLE_WARNING_MS && !apexIdleWarningShown) {
+        apexIdleWarningShown = true;
+        showToast('Sua sessão será encerrada em 2 minutos por segurança');
+      }
+    }, 30000);
 
 
     
@@ -3857,16 +5052,15 @@
       dashboardRoleSelect.value = safeRole;
       loginRoleSelect.value = safeRole;
       configureRoleNavigation(safeRole);
+      const modalitySwitchWrap = document.getElementById('athleteModalitySwitchWrap');
+      if (modalitySwitchWrap) modalitySwitchWrap.hidden = safeRole !== 'athlete' || (athleteDashboardState?.modalities || []).filter(item => item.status !== 'archived').length < 2;
       document.getElementById('primaryDashboardNav').dataset.pageTarget = targetPage;
       document.getElementById('mobileDashboardNav').dataset.pageTarget = targetPage;
       document.getElementById('currentRoleLabel').textContent = `${roleDisplayName[safeRole]} • Curitiba`;
       if (navigate) showPage(targetPage);
     }
 
-    dashboardRoleSelect.addEventListener('change', event => {
-      setDashboardRole(event.target.value, true);
-      showToast(`Dashboard alterado para ${roleDisplayName[event.target.value]}`);
-    });
+    // O perfil autenticado é definido pelo login; não há troca manual entre permissões.
 
     
     // Catálogo internacional. A seleção já é persistida; os pacotes de tradução serão ligados por etapas.
@@ -4107,3 +5301,20 @@
   </script>
 </body>
 </html>
+/html>
+>
+/html>
+>
+l>
+>
+
+/html>
+>
+/html>
+>
+l>
+>
+
+>
+l>
+>

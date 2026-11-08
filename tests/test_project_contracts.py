@@ -71,10 +71,13 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn('.return-home-btn { width: 39px; padding: 0; }', self.html)
         self.assertIn('.return-home-btn { min-width: 44px; }', self.html)
 
-    def test_logout_returns_to_welcome_screen_and_clears_session(self):
-        logout_handler = self.html[self.html.index("document.querySelectorAll('[data-logout]')"):]
-        secure_handler = logout_handler[:2600]
+    def test_logout_returns_to_welcome_screen_clears_and_revokes_session(self):
+        start = self.html.index("const APEX_IDLE_TIMEOUT_MS")
+        end = self.html.index("const roleDefaultPage", start)
+        secure_handler = self.html[start:end]
         for contract in (
+            "fetch('/api/logout'",
+            "keepalive: true",
             "activeSessionToken = '';",
             "activeAdminToken = '';",
             "sessionStorage.removeItem('apex-session')",
@@ -84,6 +87,7 @@ class ProductContractTests(unittest.TestCase):
             "sessionStorage.removeItem('apex-club-account-type')",
             "localStorage.removeItem('apex-technician-operations-v38')",
             "showWelcomeScreen();",
+            "APEX_IDLE_TIMEOUT_MS = 20 * 60 * 1000",
         ):
             self.assertIn(contract, secure_handler)
 
@@ -94,6 +98,35 @@ class ProductContractTests(unittest.TestCase):
     def test_athlete_country_field_remains_absent(self):
         self.assertNotIn('id="athleteCountry"', self.html)
         self.assertNotIn('name="country"', self.html)
+
+    def test_athlete_authenticated_identity_drives_all_personal_surfaces(self):
+        required_ids = (
+            "sidebarProfileName", "athleteHomeGreeting", "athleteCardName",
+            "athleteProfileName", "athleteRailName", "competitionAthleteIdentity",
+            "athleteRegistrationRows", "athleteRecentActivity", "athleteRailNotices",
+        )
+        for element_id in required_ids:
+            self.assertIn(f'id="{element_id}"', self.html)
+            self.assertIn(f"'{element_id}'", self.html)
+        self.assertIn("function renderAthleteCompleteDashboard(data)", self.html)
+        self.assertIn("athlete.registration_code", self.html)
+        self.assertIn("athlete.club_city", self.html)
+        self.assertIn("data.readiness?.documentsVerified", self.html)
+        self.assertIn("c.city AS club_city", self.server)
+        self.assertIn("r.created_at,c.id AS competition_id", self.server)
+        athlete_pages = self.html.split('id="page-home"', 1)[1].split('id="page-academy"', 1)[0]
+        athlete_rail = self.html.split('<aside class="right-rail">', 1)[1].split('</aside>', 1)[0]
+        for fixed_identity in ("Rafael Martins", "AC-2026-001842"):
+            self.assertNotIn(fixed_identity, athlete_pages)
+            self.assertNotIn(fixed_identity, athlete_rail)
+
+    def test_athlete_competitions_and_results_do_not_impersonate_another_athlete(self):
+        self.assertIn("function renderAthleteCompetitions(competitions = [])", self.html)
+        self.assertIn("await fetch('/api/competitions')", self.html)
+        self.assertIn("Resultados oficiais ainda não integrados.", self.html)
+        journey = self.html.split('id="page-journey"', 1)[1].split('id="page-profile"', 1)[0]
+        for fabricated_value in ("Paraná Regional", "Copa Curitiba", "Open Sul", ">#18<", ">420<"):
+            self.assertNotIn(fabricated_value, journey)
 
     def test_owner_central_is_disabled(self):
         self.assertIn("APEX_CENTRAL_ENABLED = False", self.server)
@@ -121,8 +154,9 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061"):
             self.assertIn(decision, self.master)
+        self.assertIn("revisão completa do ATLETA", self.master)
 
 
 class TypographyContractTests(unittest.TestCase):

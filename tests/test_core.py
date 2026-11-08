@@ -1,7 +1,7 @@
 import unittest
 
 from apex_db import hash_password, normalize_birth_date, normalize_document, verify_password
-from server import decode_jwt, issue_jwt
+from server import decode_jwt, issue_jwt, revoke_token, token_is_revoked
 
 
 class NormalizationTests(unittest.TestCase):
@@ -33,6 +33,13 @@ class AuthenticationPrimitiveTests(unittest.TestCase):
         self.assertEqual(payload["perfil"], "atleta")
         self.assertEqual(payload["athlete_id"], 99)
         self.assertIn("ATHLETE_READ", payload["permissions"])
+
+    def test_authenticated_session_can_be_revoked(self):
+        token = issue_jwt("AC-LOGOUT", "atleta", "ATHLETE", extra={"athlete_id": 100})
+        payload = decode_jwt(token)
+        self.assertFalse(token_is_revoked(payload))
+        revoke_token(payload)
+        self.assertTrue(token_is_revoked(payload))
 
 
 if __name__ == "__main__":

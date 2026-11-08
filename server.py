@@ -9,10 +9,11 @@ secrets, external OTP delivery and an object store for documents.
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
+from datetime import date
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from threading import Lock
-from urllib.parse import unquote, urlencode, urlsplit
+from urllib.parse import parse_qs, unquote, urlencode, urlsplit
 from urllib.request import urlopen
 import base64
 import hashlib
@@ -45,8 +46,36 @@ TRANSLATION_CACHE: dict[tuple[str, str], str] = {}
 TRANSLATION_LOCK = Lock()
 RATE_LIMITS: dict[tuple[str, str], list[float]] = {}
 RATE_LIMIT_LOCK = Lock()
+REVOKED_JTIS: dict[str, int] = {}
+REVOKED_JTIS_LOCK = Lock()
 # Mozer's owner-level Apex Central will be enabled in a later phase.
 APEX_CENTRAL_ENABLED = False
+
+
+def configured_stream_origins() -> tuple[str, ...]:
+    """Allow only explicitly configured HTTPS playback origins in the browser CSP."""
+    origins: list[str] = []
+    for value in os.environ.get("APEX_STREAM_ORIGINS", "").split(","):
+        parsed = urlsplit(value.strip())
+        if parsed.scheme == "https" and parsed.netloc and not parsed.username and not parsed.password:
+            origin = f"https://{parsed.netloc}"
+            if origin not in origins:
+                origins.append(origin)
+    return tuple(origins)
+
+
+STREAM_CSP_SOURCES = configured_stream_origins()
+
+
+def safe_stream_url(value: str) -> str:
+    candidate = str(value or "").strip()
+    if not candidate:
+        return ""
+    parsed = urlsplit(candidate)
+    if not parsed.scheme and not parsed.netloc and candidate.startswith("/"):
+        return candidate
+    origin = f"{parsed.scheme}://{parsed.netloc}"
+    return candidate if parsed.scheme == "https" and origin in STREAM_CSP_SOURCES else ""
 
 
 def b64url(data: bytes) -> str:
@@ -60,7 +89,7 @@ def b64url_decode(value: str) -> bytes:
 def issue_jwt(subject: str, profile: str, role: str, *, extra: dict | None = None) -> str:
     now = int(time.time())
     permissions_by_profile = {
-        "atleta": ["ATHLETE_READ", "REGISTRATION_CREATE", "DOCUMENT_READ"],
+        "atleta": ["ATHLETE_READ", "ATHLETE_PROFILE_WRITE", "ATHLETE_MODALITY_WRITE", "ATHLETE_CERTIFICATE_WRITE", "REGISTRATION_CREATE", "PAYMENT_READ", "PAYMENT_INITIATE", "DOCUMENT_READ", "DOCUMENT_WRITE"],
     }
     club_permissions = {
         "CLUB_ADMIN": ["CLUB_ADMIN", "CLUB_READ", "ATHLETE_WRITE", "CLASS_WRITE", "DELEGATION_WRITE", "TECHNICIAN_ASSIGN"],
@@ -89,6 +118,33 @@ def issue_jwt(subject: str, profile: str, role: str, *, extra: dict | None = Non
     signing_input = f"{encoded_header}.{encoded_payload}".encode()
     signature = b64url(hmac.new(JWT_SECRET, signing_input, hashlib.sha256).digest())
     return f"{encoded_header}.{encoded_payload}.{signature}"
+
+
+def athlete_post_login_mode(modalities: list[dict]) -> str:
+    available = [item for item in modalities if item.get("status") != "archived"]
+    if not available:
+        return "onboarding"
+    if len(available) == 1:
+        return "direct"
+    return "select_modality"
+
+
+def token_is_revoked(payload: dict) -> bool:
+    now = int(time.time())
+    jti = str(payload.get("jti", ""))
+    with REVOKED_JTIS_LOCK:
+        expired = [key for key, expires_at in REVOKED_JTIS.items() if expires_at <= now]
+        for key in expired:
+            REVOKED_JTIS.pop(key, None)
+        return bool(jti and jti in REVOKED_JTIS)
+
+
+def revoke_token(payload: dict) -> None:
+    jti = str(payload.get("jti", ""))
+    expires_at = int(payload.get("exp", 0))
+    if jti and expires_at > int(time.time()):
+        with REVOKED_JTIS_LOCK:
+            REVOKED_JTIS[jti] = expires_at
 
 
 def decode_jwt(token: str) -> dict:
@@ -134,8 +190,11 @@ class ApexHandler(SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "public, max-age=86400")
             self.send_header("Content-Disposition", 'attachment; filename="Instalar-Apex-Combate-Windows.exe"')
         self.send_header("X-Content-Type-Options", "nosniff")
-        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("Referrer-Policy", "no-referrer")
         self.send_header("Permissions-Policy", "camera=(self), geolocation=(), microphone=()")
+        stream_sources = "".join(f" {origin}" for origin in STREAM_CSP_SOURCES)
+        self.send_header("Content-Security-Policy", f"default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'{stream_sources}; media-src 'self' blob:{stream_sources}; worker-src 'self'; manifest-src 'self'")
+        self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         super().end_headers()
 
     def send_json(self, status: int, payload: dict | list) -> None:
@@ -183,6 +242,9 @@ class ApexHandler(SimpleHTTPRequestHandler):
         except (ValueError, json.JSONDecodeError, TypeError):
             self.send_json(401, {"ok": False, "message": "Sessão inválida ou expirada"})
             return None
+        if token_is_revoked(payload):
+            self.send_json(401, {"ok": False, "message": "Sessão encerrada"})
+            return None
         if payload.get("perfil") not in profiles:
             self.send_json(403, {"ok": False, "message": "Perfil sem permissão para esta operação"})
             return None
@@ -218,7 +280,24 @@ class ApexHandler(SimpleHTTPRequestHandler):
             self.handle_competitions()
             return
         if path == "/api/athlete/dashboard":
-            self.handle_athlete_dashboard()
+            query = parse_qs(urlsplit(self.path).query)
+            try:
+                modality_id = int(query.get("modalityId", [""])[0])
+            except (TypeError, ValueError):
+                modality_id = None
+            self.handle_athlete_dashboard(modality_id)
+            return
+        if path == "/api/athlete/live":
+            query = parse_qs(urlsplit(self.path).query)
+            try:
+                competition_id = int(query.get("competitionId", [""])[0])
+            except (TypeError, ValueError):
+                competition_id = None
+            try:
+                category_id = int(query.get("categoryId", [""])[0])
+            except (TypeError, ValueError):
+                category_id = None
+            self.handle_athlete_live(competition_id, category_id)
             return
         if path == "/api/club/dashboard":
             self.handle_club_dashboard()
@@ -244,6 +323,8 @@ class ApexHandler(SimpleHTTPRequestHandler):
         path = urlsplit(self.path).path
         if path == "/api/login":
             self.handle_login()
+        elif path == "/api/logout":
+            self.handle_logout()
         elif path == "/api/login/atleta":
             self.handle_athlete_login()
         elif path == "/api/login/validar-otp":
@@ -252,6 +333,14 @@ class ApexHandler(SimpleHTTPRequestHandler):
             self.handle_translate()
         elif path == "/api/athlete/profile":
             self.handle_update_athlete_profile()
+        elif path == "/api/athlete/modalities":
+            self.handle_upsert_athlete_modality()
+        elif path == "/api/athlete/guardian":
+            self.handle_upsert_athlete_guardian()
+        elif path == "/api/athlete/certificates":
+            self.handle_upsert_athlete_certificate()
+        elif path == "/api/athlete/payments/pay":
+            self.handle_pay_athlete_payment()
         elif path == "/api/athlete/documents":
             self.handle_upsert_athlete_document()
         elif path == "/api/club/students":
@@ -289,6 +378,20 @@ class ApexHandler(SimpleHTTPRequestHandler):
         else:
             self.send_json(404, {"ok": False, "message": "Rota não encontrada"})
 
+    def handle_logout(self) -> None:
+        authorization = self.headers.get("Authorization", "")
+        if not authorization.startswith("Bearer "):
+            self.send_json(401, {"ok": False, "message": "Sessão não autenticada"})
+            return
+        try:
+            payload = decode_jwt(authorization[7:].strip())
+        except (ValueError, json.JSONDecodeError, TypeError):
+            self.send_json(401, {"ok": False, "message": "Sessão inválida ou expirada"})
+            return
+        revoke_token(payload)
+        audit(str(payload.get("sub", "")), str(payload.get("perfil", "")), "LOGOUT", "session", str(payload.get("jti", "")), ip_address=self.client_ip())
+        self.send_json(200, {"ok": True, "message": "Sessão encerrada"})
+
     def handle_athlete_login(self) -> None:
         if self.rate_limited("athlete-login"):
             return
@@ -301,6 +404,9 @@ class ApexHandler(SimpleHTTPRequestHandler):
         if len(document) < 4 or not birth_date:
             self.send_json(400, {"ok": False, "message": "Informe documento e data de nascimento válidos"})
             return
+        identity_bucket = hashlib.sha256(document.encode("utf-8")).hexdigest()[:16]
+        if self.rate_limited(f"athlete-identity:{identity_bucket}", maximum=6, window=900):
+            return
         with connection() as db:
             athlete = db.execute(
                 """SELECT a.*, c.name AS club_name, c.federation_id, f.name AS federation_name
@@ -308,8 +414,9 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    WHERE a.document=? AND a.birth_date=? AND a.status!='inactive'""",
                 (document, birth_date),
             ).fetchone()
+            modalities = self.athlete_modalities(db, athlete["id"]) if athlete else []
         if not athlete:
-            self.send_json(401, {"ok": False, "message": "Atleta não encontrado. Confira o documento e a data de nascimento."})
+            self.send_json(401, {"ok": False, "message": "Não foi possível validar o acesso. Confira os dados ou aguarde antes de tentar novamente."})
             return
         token = issue_jwt(
             athlete["registration_code"], "atleta", "ATHLETE", extra={"athlete_id": athlete["id"], "club_id": athlete["club_id"], "federation_id": athlete["federation_id"]}
@@ -321,6 +428,8 @@ class ApexHandler(SimpleHTTPRequestHandler):
             "token": token,
             "expiresIn": 3600,
             "athlete": {"id": athlete["id"], "name": athlete["full_name"], "registration": athlete["registration_code"], "club": athlete["club_name"], "federation": athlete["federation_name"]},
+            "modalities": modalities,
+            "postLogin": athlete_post_login_mode(modalities),
         })
 
     def handle_login(self) -> None:
@@ -436,6 +545,23 @@ class ApexHandler(SimpleHTTPRequestHandler):
             "scope": challenge["scope"], "federation": challenge["federation_name"],
         })
 
+    @staticmethod
+    def athlete_modalities(db: sqlite3.Connection, athlete_id: int) -> list[dict]:
+        rows = db.execute(
+            """SELECT am.id,am.athlete_id,am.club_id,am.federation_id,am.sport,am.style_name,
+                      am.rank_name,am.category,am.training_center_name,am.organization_name,am.instructor_name,am.status,
+                      am.is_primary,am.public_profile,am.started_at,am.created_at,am.updated_at,
+                      COALESCE(NULLIF(am.training_center_name,''),c.name) AS club_name,c.name AS linked_club_name,c.city AS club_city,c.state AS club_state,
+                      f.name AS federation_name,f.code AS federation_code
+               FROM athlete_modalities am
+               LEFT JOIN clubs c ON c.id=am.club_id
+               LEFT JOIN federations f ON f.id=am.federation_id
+               WHERE am.athlete_id=?
+               ORDER BY am.is_primary DESC,CASE am.status WHEN 'active' THEN 0 WHEN 'paused' THEN 1 ELSE 2 END,am.sport,am.id""",
+            (athlete_id,),
+        ).fetchall()
+        return [dict(row) for row in rows]
+
     def handle_competitions(self) -> None:
         with connection() as db:
             rows = db.execute(
@@ -450,24 +576,34 @@ class ApexHandler(SimpleHTTPRequestHandler):
             items.append(item)
         self.send_json(200, {"ok": True, "competitions": items})
 
-    def handle_athlete_dashboard(self) -> None:
+    def handle_athlete_dashboard(self, modality_id: int | None = None) -> None:
         auth = self.require_auth({"atleta"})
         if not auth:
             return
+        athlete_id = int(auth.get("athlete_id"))
         with connection() as db:
             athlete = db.execute(
-                """SELECT a.*,c.name AS club_name,c.federation_id,f.name AS federation_name
+                """SELECT a.*,c.name AS club_name,c.city AS club_city,c.state AS club_state,
+                          c.federation_id,f.name AS federation_name
                    FROM athletes a LEFT JOIN clubs c ON c.id=a.club_id
                    LEFT JOIN federations f ON f.id=c.federation_id WHERE a.id=?""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
             ).fetchone()
+            modalities = self.athlete_modalities(db, athlete_id)
+            selected_modality = next((item for item in modalities if item["id"] == modality_id and item["status"] != "archived"), None)
+            if selected_modality is None:
+                selected_modality = next((item for item in modalities if item["is_primary"] and item["status"] != "archived"), None)
+            if selected_modality is None:
+                selected_modality = next((item for item in modalities if item["status"] != "archived"), None)
             registrations = db.execute(
-                """SELECT r.status,r.payment_status,r.category,r.technician_id,c.name,c.event_date,c.city,c.state,
-                          t.full_name AS technician_name
+                """SELECT r.status,r.payment_status,r.category,r.technician_id,r.created_at,c.id AS competition_id,c.name,
+                          c.sport,c.event_date,c.city,c.state,c.venue,c.registration_deadline,
+                          c.status AS competition_status,t.full_name AS technician_name
                    FROM registrations r JOIN competitions c ON c.id=r.competition_id
                    LEFT JOIN technicians t ON t.id=r.technician_id WHERE r.athlete_id=? ORDER BY c.event_date""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
             ).fetchall()
+            selected_club_id = selected_modality["club_id"] if selected_modality else (athlete["club_id"] if athlete else None)
             technicians = db.execute(
                 """SELECT t.id,t.full_name,t.registration_code,t.specialties,
                           cs.competition_id,c.name AS competition,c.event_date
@@ -475,19 +611,27 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    JOIN competitions c ON c.id=cs.competition_id
                    WHERE t.club_id=? AND t.status='active' AND cs.status='confirmed' AND c.status='open'
                    ORDER BY c.event_date,t.full_name""",
-                (athlete["club_id"],),
-            ).fetchall() if athlete else []
+                (selected_club_id,),
+            ).fetchall() if selected_club_id else []
             documents = db.execute(
                 """SELECT id,document_type,file_name,status,issued_at,expires_at,reviewed_by,notes,updated_at
                    FROM athlete_documents WHERE athlete_id=? ORDER BY
                    CASE document_type WHEN 'identity' THEN 0 WHEN 'medical_certificate' THEN 1
                    WHEN 'guardian_authorization' THEN 2 ELSE 3 END""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
+            ).fetchall()
+            certificates = db.execute(
+                """SELECT ac.id,ac.modality_id,ac.certificate_type,ac.title,ac.issuer,ac.certificate_code,
+                          ac.file_name,ac.issued_at,ac.expires_at,ac.status,ac.verification_url,ac.updated_at,
+                          am.sport,am.rank_name,am.style_name
+                   FROM athlete_certificates ac JOIN athlete_modalities am ON am.id=ac.modality_id
+                   WHERE ac.athlete_id=? ORDER BY ac.issued_at DESC,ac.id DESC""",
+                (athlete_id,),
             ).fetchall()
             guardians = db.execute(
-                """SELECT id,full_name,relationship,phone,email,authorized_competitions,emergency_contact
+                """SELECT id,full_name,relationship,document,phone,email,authorized_competitions,emergency_contact
                    FROM athlete_guardians WHERE athlete_id=? ORDER BY emergency_contact DESC,full_name""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
             ).fetchall()
             classes = db.execute(
                 """SELECT cc.id,cc.name,cc.sport,cc.level_name,cc.weekday,cc.start_time,cc.duration_minutes,
@@ -496,38 +640,547 @@ class ApexHandler(SimpleHTTPRequestHandler):
                    LEFT JOIN technicians t ON t.id=cc.technician_id
                    WHERE ce.athlete_id=? AND ce.status='active' AND cc.status='active'
                    ORDER BY cc.weekday,cc.start_time""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
             ).fetchall()
             attendance = db.execute(
                 """SELECT ar.id,ar.checked_in_at,ar.source,cc.name AS class_name,cc.sport
                    FROM attendance_records ar JOIN club_classes cc ON cc.id=ar.class_id
                    WHERE ar.athlete_id=? ORDER BY ar.checked_in_at DESC LIMIT 20""",
-                (auth.get("athlete_id"),),
+                (athlete_id,),
+            ).fetchall()
+            payments = db.execute(
+                """SELECT p.id,p.club_id,p.registration_id,p.competition_id,p.payment_type,p.reference_key,
+                          p.description,p.amount_cents,p.due_date,p.status,p.payment_method,p.transaction_reference,
+                          p.receipt_code,p.paid_at,p.created_at,p.updated_at,c.name AS competition_name,c.sport,
+                          cl.name AS club_name
+                   FROM athlete_payments p
+                   LEFT JOIN competitions c ON c.id=p.competition_id
+                   LEFT JOIN clubs cl ON cl.id=p.club_id
+                   WHERE p.athlete_id=? ORDER BY CASE p.status WHEN 'pending' THEN 0 WHEN 'overdue' THEN 0 ELSE 1 END,p.due_date DESC,p.id DESC""",
+                (athlete_id,),
             ).fetchall()
         if not athlete:
             self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
             return
         athlete_data = row_to_dict(athlete)
+        if selected_modality:
+            athlete_data.update({
+                "sport": selected_modality["sport"],
+                "rank_name": selected_modality["rank_name"],
+                "current_category": selected_modality["category"],
+                "club_id": selected_modality["club_id"],
+                "club_name": selected_modality["club_name"],
+                "club_city": selected_modality["club_city"],
+                "club_state": selected_modality["club_state"],
+                "federation_id": selected_modality["federation_id"],
+                "federation_name": selected_modality["federation_name"],
+                "selected_modality_id": selected_modality["id"],
+                "style_name": selected_modality["style_name"],
+                "training_center_name": selected_modality["training_center_name"],
+                "organization_name": selected_modality["organization_name"],
+                "instructor_name": selected_modality["instructor_name"],
+                "modality_status": selected_modality["status"],
+            })
+        selected_sport = selected_modality["sport"] if selected_modality else ""
+        registration_items = [dict(row) for row in registrations]
+        class_items = [dict(row) for row in classes]
+        attendance_items = [dict(row) for row in attendance]
+        certificate_items = [dict(row) for row in certificates]
+        payment_items = []
+        today_iso = date.today().isoformat()
+        for row in payments:
+            item = dict(row)
+            item["amount"] = item["amount_cents"] / 100
+            if item["status"] == "pending" and item["due_date"] and item["due_date"] < today_iso:
+                item["status"] = "overdue"
+            payment_items.append(item)
+        if selected_sport:
+            registration_items = [item for item in registration_items if item["sport"] == selected_sport]
+            class_items = [item for item in class_items if item["sport"] in {selected_sport, "Multimodalidades"}]
+            attendance_items = [item for item in attendance_items if item["sport"] in {selected_sport, "Multimodalidades"}]
+            certificate_items = [item for item in certificate_items if item["modality_id"] == selected_modality["id"]]
         required_documents = {"identity", "medical_certificate", "responsibility_term"}
+        try:
+            born = date.fromisoformat(athlete_data.get("birth_date", ""))
+            try:
+                eighteenth_birthday = born.replace(year=born.year + 18)
+            except ValueError:
+                eighteenth_birthday = date(born.year + 18, 2, 28)
+            if date.today() < eighteenth_birthday:
+                required_documents.add("guardian_authorization")
+        except ValueError:
+            pass
         verified_documents = {row["document_type"] for row in documents if row["status"] == "verified"}
-        profile_fields = ("email", "phone", "weight_kg", "current_category", "emergency_name", "emergency_phone")
-        profile_complete = round(100 * sum(bool(athlete_data.get(field)) for field in profile_fields) / len(profile_fields))
         self.send_json(200, {
             "ok": True,
             "athlete": athlete_data,
-            "registrations": [dict(row) for row in registrations],
+            "modalities": modalities,
+            "selectedModality": selected_modality,
+            "registrations": registration_items,
             "technicians": [dict(row) for row in technicians],
             "documents": [dict(row) for row in documents],
+            "certificates": certificate_items,
             "guardians": [dict(row) for row in guardians],
-            "classes": [dict(row) for row in classes],
-            "attendance": [dict(row) for row in attendance],
+            "classes": class_items,
+            "attendance": attendance_items,
+            "payments": payment_items,
             "readiness": {
-                "profileComplete": profile_complete,
                 "documentsVerified": len(verified_documents & required_documents),
                 "documentsRequired": len(required_documents),
                 "ready": required_documents.issubset(verified_documents),
             },
+            "postLogin": athlete_post_login_mode(modalities),
         })
+
+    def handle_athlete_live(self, competition_id: int | None = None, category_id: int | None = None) -> None:
+        """Read-only live championship view scoped to the authenticated athlete's registrations."""
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        athlete_id = int(auth.get("athlete_id"))
+        with connection() as db:
+            registrations = db.execute(
+                """SELECT r.id AS registration_id,r.competition_id,r.category,r.status AS registration_status,
+                          r.payment_status,c.name AS competition,c.sport,c.event_date,c.venue,c.city,c.state,c.organizer,
+                          COALESCE(o.stage,'confirmed') AS stage,COALESCE(o.call_time,'') AS call_time,
+                          COALESCE(o.arena_label,'') AS arena_label,COALESCE(o.bout_number,'') AS bout_number,
+                          COALESCE(o.bouts_before,0) AS bouts_before,COALESCE(o.warmup_minutes,20) AS warmup_minutes,
+                          COALESCE(o.updated_at,r.created_at) AS operation_updated_at
+                   FROM registrations r JOIN competitions c ON c.id=r.competition_id
+                   LEFT JOIN competition_operations o ON o.registration_id=r.id
+                   WHERE r.athlete_id=? AND r.status!='cancelled'
+                   ORDER BY c.event_date,r.id""",
+                (athlete_id,),
+            ).fetchall()
+            registration_items = [dict(row) for row in registrations]
+            if not registration_items:
+                self.send_json(200, {
+                    "ok": True, "events": [], "categories": [], "bouts": [], "callQueue": [], "filterBouts": [],
+                    "notices": [], "streams": [], "registration": None, "selectedCategory": None, "myCategory": None,
+                    "myBout": None, "serverTime": utc_now(), "refreshSeconds": 30,
+                })
+                return
+            registration = next(
+                (item for item in registration_items if competition_id and item["competition_id"] == competition_id),
+                None,
+            )
+            if competition_id and registration is None:
+                self.send_json(404, {"ok": False, "message": "Campeonato não encontrado para este atleta"})
+                return
+            if registration is None:
+                competition_statuses = db.execute(
+                    """SELECT competition_id,MAX(CASE status WHEN 'calling' THEN 4 WHEN 'in_progress' THEN 3 WHEN 'scheduled' THEN 2 ELSE 1 END) AS live_priority
+                       FROM competition_categories WHERE publication_status='published' GROUP BY competition_id"""
+                ).fetchall()
+                priorities = {row["competition_id"]: row["live_priority"] for row in competition_statuses}
+                registration = sorted(
+                    registration_items,
+                    key=lambda item: (-priorities.get(item["competition_id"], 0), item["event_date"], item["registration_id"]),
+                )[0]
+            selected_competition_id = int(registration["competition_id"])
+            categories = db.execute(
+                """SELECT id,competition_id,sport,name,division,arena_label,bracket_size,status,published_at,updated_at
+                   FROM competition_categories
+                   WHERE competition_id=? AND publication_status='published'
+                   ORDER BY CASE status WHEN 'calling' THEN 0 WHEN 'in_progress' THEN 1 WHEN 'scheduled' THEN 2 WHEN 'completed' THEN 3 ELSE 4 END,sport,name""",
+                (selected_competition_id,),
+            ).fetchall()
+            category_items = [dict(row) for row in categories]
+            my_category = next((item for item in category_items if item["name"] == registration["category"]), None)
+            selected_category = next((item for item in category_items if category_id and item["id"] == category_id), None)
+            if category_id and selected_category is None:
+                self.send_json(404, {"ok": False, "message": "Categoria publicada não encontrada neste campeonato"})
+                return
+            selected_category = selected_category or my_category or (category_items[0] if category_items else None)
+            category_ids = [item["id"] for item in category_items]
+            bout_rows = []
+            if category_ids:
+                marks = ",".join("?" for _ in category_ids)
+                bout_rows = db.execute(
+                    f"""SELECT b.id,b.category_id,b.round_name,b.round_order,b.bout_order,b.bout_number,
+                                b.scheduled_time,b.estimated_time,b.arena_label,b.red_registration_id,b.red_name,
+                                b.blue_registration_id,b.blue_name,b.status,b.score_red,b.score_blue,b.winner_name,
+                                b.next_bout_number,b.updated_at,cc.name AS category_name,cc.sport AS category_sport
+                         FROM competition_bouts b JOIN competition_categories cc ON cc.id=b.category_id
+                         WHERE b.category_id IN ({marks})
+                         ORDER BY CASE b.status WHEN 'calling' THEN 0 WHEN 'in_progress' THEN 1 WHEN 'on_deck' THEN 2 WHEN 'scheduled' THEN 3 WHEN 'completed' THEN 4 ELSE 5 END,
+                                  b.scheduled_time,b.round_order,b.bout_order""",
+                    category_ids,
+                ).fetchall()
+            athlete_registration_id = int(registration["registration_id"])
+            bout_items = []
+            my_bout = None
+            for row in bout_rows:
+                bout = dict(row)
+                red_is_me = bout.pop("red_registration_id") == athlete_registration_id
+                blue_is_me = bout.pop("blue_registration_id") == athlete_registration_id
+                bout["redIsMe"] = red_is_me
+                bout["blueIsMe"] = blue_is_me
+                bout["isMine"] = red_is_me or blue_is_me
+                if bout["isMine"]:
+                    stage_status = {
+                        "warming_up": "on_deck", "call_area": "calling", "ready": "calling",
+                        "fighting": "in_progress", "completed": "completed",
+                    }.get(registration.get("stage"))
+                    if stage_status:
+                        bout["status"] = stage_status
+                    bout["operationStage"] = registration.get("stage", "confirmed")
+                bout_items.append(bout)
+            my_bouts = [item for item in bout_items if item["isMine"]]
+            my_bout = next((item for item in my_bouts if item["status"] not in {"completed", "cancelled"}), None)
+            if my_bout is None and my_bouts:
+                my_bout = my_bouts[-1]
+            notice_rows = db.execute(
+                """SELECT id,category_id,registration_id,kind,priority,title,body,created_at
+                   FROM competition_live_notices
+                   WHERE competition_id=? AND (registration_id IS NULL OR registration_id=?)
+                   ORDER BY CASE priority WHEN 'urgent' THEN 0 WHEN 'high' THEN 1 ELSE 2 END,id DESC LIMIT 30""",
+                (selected_competition_id, athlete_registration_id),
+            ).fetchall()
+            stream_rows = db.execute(
+                """SELECT id,arena_label,title,playback_type,playback_url,fallback_url,status,access_level,
+                          latency_seconds,starts_at,updated_at
+                   FROM competition_streams WHERE competition_id=? AND access_level='authenticated'
+                   ORDER BY CASE status WHEN 'live' THEN 0 WHEN 'standby' THEN 1 ELSE 2 END,arena_label""",
+                (selected_competition_id,),
+            ).fetchall()
+        for item in category_items:
+            item["isMine"] = bool(my_category and item["id"] == my_category["id"])
+            item["boutCount"] = sum(1 for bout in bout_items if bout["category_id"] == item["id"])
+            item["completedBouts"] = sum(1 for bout in bout_items if bout["category_id"] == item["id"] and bout["status"] == "completed")
+        selected_category_id = selected_category["id"] if selected_category else None
+        selected_bouts = [item for item in bout_items if item["category_id"] == selected_category_id]
+        queue = [item for item in bout_items if item["status"] in {"calling", "in_progress", "on_deck", "scheduled"}]
+        events = [{
+            "competitionId": item["competition_id"], "registrationId": item["registration_id"],
+            "competition": item["competition"], "eventDate": item["event_date"], "venue": item["venue"],
+            "city": item["city"], "state": item["state"], "category": item["category"],
+            "registrationStatus": item["registration_status"],
+        } for item in registration_items]
+        stream_items = []
+        for row in stream_rows:
+            item = dict(row)
+            item["playback_url"] = safe_stream_url(item["playback_url"])
+            item["fallback_url"] = safe_stream_url(item["fallback_url"])
+            item["available"] = bool(item["playback_url"] or item["fallback_url"])
+            stream_items.append(item)
+        self.send_json(200, {
+            "ok": True,
+            "scope": "authenticated-athlete-read-only",
+            "events": events,
+            "registration": registration,
+            "categories": category_items,
+            "selectedCategory": selected_category,
+            "myCategory": my_category,
+            "bouts": selected_bouts,
+            "callQueue": queue[:40],
+            "filterBouts": bout_items[:100],
+            "notices": [dict(row) for row in notice_rows],
+            "streams": stream_items,
+            "myBout": my_bout,
+            "serverTime": utc_now(),
+            "refreshSeconds": 30,
+        })
+
+    def handle_pay_athlete_payment(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Pagamento inválido"})
+            return
+        try:
+            payment_id = int(payload.get("paymentId"))
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Pagamento inválido"})
+            return
+        method = str(payload.get("method", "")).strip().lower()
+        method_labels = {"pix": "PIX", "card": "Cartão pelo gateway", "boleto": "Boleto"}
+        if method not in method_labels:
+            self.send_json(400, {"ok": False, "message": "Selecione uma forma de pagamento válida"})
+            return
+        athlete_id = int(auth.get("athlete_id"))
+        paid_at = utc_now()
+        transaction_reference = f"PAY-{time.strftime('%Y%m%d')}-{secrets.token_hex(4).upper()}"
+        receipt_code = f"REC-{time.strftime('%Y')}-{secrets.token_hex(5).upper()}"
+        with connection() as db:
+            payment = db.execute(
+                """SELECT id,athlete_id,registration_id,competition_id,payment_type,description,amount_cents,due_date,status
+                   FROM athlete_payments WHERE id=? AND athlete_id=?""",
+                (payment_id, athlete_id),
+            ).fetchone()
+            if not payment:
+                self.send_json(404, {"ok": False, "message": "Cobrança não encontrada nesta conta"})
+                return
+            if payment["status"] == "paid":
+                self.send_json(409, {"ok": False, "message": "Este pagamento já foi confirmado"})
+                return
+            if payment["status"] in {"waived", "refunded", "cancelled"}:
+                self.send_json(409, {"ok": False, "message": "Esta cobrança não pode ser paga"})
+                return
+            db.execute(
+                """UPDATE athlete_payments SET status='paid',payment_method=?,transaction_reference=?,receipt_code=?,
+                          paid_at=?,updated_at=? WHERE id=? AND athlete_id=?""",
+                (method, transaction_reference, receipt_code, paid_at, paid_at, payment_id, athlete_id),
+            )
+            if payment["registration_id"]:
+                db.execute(
+                    "UPDATE registrations SET payment_status='paid' WHERE id=? AND athlete_id=?",
+                    (payment["registration_id"], athlete_id),
+                )
+                db.execute(
+                    "UPDATE delegation_members SET payment_status='paid' WHERE registration_id=? AND athlete_id=?",
+                    (payment["registration_id"], athlete_id),
+                )
+            updated = db.execute(
+                """SELECT id,payment_type,description,amount_cents,due_date,status,payment_method,
+                          transaction_reference,receipt_code,paid_at FROM athlete_payments WHERE id=? AND athlete_id=?""",
+                (payment_id, athlete_id),
+            ).fetchone()
+        audit(auth["sub"], "atleta", "ATHLETE_PAYMENT_DEMO_CONFIRM", "athlete_payment", payment_id, json.dumps({"method": method, "amount_cents": payment["amount_cents"]}), self.client_ip())
+        result = dict(updated)
+        result["amount"] = result["amount_cents"] / 100
+        result["method_label"] = method_labels[method]
+        result["demo"] = True
+        self.send_json(200, {"ok": True, "payment": result, "message": "Pagamento demonstrativo confirmado; nenhuma cobrança real foi realizada"})
+
+    def handle_upsert_athlete_guardian(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Dados do responsável inválidos"})
+            return
+        athlete_id = int(auth.get("athlete_id"))
+        full_name = str(payload.get("name", "")).strip()[:140]
+        relationship = str(payload.get("relationship", "")).strip()[:80]
+        document = normalize_document(payload.get("document", ""))[:60]
+        phone = str(payload.get("phone", "")).strip()[:40]
+        email = str(payload.get("email", "")).strip().lower()[:180]
+        if len(full_name) < 3 or len(relationship) < 2 or len(document) < 4 or len(phone) < 8 or (email and "@" not in email):
+            self.send_json(400, {"ok": False, "message": "Preencha nome, vínculo, documento e telefone do responsável"})
+            return
+        created_at = utc_now()
+        try:
+            with connection() as db:
+                athlete = db.execute("SELECT id,birth_date FROM athletes WHERE id=?", (athlete_id,)).fetchone()
+                if not athlete:
+                    self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
+                    return
+                try:
+                    born = date.fromisoformat(athlete["birth_date"])
+                except ValueError:
+                    self.send_json(400, {"ok": False, "message": "Nascimento do atleta inválido"})
+                    return
+                try:
+                    eighteenth_birthday = born.replace(year=born.year + 18)
+                except ValueError:
+                    eighteenth_birthday = date(born.year + 18, 2, 28)
+                if date.today() >= eighteenth_birthday:
+                    self.send_json(400, {"ok": False, "message": "Responsável legal é necessário somente para atleta menor de idade"})
+                    return
+                existing = db.execute(
+                    "SELECT id,authorized_competitions FROM athlete_guardians WHERE athlete_id=? ORDER BY emergency_contact DESC,id LIMIT 1",
+                    (athlete_id,),
+                ).fetchone()
+                if existing:
+                    db.execute(
+                        """UPDATE athlete_guardians SET full_name=?,relationship=?,document=?,phone=?,email=?,emergency_contact=1
+                           WHERE id=? AND athlete_id=?""",
+                        (full_name, relationship, document, phone, email, existing["id"], athlete_id),
+                    )
+                    guardian_id = existing["id"]
+                else:
+                    cursor = db.execute(
+                        """INSERT INTO athlete_guardians
+                           (athlete_id,full_name,relationship,document,phone,email,authorized_competitions,emergency_contact,created_at)
+                           VALUES(?,?,?,?,?,?,?,?,?)""",
+                        (athlete_id, full_name, relationship, document, phone, email, 0, 1, created_at),
+                    )
+                    guardian_id = cursor.lastrowid
+                guardian = db.execute(
+                    """SELECT id,full_name,relationship,document,phone,email,authorized_competitions,emergency_contact
+                       FROM athlete_guardians WHERE id=? AND athlete_id=?""",
+                    (guardian_id, athlete_id),
+                ).fetchone()
+        except sqlite3.IntegrityError:
+            self.send_json(409, {"ok": False, "message": "Este documento de responsável já está vinculado"})
+            return
+        audit(auth["sub"], "atleta", "ATHLETE_GUARDIAN_UPDATE", "athlete_guardian", guardian_id, ip_address=self.client_ip())
+        self.send_json(200, {"ok": True, "guardian": dict(guardian), "authorization": "preserved" if guardian["authorized_competitions"] else "pending_validation"})
+
+    def handle_upsert_athlete_modality(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Dados da modalidade inválidos"})
+            return
+        athlete_id = int(auth.get("athlete_id"))
+        try:
+            modality_id = int(payload.get("id")) if payload.get("id") else None
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Modalidade inválida"})
+            return
+        sport = str(payload.get("sport", "")).strip()[:80]
+        style_name = str(payload.get("styleName", "")).strip()[:100]
+        rank_name = str(payload.get("rankName", "")).strip()[:120]
+        category = str(payload.get("category", "")).strip()[:120]
+        training_center_name = str(payload.get("trainingCenterName", "")).strip()[:160]
+        organization_name = str(payload.get("organizationName", "")).strip()[:160]
+        instructor_name = str(payload.get("instructorName", "")).strip()[:120]
+        started_at = str(payload.get("startedAt", "")).strip()[:10]
+        status = str(payload.get("status", "active")).strip().lower()
+        public_profile = 0
+        requested_primary = bool(payload.get("isPrimary"))
+        if len(sport) < 2 or len(rank_name) < 2 or len(category) < 2 or status not in {"active", "paused", "archived"}:
+            self.send_json(400, {"ok": False, "message": "Informe modalidade, graduação, categoria e situação válidas"})
+            return
+        if started_at and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", started_at):
+            self.send_json(400, {"ok": False, "message": "Data de início inválida"})
+            return
+        updated_at = utc_now()
+        try:
+            with connection() as db:
+                athlete = db.execute(
+                    """SELECT a.id,a.club_id,c.federation_id,c.name AS club_name FROM athletes a
+                       LEFT JOIN clubs c ON c.id=a.club_id WHERE a.id=?""",
+                    (athlete_id,),
+                ).fetchone()
+                if not athlete:
+                    self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
+                    return
+                training_center_name = training_center_name or athlete["club_name"] or "Sem clube vinculado"
+                linked_club_id = athlete["club_id"] if athlete["club_name"] and training_center_name.casefold() == athlete["club_name"].casefold() else None
+                existing = db.execute(
+                    "SELECT id,is_primary FROM athlete_modalities WHERE id=? AND athlete_id=?",
+                    (modality_id, athlete_id),
+                ).fetchone() if modality_id else None
+                if modality_id and not existing:
+                    self.send_json(404, {"ok": False, "message": "Modalidade não encontrada nesta conta"})
+                    return
+                total = db.execute("SELECT COUNT(*) FROM athlete_modalities WHERE athlete_id=?", (athlete_id,)).fetchone()[0]
+                if not existing and total >= 20:
+                    self.send_json(409, {"ok": False, "message": "Limite de modalidades da conta atingido"})
+                    return
+                is_primary = 1 if requested_primary or total == 0 or (existing and existing["is_primary"]) else 0
+                if status == "archived" and is_primary and total > 1:
+                    is_primary = 0
+                if is_primary:
+                    db.execute("UPDATE athlete_modalities SET is_primary=0,updated_at=? WHERE athlete_id=?", (updated_at, athlete_id))
+                if existing:
+                    db.execute(
+                        """UPDATE athlete_modalities SET club_id=?,federation_id=?,sport=?,style_name=?,rank_name=?,
+                                  category=?,training_center_name=?,organization_name=?,instructor_name=?,status=?,is_primary=?,public_profile=?,
+                                  started_at=?,updated_at=? WHERE id=? AND athlete_id=?""",
+                        (linked_club_id, athlete["federation_id"], sport, style_name, rank_name, category,
+                         training_center_name, organization_name, instructor_name, status, is_primary, public_profile, started_at,
+                         updated_at, modality_id, athlete_id),
+                    )
+                else:
+                    cursor = db.execute(
+                        """INSERT INTO athlete_modalities
+                           (athlete_id,club_id,federation_id,sport,style_name,rank_name,category,training_center_name,organization_name,
+                            instructor_name,status,is_primary,public_profile,started_at,created_at,updated_at)
+                           VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                        (athlete_id, linked_club_id, athlete["federation_id"], sport, style_name, rank_name,
+                         category, training_center_name, organization_name, instructor_name, status, is_primary, public_profile,
+                         started_at, updated_at, updated_at),
+                    )
+                    modality_id = cursor.lastrowid
+                if not is_primary and db.execute(
+                    "SELECT 1 FROM athlete_modalities WHERE athlete_id=? AND is_primary=1 AND status!='archived'",
+                    (athlete_id,),
+                ).fetchone() is None:
+                    fallback = db.execute(
+                        "SELECT id FROM athlete_modalities WHERE athlete_id=? AND status!='archived' ORDER BY id LIMIT 1",
+                        (athlete_id,),
+                    ).fetchone()
+                    if fallback:
+                        db.execute("UPDATE athlete_modalities SET is_primary=1,updated_at=? WHERE id=?", (updated_at, fallback["id"]))
+                primary = db.execute(
+                    """SELECT sport,rank_name,category FROM athlete_modalities
+                       WHERE athlete_id=? AND is_primary=1 ORDER BY id LIMIT 1""",
+                    (athlete_id,),
+                ).fetchone()
+                if primary:
+                    db.execute(
+                        "UPDATE athletes SET sport=?,rank_name=?,current_category=?,profile_updated_at=? WHERE id=?",
+                        (primary["sport"], primary["rank_name"], primary["category"], updated_at, athlete_id),
+                    )
+                modality = next(item for item in self.athlete_modalities(db, athlete_id) if item["id"] == modality_id)
+        except sqlite3.IntegrityError:
+            self.send_json(409, {"ok": False, "message": "Esta modalidade já está cadastrada com o mesmo estilo e organização"})
+            return
+        action = "ATHLETE_MODALITY_UPDATE" if payload.get("id") else "ATHLETE_MODALITY_CREATE"
+        audit(auth["sub"], "atleta", action, "athlete_modality", modality_id, json.dumps({"sport": sport, "status": status}), self.client_ip())
+        self.send_json(200 if payload.get("id") else 201, {"ok": True, "modality": modality})
+
+    def handle_upsert_athlete_certificate(self) -> None:
+        auth = self.require_auth({"atleta"})
+        if not auth:
+            return
+        payload = self.read_json()
+        if payload is None:
+            self.send_json(400, {"ok": False, "message": "Certificado inválido"})
+            return
+        athlete_id = int(auth.get("athlete_id"))
+        try:
+            modality_id = int(payload.get("modalityId"))
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Selecione a modalidade do certificado"})
+            return
+        certificate_type = str(payload.get("type", "graduation")).strip().lower()
+        title = str(payload.get("title", "")).strip()[:160]
+        issuer = str(payload.get("issuer", "")).strip()[:160]
+        raw_code = str(payload.get("code", "")).strip().upper()
+        certificate_code = re.sub(r"[^A-Z0-9._/-]", "-", raw_code)[:80] or f"AC-{athlete_id}-{modality_id}-{secrets.token_hex(3).upper()}"
+        file_name = re.sub(r"[^A-Za-z0-9._-]", "-", str(payload.get("fileName", "certificado.pdf")).strip())[:180]
+        issued_at = str(payload.get("issuedAt", "")).strip()[:10]
+        expires_at = str(payload.get("expiresAt", "")).strip()[:10]
+        valid_extension = bool(re.search(r"\.(pdf|jpe?g|png|webp)$", file_name, re.IGNORECASE))
+        if certificate_type not in {"graduation", "membership", "course", "instructor", "referee"} or len(title) < 2 or len(issuer) < 2 or not file_name or not valid_extension:
+            self.send_json(400, {"ok": False, "message": "Preencha tipo, título, emissor e arquivo PDF ou imagem do certificado"})
+            return
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", issued_at) or (expires_at and (not re.fullmatch(r"\d{4}-\d{2}-\d{2}", expires_at) or expires_at < issued_at)):
+            self.send_json(400, {"ok": False, "message": "Informe datas válidas para o certificado"})
+            return
+        updated_at = utc_now()
+        try:
+            with connection() as db:
+                modality = db.execute(
+                    "SELECT id,sport FROM athlete_modalities WHERE id=? AND athlete_id=?",
+                    (modality_id, athlete_id),
+                ).fetchone()
+                if not modality:
+                    self.send_json(404, {"ok": False, "message": "Modalidade não encontrada nesta conta"})
+                    return
+                certificate_total = db.execute("SELECT COUNT(*) FROM athlete_certificates WHERE athlete_id=?", (athlete_id,)).fetchone()[0]
+                if certificate_total >= 200:
+                    self.send_json(409, {"ok": False, "message": "Limite de certificados da conta atingido"})
+                    return
+                cursor = db.execute(
+                    """INSERT INTO athlete_certificates
+                       (athlete_id,modality_id,certificate_type,title,issuer,certificate_code,file_name,issued_at,
+                        expires_at,status,verification_url,created_at,updated_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (athlete_id, modality_id, certificate_type, title, issuer, certificate_code, file_name,
+                     issued_at, expires_at, "pending", f"https://apexcombate.com/verificar/{certificate_code}", updated_at, updated_at),
+                )
+                certificate_id = cursor.lastrowid
+                certificate = db.execute(
+                    """SELECT ac.*,am.sport,am.style_name FROM athlete_certificates ac
+                       JOIN athlete_modalities am ON am.id=ac.modality_id WHERE ac.id=?""",
+                    (certificate_id,),
+                ).fetchone()
+        except sqlite3.IntegrityError:
+            self.send_json(409, {"ok": False, "message": "Já existe um certificado com este código"})
+            return
+        audit(auth["sub"], "atleta", "ATHLETE_CERTIFICATE_SUBMIT", "athlete_certificate", certificate_id, json.dumps({"modalityId": modality_id}), self.client_ip())
+        self.send_json(201, {"ok": True, "certificate": dict(certificate)})
 
     def handle_update_athlete_profile(self) -> None:
         auth = self.require_auth({"atleta"})
@@ -549,18 +1202,39 @@ class ApexHandler(SimpleHTTPRequestHandler):
         if "@" not in email or len(phone) < 8 or not 20 <= weight <= 350 or len(category) < 3 or len(emergency_name) < 3 or len(emergency_phone) < 8:
             self.send_json(400, {"ok": False, "message": "Preencha corretamente contato, peso, categoria e emergência"})
             return
+        try:
+            modality_id = int(payload.get("modalityId")) if payload.get("modalityId") else None
+        except (TypeError, ValueError):
+            self.send_json(400, {"ok": False, "message": "Modalidade inválida"})
+            return
         updated_at = utc_now()
         with connection() as db:
+            selected_modality = db.execute(
+                "SELECT id,is_primary FROM athlete_modalities WHERE id=? AND athlete_id=?",
+                (modality_id, auth.get("athlete_id")),
+            ).fetchone() if modality_id else None
+            if modality_id and not selected_modality:
+                self.send_json(404, {"ok": False, "message": "Modalidade não encontrada nesta conta"})
+                return
             cursor = db.execute(
-                """UPDATE athletes SET email=?,phone=?,weight_kg=?,current_category=?,emergency_name=?,
+                """UPDATE athletes SET email=?,phone=?,weight_kg=?,emergency_name=?,
                    emergency_phone=?,contact=?,profile_updated_at=? WHERE id=?""",
-                (email, phone, weight, category, emergency_name, emergency_phone, email or phone, updated_at, auth.get("athlete_id")),
+                (email, phone, weight, emergency_name, emergency_phone, email or phone, updated_at, auth.get("athlete_id")),
             )
             if not cursor.rowcount:
                 self.send_json(404, {"ok": False, "message": "Atleta não encontrado"})
                 return
-        audit(auth["sub"], "atleta", "ATHLETE_PROFILE_UPDATE", "athlete", auth.get("athlete_id"), ip_address=self.client_ip())
-        self.send_json(200, {"ok": True, "profile": {"email": email, "phone": phone, "weight_kg": weight, "current_category": category, "emergency_name": emergency_name, "emergency_phone": emergency_phone, "updated_at": updated_at}})
+            if selected_modality:
+                db.execute(
+                    "UPDATE athlete_modalities SET category=?,updated_at=? WHERE id=? AND athlete_id=?",
+                    (category, updated_at, modality_id, auth.get("athlete_id")),
+                )
+                if selected_modality["is_primary"]:
+                    db.execute("UPDATE athletes SET current_category=? WHERE id=?", (category, auth.get("athlete_id")))
+            else:
+                db.execute("UPDATE athletes SET current_category=? WHERE id=?", (category, auth.get("athlete_id")))
+        audit(auth["sub"], "atleta", "ATHLETE_PROFILE_UPDATE", "athlete", auth.get("athlete_id"), json.dumps({"modalityId": modality_id}), self.client_ip())
+        self.send_json(200, {"ok": True, "profile": {"email": email, "phone": phone, "weight_kg": weight, "current_category": category, "emergency_name": emergency_name, "emergency_phone": emergency_phone, "modality_id": modality_id, "updated_at": updated_at}})
 
     def handle_upsert_athlete_document(self) -> None:
         auth = self.require_auth({"atleta"})
@@ -575,10 +1249,11 @@ class ApexHandler(SimpleHTTPRequestHandler):
         file_name = re.sub(r"[^A-Za-z0-9._-]", "-", str(payload.get("fileName", "documento.pdf")).strip())[:180]
         issued_at = str(payload.get("issuedAt", "")).strip()[:10]
         expires_at = str(payload.get("expiresAt", "")).strip()[:10]
-        if document_type not in allowed_types or not file_name or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", issued_at or ""):
-            self.send_json(400, {"ok": False, "message": "Informe tipo, arquivo e data de emissão válidos"})
+        valid_extension = bool(re.search(r"\.(pdf|jpe?g|png|webp)$", file_name, re.IGNORECASE))
+        if document_type not in allowed_types or not file_name or not valid_extension or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", issued_at or ""):
+            self.send_json(400, {"ok": False, "message": "Informe tipo, arquivo PDF ou imagem e data de emissão válidos"})
             return
-        if expires_at and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", expires_at):
+        if expires_at and (not re.fullmatch(r"\d{4}-\d{2}-\d{2}", expires_at) or expires_at < issued_at):
             self.send_json(400, {"ok": False, "message": "Data de validade inválida"})
             return
         updated_at = utc_now()
@@ -1307,6 +1982,15 @@ class ApexHandler(SimpleHTTPRequestHandler):
                 )
                 db.execute("UPDATE clubs SET active_students=active_students+1 WHERE id=?", (auth.get("club_id"),))
                 athlete_id = cursor.lastrowid
+                club = db.execute("SELECT federation_id,name FROM clubs WHERE id=?", (auth.get("club_id"),)).fetchone()
+                created_at = utc_now()
+                db.execute(
+                    """INSERT INTO athlete_modalities
+                       (athlete_id,club_id,federation_id,sport,rank_name,category,training_center_name,organization_name,status,is_primary,public_profile,created_at,updated_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (athlete_id, auth.get("club_id"), club["federation_id"] if club else None, sport,
+                     "Cadastro inicial", "A definir", club["name"] if club else "", club["name"] if club else "", "active", 1, 0, created_at, created_at),
+                )
         except sqlite3.IntegrityError:
             self.send_json(409, {"ok": False, "message": "Já existe um atleta com este documento"})
             return
@@ -1384,11 +2068,20 @@ class ApexHandler(SimpleHTTPRequestHandler):
                     (competition["id"], auth.get("athlete_id"), technician_id, category, "pending", "pending", utc_now()),
                 )
                 registration_id = cursor.lastrowid
+                payment_cursor = db.execute(
+                    """INSERT INTO athlete_payments
+                       (athlete_id,club_id,registration_id,competition_id,payment_type,reference_key,description,amount_cents,due_date,status,created_at,updated_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (auth.get("athlete_id"), auth.get("club_id"), registration_id, competition["id"], "competition_fee",
+                     f"registration:{registration_id}", f"Inscrição • {competition['name']}", competition["fee_cents"],
+                     competition["registration_deadline"], "pending", utc_now(), utc_now()),
+                )
+                payment_id = payment_cursor.lastrowid
             except sqlite3.IntegrityError:
                 self.send_json(409, {"ok": False, "message": "Você já possui inscrição nesta competição"})
                 return
         audit(auth["sub"], "atleta", "REGISTRATION_CREATE", "registration", registration_id, ip_address=self.client_ip())
-        self.send_json(201, {"ok": True, "registration": {"id": registration_id, "event": competition["name"], "status": "pending", "payment": "pending", "technicianId": technician_id}})
+        self.send_json(201, {"ok": True, "registration": {"id": registration_id, "event": competition["name"], "status": "pending", "payment": "pending", "paymentId": payment_id, "amount": competition["fee_cents"] / 100, "technicianId": technician_id}})
 
     @staticmethod
     def translate_one(text: str, target: str) -> str:
