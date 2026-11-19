@@ -1,4 +1,4 @@
-const CACHE_NAME = 'apex-combate-v44-notebook-login-2';
+const CACHE_NAME = 'apex-combate-v44-notebook-login-3';
 const APP_SHELL = [
   './',
   './apex-combate.html',

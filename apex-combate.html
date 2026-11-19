@@ -589,7 +589,7 @@
     .demo-access:hover { border-color: #4a5360; color: white; }
     .auth-legal { margin: 16px 0 0; color: #5d6571; font-size: 11px; font-size: var(--font-caption, 11px); line-height: 1.55; text-align: center; }
     .auth-legal button { border: 0; padding: 0; background: transparent; color: #929aa6; cursor: pointer; font-size: inherit; }
-    .auth-footer { position: relative; z-index: 2; width: min(1400px, calc(100% - 64px)); margin: 0 auto; min-height: 66px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; color: #555d68; font-size: 11px; font-size: var(--font-caption, 11px); letter-spacing: .1em; text-transform: uppercase; }
+    .auth-footer { position: relative; z-index: 1; pointer-events: none; width: min(1400px, calc(100% - 64px)); margin: 0 auto; min-height: 66px; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; color: #555d68; font-size: 11px; font-size: var(--font-caption, 11px); letter-spacing: .1em; text-transform: uppercase; }
     .auth-footer-status { display: flex; align-items: center; gap: 8px; }
     .auth-footer-status i { width: 7px; height: 7px; border-radius: 50%; background: #49d49d; box-shadow: 0 0 9px rgba(73,212,157,.55); }
     .logout-setting { cursor: pointer; }
@@ -918,7 +918,7 @@
     .auth-header--language-only .auth-header-actions { display: block; }
     .auth-header--language-only .auth-language { display: flex; align-items: center; min-width: 155px; }
 
-    .auth-stage { position: relative; z-index: 2; width: 100%; flex: 1; min-height: 650px; padding: 54px 20px 48px; display: grid; place-items: center; }
+    .auth-stage { position: relative; z-index: 3; width: 100%; flex: 1; min-height: 650px; padding: 54px 20px 48px; display: grid; place-items: center; }
     .auth-card { position: relative; width: min(455px, 100%); padding: 28px 30px 27px; border: 1px solid rgba(239,38,54,.42); border-radius: 7px; background: linear-gradient(155deg, rgba(20,24,31,.97), rgba(7,10,15,.98)); box-shadow: 0 32px 90px rgba(0,0,0,.68), inset 0 1px 0 rgba(255,255,255,.04); backdrop-filter: blur(14px); }
     .auth-card::before, .auth-card::after { content: ""; position: absolute; width: 64px; height: 3px; background: #ef2636; top: -2px; }
     .auth-card::before { left: 26px; }
@@ -973,7 +973,7 @@
       .profile-choice strong { font-size: 12px; font-size: var(--font-small, 12px); }
       .profile-choice small { font-size: 10px; font-size: var(--font-micro, 10px); }
     }
-    @media (max-height: 720px) and (min-width: 721px) {
+    @media (max-height: 900px) and (min-width: 721px) {
       .auth-screen { overflow-y: auto; overscroll-behavior: contain; }
       .auth-stage { min-height: 650px; padding-block: 24px; place-items: center; }
       .auth-card { transform: none; }
@@ -5375,7 +5375,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-notebook-login-2', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-notebook-login-3', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

@@ -34,7 +34,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_notebook_login_button_is_not_inside_a_scaled_hit_area(self):
         match = re.search(
-            r"@media\s*\(max-height:\s*720px\)\s*and\s*\(min-width:\s*721px\)\s*\{(.*?)\n\s*\}",
+            r"@media\s*\(max-height:\s*900px\)\s*and\s*\(min-width:\s*721px\)\s*\{(.*?)\n\s*\}",
             self.html,
             re.DOTALL,
         )
@@ -44,6 +44,9 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn(".auth-card { transform: none; }", notebook_rules)
         self.assertNotIn("transform: scale", notebook_rules)
         self.assertIn("pointer-events: auto", notebook_rules)
+        self.assertIn(".auth-footer { display: none; }", notebook_rules)
+        self.assertIn(".auth-stage { position: relative; z-index: 3;", self.html)
+        self.assertIn(".auth-footer { position: relative; z-index: 1; pointer-events: none;", self.html)
 
     def test_login_has_direct_click_keyboard_and_visible_status_fallbacks(self):
         button = re.search(r'<button class="auth-submit" id="loginSubmit"([^>]*)>', self.html)
@@ -243,8 +246,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-notebook-login-2'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v44-notebook-login-2", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-notebook-login-3'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44-notebook-login-3", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
