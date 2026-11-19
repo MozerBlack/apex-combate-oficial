@@ -581,6 +581,10 @@
     .auth-submit { width: 100%; height: 49px; border: 0; border-radius: 9px; background: #ef2636; color: white; cursor: pointer; font-size: 14px; font-size: var(--font-body, 14px); font-weight: 900; letter-spacing: .13em; text-transform: uppercase; box-shadow: 0 13px 28px rgba(239,38,54,.20); }
     .auth-submit:hover { background: #ff3544; transform: translateY(-1px); }
     .auth-submit:disabled { opacity: .65; cursor: wait; }
+    .login-status { min-height: 1.35em; margin: 9px 4px 0; color: #9ea6b2; font-size: 12px; font-size: var(--font-small, 12px); font-weight: 700; line-height: 1.35; text-align: center; }
+    .login-status[data-state="progress"] { color: #f3c85b; }
+    .login-status[data-state="success"] { color: #65dda9; }
+    .login-status[data-state="error"] { color: #ff7d86; }
     .demo-access { width: 100%; margin-top: 9px; height: 42px; border: 1px solid #2b323d; border-radius: 9px; background: transparent; color: #a9b0ba; cursor: pointer; font-size: 13px; font-size: var(--font-label, 13px); font-weight: 750; }
     .demo-access:hover { border-color: #4a5360; color: white; }
     .auth-legal { margin: 16px 0 0; color: #5d6571; font-size: 11px; font-size: var(--font-caption, 11px); line-height: 1.55; text-align: center; }
@@ -1966,7 +1970,8 @@
             </div>
 
             <div class="auth-row"><label class="remember"><input type="checkbox" checked /> Confiar neste dispositivo</label><button class="forgot" type="button" data-auth-info="A recuperação segura será enviada ao contato verificado.">Preciso de ajuda</button></div>
-            <button class="auth-submit" id="loginSubmit" type="submit">Entrar na plataforma</button>
+            <button class="auth-submit" id="loginSubmit" type="button" onpointerdown="this.textContent='Clique recebido...';var status=document.getElementById('loginStatus');if(status){status.textContent='Clique recebido. Preparando validação...';status.dataset.state='progress';}" onclick="if(window.apexDirectLogin){window.apexDirectLogin(event);return false;}">Entrar na plataforma</button>
+            <p id="loginStatus" class="login-status" role="status" aria-live="assertive" aria-atomic="true"></p>
             <button class="demo-access" id="demoAccess" type="button">Preencher acesso demonstrativo</button>
           </form>
           <p class="auth-legal">Ao continuar, você concorda com os <button type="button" data-auth-info="Termos de uso serão publicados antes do lançamento.">Termos de Uso</button> e a <button type="button" data-auth-info="A política seguirá os requisitos da LGPD.">Política de Privacidade</button>.</p>
@@ -4167,6 +4172,7 @@
     const authScreen = document.getElementById('authScreen');
     const loginForm = document.getElementById('loginForm');
     const loginSubmit = document.getElementById('loginSubmit');
+    const loginStatus = document.getElementById('loginStatus');
     const passwordToggle = document.getElementById('passwordToggle');
     const passwordInput = document.getElementById('loginPassword');
     const profileStep = document.getElementById('profileStep');
@@ -4182,6 +4188,22 @@
     let federationChallengeId = '';
     let activeSessionToken = '';
     let activeAdminToken = '';
+    let loginAttemptRunning = false;
+
+    function setLoginStatus(message = '', state = '') {
+      loginStatus.textContent = message;
+      if (state) loginStatus.dataset.state = state;
+      else delete loginStatus.dataset.state;
+    }
+
+    function releaseLoginAttempt(message, state = 'error') {
+      loginAttemptRunning = false;
+      loginSubmit.disabled = false;
+      loginSubmit.removeAttribute('aria-busy');
+      loginSubmit.textContent = 'Entrar na plataforma';
+      setLoginStatus(message, state);
+      if (state === 'error') showToast(message);
+    }
 
     function getApexToken(profile) {
       if (profile === 'federation') return activeAdminToken || sessionStorage.getItem('apex-admin-jwt') || '';
@@ -4291,7 +4313,11 @@
         passwordLabel.textContent = 'Senha';
         passwordInput.placeholder = 'Digite sua senha';
       }
+      loginAttemptRunning = false;
+      loginSubmit.disabled = false;
+      loginSubmit.removeAttribute('aria-busy');
       loginSubmit.textContent = 'Entrar na plataforma';
+      setLoginStatus('');
     }
 
     function showCredentials() {
@@ -4838,23 +4864,33 @@
     function closeFederationOtp() {
       federationOtpModal.hidden = true;
       federationChallengeId = '';
+      loginAttemptRunning = false;
       loginSubmit.disabled = false;
+      loginSubmit.removeAttribute('aria-busy');
       loginSubmit.textContent = 'Entrar na plataforma';
+      setLoginStatus('Verificação em duas etapas cancelada.', 'error');
     }
 
-    loginForm.addEventListener('submit', async event => {
-      event.preventDefault();
+    async function handleLoginAttempt() {
+      if (loginAttemptRunning) return;
+      loginAttemptRunning = true;
+      loginSubmit.disabled = true;
+      loginSubmit.setAttribute('aria-busy', 'true');
+      loginSubmit.textContent = 'Clique recebido...';
+      setLoginStatus('Clique recebido. Validando os dados informados...', 'progress');
+      await new Promise(resolve => requestAnimationFrame(resolve));
+
       const role = document.getElementById('loginProfile').value;
       if (role === 'athlete') {
         const documentValue = athleteDocument.value.trim();
         const birthISO = parseFlexibleDate(athleteBirth.value);
-        if (!documentValue || documentValue.replace(/\s/g, '').length < 4) return showToast('Informe seu CPF ou documento');
-        if (!birthISO) return showToast('Informe uma data de nascimento válida');
+        if (!documentValue || documentValue.replace(/\s/g, '').length < 4) return releaseLoginAttempt('Informe seu CPF ou documento.');
+        if (!birthISO) return releaseLoginAttempt('Informe uma data de nascimento válida.');
         const digits = documentValue.replace(/\D/g, '');
         athleteDocument.dataset.normalized = isValidCPF(documentValue) ? digits : documentValue.trim();
         athleteBirth.dataset.iso = birthISO;
-        loginSubmit.disabled = true;
         loginSubmit.textContent = 'Localizando atleta...';
+        setLoginStatus('Dados válidos. Localizando o atleta demonstrativo...', 'progress');
         try {
           const athleteAccess = await authenticateAthlete(documentValue, birthISO);
           pendingAthleteLoginData = athleteAccess;
@@ -4866,42 +4902,55 @@
             selectedAthleteModalityId = null;
             try { sessionStorage.removeItem('apex-athlete-modality-id'); } catch (_) {}
           }
+          setLoginStatus('Acesso confirmado. Abrindo a plataforma...', 'success');
           enterApex('athlete');
         } catch (error) {
-          loginSubmit.disabled = false;
-          loginSubmit.textContent = 'Entrar na plataforma';
-          showToast(error.message);
+          releaseLoginAttempt(error.message || 'Não foi possível autenticar o atleta.');
         }
       } else if (role === 'academy') {
         const usuario = loginIdInput.value.trim();
         const senha = passwordInput.value;
-        if (!usuario || !senha) return showToast('Informe o usuário e a senha');
-        if (usuario.length < 2 || senha.length < 4) return showToast('Confira o usuário e a senha');
-        loginSubmit.disabled = true;
+        if (!usuario || !senha) return releaseLoginAttempt('Informe o usuário e a senha.');
+        if (usuario.length < 2 || senha.length < 4) return releaseLoginAttempt('Confira o usuário e a senha.');
         loginSubmit.textContent = 'Validando usuário...';
+        setLoginStatus('Validando o acesso do clube ou técnico...', 'progress');
         try {
           await authenticateClub(usuario, senha);
+          setLoginStatus('Acesso confirmado. Abrindo a plataforma...', 'success');
           enterApex('academy');
         } catch (error) {
-          loginSubmit.disabled = false;
-          loginSubmit.textContent = 'Entrar na plataforma';
-          showToast(error.message);
+          releaseLoginAttempt(error.message || 'Não foi possível autenticar o clube.');
         }
       } else {
         const usuario = loginIdInput.value.trim();
         const senha = passwordInput.value;
-        if (!usuario || !senha) return showToast('Informe o admin e a senha');
-        if (senha.length < 8) return showToast('A senha deve ter pelo menos 8 caracteres');
-        loginSubmit.disabled = true;
+        if (!usuario || !senha) return releaseLoginAttempt('Informe o admin e a senha.');
+        if (senha.length < 8) return releaseLoginAttempt('A senha deve ter pelo menos 8 caracteres.');
         loginSubmit.textContent = 'Validando admin...';
+        setLoginStatus('Validando a primeira etapa da Federação...', 'progress');
         try {
           const data = await authenticateFederation(usuario, senha);
+          loginAttemptRunning = false;
+          loginSubmit.removeAttribute('aria-busy');
+          setLoginStatus('Primeira etapa confirmada. Informe o código de segurança.', 'success');
           openFederationOtp(data);
         } catch (error) {
-          loginSubmit.disabled = false;
-          loginSubmit.textContent = 'Entrar na plataforma';
-          showToast(error.message);
+          releaseLoginAttempt(error.message || 'Não foi possível autenticar a Federação.');
         }
+      }
+    }
+
+    window.apexDirectLogin = event => {
+      if (event) event.preventDefault();
+      void handleLoginAttempt();
+      return false;
+    };
+    loginSubmit.addEventListener('click', window.apexDirectLogin);
+    loginForm.addEventListener('submit', window.apexDirectLogin);
+    loginForm.addEventListener('keydown', event => {
+      if ((event.key === 'Enter' || event.keyCode === 13) && event.target.matches('input')) {
+        event.preventDefault();
+        window.apexDirectLogin(event);
       }
     });
 
@@ -4932,6 +4981,7 @@
       showCredentials();
       athleteDocument.value = formatCPF('52998224725');
       athleteBirth.value = '10/05/1998';
+      setLoginStatus('Dados demonstrativos preenchidos. Clique em “Entrar na plataforma”.', 'success');
       showToast('Acesso demonstrativo preenchido; confirme para entrar');
     });
 
@@ -4953,6 +5003,7 @@
       if (role === 'athlete') {
         athleteDocument.value = formatCPF('52998224725');
         athleteBirth.value = '10/05/1998';
+        setLoginStatus('Dados demonstrativos preenchidos. Clique em “Entrar na plataforma”.', 'success');
         showToast('Dados demonstrativos preenchidos');
       } else {
         if (role === 'academy') {
@@ -5324,7 +5375,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-notebook-login-1', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-notebook-login-2', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

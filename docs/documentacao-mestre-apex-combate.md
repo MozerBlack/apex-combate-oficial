@@ -2954,7 +2954,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-060 | O atleta terá, dentro de Competições, uma central autenticada de campeonato ao vivo para acompanhar sua próxima luta, chave, categorias publicadas, adversário, área, número da luta, horário, quantidade de lutas anteriores, fila de chamadas, resultados da chave e avisos oficiais. A consulta é somente leitura, isolada pelas inscrições do atleta e atualizada automaticamente. | Aprovada e publicada na demonstração oficial |
 | DEC-061 | A central de campeonato ao vivo terá player de vídeo por tatame, ringue ou área e modo de filtragem por busca, modalidade, categoria, área, situação e luta do próprio atleta. A demonstração não exibirá luta falsa: o player ficará preparado para HLS autenticado e só reproduzirá fonte autorizada. Origens externas exigem allowlist explícita, URL temporária e autorização de imagem. | Aprovada e publicada; fonte real pendente de provedor autorizado |
 | DEC-062 | O nome “João Victor Mozer dos Santos” poderá aparecer nas referências autenticadas das chaves 1181 e 1201 e no histórico do Campeonato Paranaense de Karatê 2026 — Oeste, conforme autorização direta de Mozer. O registro não substituirá a conta demonstrativa de Rafael, não será apresentado como histórico do usuário autenticado e não presumirá resultado, colocação ou medalha. | Aprovada, implementada e publicada na demonstração oficial |
-| DEC-063 | O botão “Entrar na plataforma” deve manter uma área de clique direta em notebooks com tela baixa, sem `transform: scale()` no cartão de autenticação. A tela poderá rolar verticalmente sem sobrepor ou desalinhar o botão. O service worker receberá uma revisão própria para remover do Chrome caches anteriores da v44 e entregar a correção imediatamente. | Aprovada, implementada e publicada na demonstração oficial |
+| DEC-063 | O botão “Entrar na plataforma” deve manter uma área de clique direta em notebooks com tela baixa, sem `transform: scale()` no cartão de autenticação. Além do envio do formulário, haverá acionamento direto por clique e pela tecla Enter, confirmação textual imediata em região `aria-live`, erros persistentes junto ao botão e revisão própria do service worker. | Aprovada, implementada e publicada na demonstração oficial |
 
 ### Regras de mudança
 
@@ -3016,7 +3016,9 @@ Na área de Resultados, as chaves 1181 e 1201 do Campeonato Paranaense de Karat�
 
 Após relato de Mozer sobre o botão “Entrar na plataforma” no Google Chrome de um notebook, a área de autenticação para telas de até 720 px de altura deixou de aplicar escala CSS no cartão. A tela mantém rolagem vertical, o botão preserva eventos de ponteiro e o cache PWA recebeu uma nova revisão, forçando a substituição da cópia anterior no Chrome sem alterar credenciais, perfis ou o fluxo de autenticação.
 
-O conjunto completo do atleta e a correção de entrada no notebook foram autorizados para publicação na demonstração oficial.
+Mozer confirmou que a primeira correção não resolveu o comportamento no Chrome atualizado, inclusive em janela anônima: clique e tecla Enter permaneceram sem reação visível. O reforço seguinte desacopla o botão do envio nativo, mantém acionamentos redundantes por clique, `submit` e Enter, mostra “Clique recebido” antes da validação e conserva a mensagem de erro ao lado do botão. Assim, uma validação local ou falha da API deixa de parecer ausência de resposta. A revisão `notebook-login-2` do service worker invalida novamente a cópia anterior.
+
+O conjunto completo do atleta e o reforço de entrada no notebook foram autorizados para publicação na demonstração oficial.
 
 ---
 
