@@ -63,7 +63,8 @@ Mozer autorizou a retomada da Apex’s Forge pelo visual público, em nível pro
 O primeiro conceito publicado está em `../apex-forge.html` e estabelece:
 
 - direção editorial premium ligada à família Apex, com marca visual própria da Forge;
-- o símbolo oficial do Apex Combate não é usado na vitrine; cabeçalho, busca e rodapé utilizam um monograma “F” exclusivo da Apex’s Forge;
+- o símbolo oficial do Apex Combate não é usado na vitrine; tela de entrada, cabeçalho, busca e rodapé utilizam um monograma “F” exclusivo da Apex’s Forge;
+- tela inicial imersiva antes do catálogo, com apresentação da coleção, botão “Entrar na loja”, retorno ao Apex Combate e indicação do caráter demonstrativo;
 - preto, grafite, branco técnico e Crimson Apex, com aço e tom metálico quente como apoio comercial;
 - fotografia original sem marca de terceiro;
 - abertura de campanha, coleções por finalidade, modalidades, catálogo demonstrativo e manifesto;

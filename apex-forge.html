@@ -31,7 +31,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; background: var(--ink); }
     body { margin: 0; overflow-x: hidden; background: var(--ink); color: var(--text); font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
-    body.drawer-open, body.menu-open, body.modal-open, body.search-open { overflow: hidden; }
+    body.entry-open, body.drawer-open, body.menu-open, body.modal-open, body.search-open { overflow: hidden; }
     button, input, a { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { color: inherit; }
@@ -43,6 +43,35 @@
     .skip-link { position: fixed; top: -60px; left: 16px; z-index: 1000; padding: 12px 16px; background: white; color: black; border-radius: 8px; }
     .skip-link:focus { top: 16px; }
     .shell { width: min(1480px, calc(100% - 48px)); margin-inline: auto; }
+
+    .store-entry { position: fixed; inset: 0; z-index: 900; min-height: 100svh; overflow: auto; background: #07090b; isolation: isolate; transition: opacity .55s ease, visibility .55s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+    .store-entry::before { content: ""; position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg,rgba(5,7,9,.99) 0%,rgba(5,7,9,.95) 34%,rgba(5,7,9,.55) 59%,rgba(5,7,9,.12) 100%),url("assets/apex-forge-hero.jpg") 64% center/cover no-repeat; }
+    .store-entry::after { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size: 78px 78px; mask-image: linear-gradient(90deg,black,transparent 78%); }
+    .store-entry.leaving { opacity: 0; visibility: hidden; transform: scale(1.025); pointer-events: none; }
+    .entry-shell { width: min(1480px,calc(100% - 64px)); min-height: 100svh; margin-inline: auto; padding: 27px 0 31px; display: grid; grid-template-rows: auto 1fr auto; }
+    .entry-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .entry-brand { display: inline-flex; align-items: center; gap: 13px; }
+    .entry-brand .forge-mark { width: 55px; height: 55px; }
+    .entry-brand .forge-mark i { font-size: 28px; }
+    .entry-brand .brand-copy b { font-size: 28px; }
+    .entry-demo { padding: 9px 12px; border: 1px solid rgba(255,255,255,.13); border-radius: 999px; color: #a7abb3; font-size: 8px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; backdrop-filter: blur(9px); }
+    .entry-content { width: min(720px,58%); padding: clamp(55px,8vh,95px) 0 45px; align-self: center; }
+    .entry-kicker { display: inline-flex; align-items: center; gap: 11px; color: #d8dbe0; font-size: 9px; font-weight: 900; letter-spacing: .25em; text-transform: uppercase; }
+    .entry-kicker::before { content: ""; width: 34px; height: 2px; background: var(--red); }
+    .entry-content h1 { margin: 25px 0 23px; font-family: var(--font-display); font-size: clamp(70px,9.2vw,142px); font-style: italic; font-weight: 950; line-height: .78; letter-spacing: -.055em; text-transform: uppercase; }
+    .entry-content h1 span { display: block; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.58); }
+    .entry-content p { max-width: 570px; margin: 0; color: #b3b7bf; font-size: clamp(14px,1.25vw,18px); line-height: 1.7; }
+    .entry-actions { margin-top: 31px; display: flex; flex-wrap: wrap; align-items: center; gap: 13px; }
+    .entry-primary { min-height: 56px; padding: 0 27px; border: 0; border-radius: 999px; display: inline-flex; align-items: center; gap: 16px; background: var(--red); color: white; cursor: pointer; box-shadow: 0 18px 42px rgba(239,38,54,.28); font-size: 10px; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; transition: transform .18s,background .18s; }
+    .entry-primary:hover,.entry-primary:focus-visible { transform: translateY(-2px); background: var(--red-bright); }
+    .entry-primary svg { width: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .entry-return { min-height: 50px; padding: 0 16px; display: inline-flex; align-items: center; color: #b0b4bc; font-size: 9px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .entry-return:hover { color: white; }
+    .entry-foot { padding-top: 22px; border-top: 1px solid rgba(255,255,255,.11); display: grid; grid-template-columns: repeat(3,max-content); gap: clamp(28px,5vw,75px); }
+    .entry-proof { display: flex; align-items: center; gap: 10px; }
+    .entry-proof i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 5px rgba(88,210,161,.1); }
+    .entry-proof b { display: block; font-size: 10px; }
+    .entry-proof span { display: block; margin-top: 3px; color: #717680; font-size: 8px; }
 
     .concept-bar { min-height: 34px; padding: 0 18px; display: flex; align-items: center; justify-content: center; background: #f3efe7; color: #15171a; }
     .concept-bar-inner { width: min(960px,100%); display: grid; grid-template-columns: repeat(3,1fr); align-items: center; }
@@ -328,6 +357,24 @@
 
     @media (max-width: 760px) {
       .shell { width: min(100% - 28px, 640px); }
+      .store-entry::before { background: linear-gradient(180deg,rgba(5,7,9,.15),rgba(5,7,9,.48) 39%,rgba(5,7,9,.99) 70%),url("assets/apex-forge-hero.jpg") 68% center/cover no-repeat; }
+      .store-entry::after { display:none; }
+      .entry-shell { width:min(100% - 30px,620px); padding:18px 0 22px; }
+      .entry-head { align-items:flex-start; }
+      .entry-brand .forge-mark { width:43px; height:43px; }
+      .entry-brand .forge-mark i { font-size:22px; }
+      .entry-brand .brand-copy b { font-size:22px; }
+      .entry-demo { max-width:126px; padding:7px 9px; font-size:6px; line-height:1.45; text-align:center; }
+      .entry-content { width:100%; padding:300px 2px 28px; align-self:end; }
+      .entry-content h1 { margin:17px 0; font-size:clamp(57px,17vw,78px); }
+      .entry-content p { font-size:13px; line-height:1.55; }
+      .entry-actions { margin-top:22px; display:grid; grid-template-columns:1fr; gap:5px; }
+      .entry-primary { width:100%; justify-content:center; }
+      .entry-return { justify-content:center; min-height:42px; }
+      .entry-foot { padding-top:16px; grid-template-columns:1fr 1fr; gap:13px; }
+      .entry-proof:last-child { display:none; }
+      .entry-proof b { font-size:9px; }
+      .entry-proof span { font-size:7px; }
       .concept-bar { min-height: 30px; padding-inline:12px; }
       .concept-bar-inner { display:flex; justify-content:center; }
       .concept-message { min-height:30px; font-size:7px; letter-spacing:.09em; }
@@ -423,7 +470,27 @@
     }
   </style>
 </head>
-<body>
+<body class="entry-open">
+  <section class="store-entry" id="storeEntry" role="dialog" aria-modal="true" aria-labelledby="storeEntryTitle">
+    <div class="entry-shell">
+      <header class="entry-head">
+        <span class="entry-brand"><span class="forge-mark" aria-hidden="true"><i>F</i></span><span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span></span>
+        <span class="entry-demo">Vitrine comercial demonstrativa</span>
+      </header>
+      <div class="entry-content">
+        <span class="entry-kicker">Bem-vindo à coleção 001</span>
+        <h1 id="storeEntryTitle">Entre na <span>forja.</span></h1>
+        <p>Equipamentos e vestuário para quem transforma disciplina em evolução. Escolha sua modalidade e encontre o que prepara o próximo treino.</p>
+        <div class="entry-actions"><button class="entry-primary" id="enterStore" type="button">Entrar na loja <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button><a class="entry-return" href="./apex-combate.html">Voltar ao Apex Combate</a></div>
+      </div>
+      <footer class="entry-foot">
+        <span class="entry-proof"><i></i><span><b>Curadoria marcial</b><span>Produtos por modalidade</span></span></span>
+        <span class="entry-proof"><i></i><span><b>Experiência segura</b><span>Nenhuma cobrança nesta fase</span></span></span>
+        <span class="entry-proof"><i></i><span><b>Ecossistema conectado</b><span>Produto separado do Apex Combate</span></span></span>
+      </footer>
+    </div>
+  </section>
+
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
   <div class="concept-bar"><div class="concept-bar-inner"><span class="concept-message"><i></i> Frete demonstrativo grátis acima de R$ 499</span><span class="concept-message">Troca simulada em até 30 dias</span><span class="concept-message demo">Vitrine comercial demonstrativa</span></div></div>
@@ -699,6 +766,8 @@
 
   <script>
     const body = document.body;
+    const storeEntry = document.getElementById('storeEntry');
+    const enterStore = document.getElementById('enterStore');
     const cartDrawer = document.getElementById('cartDrawer');
     const drawerBackdrop = document.getElementById('drawerBackdrop');
     const cartOpen = document.getElementById('cartOpen');
@@ -744,6 +813,19 @@
       toast.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function enterStorefront() {
+      storeEntry.classList.add('leaving');
+      storeEntry.setAttribute('aria-hidden', 'true');
+      body.classList.remove('entry-open');
+      const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650;
+      window.setTimeout(() => {
+        storeEntry.hidden = true;
+        const heroTitle = document.getElementById('heroTitle');
+        heroTitle.setAttribute('tabindex', '-1');
+        heroTitle.focus({ preventScroll: true });
+      }, delay);
     }
 
     function productFromCard(card) {
@@ -1002,6 +1084,7 @@
     });
     document.querySelectorAll('[data-toast]').forEach(button => button.addEventListener('click', () => showToast(button.dataset.toast)));
 
+    enterStore.addEventListener('click', enterStorefront);
     cartOpen.addEventListener('click', openDrawer);
     cartClose.addEventListener('click', () => closeDrawer());
     drawerBackdrop.addEventListener('click', () => closeDrawer());
