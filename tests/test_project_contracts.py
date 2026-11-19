@@ -289,6 +289,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertIn("apex-combate-v44-forge-dashboard-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
         for offline_asset in ("./apex-forge.html", "./assets/apex-forge-hero.jpg", "./assets/apex-forge-kimono.jpg", "./assets/apex-forge-gloves.jpg"):
             self.assertIn(offline_asset, (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+        self.assertRegex(dockerfile, r"COPY[^\n]*\bapex-forge\.html\b")
 
 
 if __name__ == "__main__":
