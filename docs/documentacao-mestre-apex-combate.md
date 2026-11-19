@@ -2446,7 +2446,7 @@ O conceito local `../apex-forge.html` adota linguagem editorial premium derivada
 
 Produtos, preços, catálogo, vendedores, checkout, pagamentos, estoque e pedidos não estão em operação nesta etapa. A experiência identifica esses dados como demonstrativos e mantém o aplicativo dos lojistas separado do Apex Combate.
 
-Cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — oferece um cartão contextual de acesso à vitrine da Apex’s Forge. O acesso abre o produto comercial separado em nova aba, preserva a sidebar vigente, não cria um quarto perfil público e não transfere à loja permissões, documentos ou dados esportivos e administrativos.
+Cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — oferece um cartão contextual de acesso à vitrine da Apex’s Forge. A navegação lateral esquerda também oferece um atalho com símbolo de loja e o nome “Apex’s Forge”. Ambos abrem o produto comercial separado em nova aba, não criam um quarto perfil público e não transferem à loja permissões, documentos ou dados esportivos e administrativos.
 
 ---
 
@@ -2967,6 +2967,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-063 | O botão “Entrar na plataforma” deve manter uma área de clique direta em notebooks, sem `transform: scale()` e sem camadas decorativas sobre o cartão. O rodapé não poderá capturar eventos de ponteiro, ficará abaixo da autenticação e será ocultado em notebooks com até 900 px de altura. Permanecem acionamento direto por clique e Enter, confirmação textual em região `aria-live`, erros persistentes e revisão própria do service worker. | Aprovada, causa exata reproduzida, implementada e publicada na demonstração oficial |
 | DEC-064 | A Apex’s Forge é retomada pela criação de uma vitrine pública original e de nível profissional, derivada da família visual Apex e focada em artes marciais. Referências externas serão usadas apenas como parâmetro de acabamento, sem cópia. A primeira etapa é exclusivamente visual e responsiva; produtos, preços, sacola, vendedores e operações permanecem demonstrativos até a definição e implementação comercial. | Aprovada por Mozer; primeiro conceito local implementado para revisão |
 | DEC-065 | As dashboards autenticadas de atleta, clube, técnico e Federação terão um cartão contextual de acesso à Apex’s Forge. A vitrine abre como produto separado, sem novo perfil público, sem alteração da sidebar, sem mistura de permissões e com indicação de operação demonstrativa enquanto o comércio real não estiver habilitado. | Implementada, validada e publicada em produção |
+| DEC-066 | Em substituição parcial à restrição de sidebar da DEC-065, a navegação lateral esquerda autenticada também terá um atalho para a Apex’s Forge, identificado por símbolo de loja e pelo nome do produto. O destino continua separado e abre em nova aba. | Implementada, validada e publicada em produção |
 
 ### Regras de mudança
 

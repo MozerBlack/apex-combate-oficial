@@ -73,7 +73,7 @@ O primeiro conceito publicado está em `../apex-forge.html` e estabelece:
 
 Essa etapa define linguagem visual, hierarquia, responsividade e experiência de navegação. Catálogo real, vendedores, pagamentos, estoque e pedidos continuam dependentes das fases comerciais e decisões pendentes deste documento.
 
-Por decisão posterior de Mozer, cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — passa a apresentar um cartão de acesso à vitrine da Apex’s Forge. O cartão abre o produto comercial separado em nova aba, não adiciona um quarto perfil público, não altera a sidebar autenticada e não compartilha permissões esportivas ou administrativas com a loja. O conteúdo identifica catálogo, preços e sacola como demonstrativos nesta fase.
+Por decisão posterior de Mozer, cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — passa a apresentar um cartão de acesso à vitrine da Apex’s Forge. O produto comercial separado abre em nova aba, não adiciona um quarto perfil público e não compartilha permissões esportivas ou administrativas com a loja. Além do cartão, a navegação lateral esquerda exibe um atalho identificado por símbolo de loja e pelo nome “Apex’s Forge”. O conteúdo identifica catálogo, preços e sacola como demonstrativos nesta fase.
 
 ---
 

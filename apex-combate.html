@@ -123,6 +123,9 @@
     .nav-btn:hover { background: #12151c; color: #d9dde4; }
     .nav-btn.active { color: #fff; background: var(--accent-soft); }
     .nav-btn.active .nav-icon { color: var(--accent); }
+    .forge-sidebar-link { margin-top: 8px; border: 1px solid rgba(212,154,85,.26); background: linear-gradient(100deg,rgba(212,154,85,.1),rgba(212,154,85,.025)); color: #d9b27d; text-decoration: none; }
+    .forge-sidebar-link:hover,.forge-sidebar-link:focus-visible { border-color: rgba(225,173,104,.56); background: rgba(212,154,85,.15); color: #f3d4ad; }
+    .forge-sidebar-link .nav-icon { color: #e1ad68; }
     .nav-icon { width: 22px; display: grid; place-items: center; }
     .nav-btn .nav-badge { margin-left: auto; min-width: 19px; height: 19px; padding: 0 5px; display: grid; place-items: center; border-radius: 99px; font-size: 13px; font-size: var(--font-label, 13px); background: var(--accent); color: #fff; }
     .side-spacer { flex: 1; }
@@ -1821,6 +1824,7 @@
     <symbol id="i-fire" viewBox="0 0 24 24"><path d="M13 3s1 4-2 6c-3-2-5 1-5 4a6 6 0 0 0 12 0c0-3-1-5-3-7 0 3-2 4-2 4"/></symbol>
     <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-13h-7z"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10M3 10l2-6h14l2 6"/><path d="M3 10c0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0M9 20v-5h6v5"/></symbol>
     <symbol id="i-edit" viewBox="0 0 24 24"><path d="m14 5 5 5M4 20l3.5-1L19 7a2 2 0 0 0-3-3L4 16z"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
@@ -2040,6 +2044,7 @@
         <button class="nav-btn" data-page-target="training" data-athlete-page="training" data-club-anchor="club-classes" data-federation-anchor="federation-registrations" data-technician-anchor="technician-call"><span class="nav-icon"><svg class="icon"><use href="#i-calendar"/></svg></span>Competições</button>
         <button class="nav-btn" data-page-target="journey" data-athlete-page="journey" data-club-anchor="club-competition" data-federation-anchor="federation-events" data-technician-anchor="technician-credential"><span class="nav-icon"><svg class="icon"><use href="#i-target"/></svg></span>Resultados</button>
         <button class="nav-btn" data-page-target="profile" data-athlete-page="profile" data-club-anchor="club-finance" data-federation-anchor="federation-compliance" data-technician-anchor="technician-alerts"><span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span>Perfil</button>
+        <a class="nav-btn forge-sidebar-link" href="./apex-forge.html" target="_blank" rel="noopener" aria-label="Abrir a loja Apex’s Forge em nova aba"><span class="nav-icon"><svg class="icon"><use href="#i-store"/></svg></span>Apex’s Forge</a>
       </nav>
 
       <div class="side-spacer"></div>
@@ -5410,7 +5415,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-forge-dashboard-1', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-forge-sidebar-1', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

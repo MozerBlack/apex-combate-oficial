@@ -1,4 +1,4 @@
-const CACHE_NAME = 'apex-combate-v44-forge-dashboard-1';
+const CACHE_NAME = 'apex-combate-v44-forge-sidebar-1';
 const APP_SHELL = [
   './',
   './apex-combate.html',

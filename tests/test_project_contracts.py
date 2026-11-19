@@ -209,13 +209,16 @@ class ProductContractTests(unittest.TestCase):
         for asset in ("apex-forge-hero.jpg", "apex-forge-kimono.jpg", "apex-forge-gloves.jpg"):
             self.assertTrue((ROOT / "assets" / asset).is_file(), asset)
 
-    def test_apex_forge_is_available_in_every_authenticated_dashboard_without_sidebar_change(self):
+    def test_apex_forge_is_available_in_every_dashboard_and_left_sidebar(self):
         entries = re.findall(r'data-forge-dashboard-entry="([^"]+)"', self.html)
         self.assertEqual(entries, ["athlete", "academy", "technician", "federation"])
-        self.assertEqual(self.html.count('href="./apex-forge.html"'), 4)
-        self.assertEqual(self.html.count('target="_blank" rel="noopener"'), 4)
+        self.assertEqual(self.html.count('href="./apex-forge.html"'), 5)
+        self.assertEqual(self.html.count('target="_blank" rel="noopener"'), 5)
         sidebar = self.html.split('<aside class="sidebar">', 1)[1].split('</aside>', 1)[0]
-        self.assertNotIn("Apex’s Forge", sidebar)
+        self.assertIn('class="nav-btn forge-sidebar-link"', sidebar)
+        self.assertIn('<use href="#i-store"/>', sidebar)
+        self.assertIn("Apex’s Forge", sidebar)
+        self.assertNotIn("data-page-target", sidebar.split('class="nav-btn forge-sidebar-link"', 1)[1].split('</a>', 1)[0])
         for page_id, next_page, role in (
             ("page-home", "page-explore", "athlete"),
             ("page-academy", "page-technician", "academy"),
@@ -228,7 +231,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063", "DEC-064", "DEC-065"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063", "DEC-064", "DEC-065", "DEC-066"):
             self.assertIn(decision, self.master)
         self.assertIn("revisão completa do ATLETA", self.master)
 
@@ -285,8 +288,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-forge-dashboard-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v44-forge-dashboard-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-forge-sidebar-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44-forge-sidebar-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
         for offline_asset in ("./apex-forge.html", "./assets/apex-forge-hero.jpg", "./assets/apex-forge-kimono.jpg", "./assets/apex-forge-gloves.jpg"):
             self.assertIn(offline_asset, (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
