@@ -1,7 +1,7 @@
 # Apex’s Forge — Aplicativo Comercial Conectado
 
 **Proprietário:** Mozer  
-**Status:** primeiro conceito visual publicado em caráter demonstrativo; detalhes e operação comercial em etapas futuras
+**Status:** vitrine profissional ampliada e publicada em caráter demonstrativo; operação comercial real em etapa futura
 **Nome oficial:** Apex’s Forge  
 **Vínculo:** produto separado conectado ao Apex Combate por API comercial  
 **Slogan de trabalho:** Forje sua marca. Eleve seu negócio.
@@ -65,11 +65,14 @@ O primeiro conceito publicado está em `../apex-forge.html` e estabelece:
 - direção editorial premium ligada à família Apex;
 - preto, grafite, branco técnico e Crimson Apex, com aço e tom metálico quente como apoio comercial;
 - fotografia original sem marca de terceiro;
-- abertura de campanha, coleções por finalidade, modalidades, seleção demonstrativa e manifesto;
+- abertura de campanha, coleções por finalidade, modalidades, catálogo demonstrativo e manifesto;
+- busca global, busca no catálogo, filtros por categoria e modalidade e ordenação de produtos;
+- oito produtos demonstrativos com fotografia própria, avaliações, parcelamento, variações e visualização detalhada;
+- cálculo de entrega, quantidade, favoritos, cupom, sacola, frete grátis progressivo e checkout simulados;
+- lista de lançamentos e estrutura de atendimento comercial;
 - vitrine responsiva para celular, notebook e desktop;
-- sacola e favoritos apenas como interações visuais nesta fase;
 - separação explícita entre a loja do comprador e o futuro aplicativo operacional do lojista;
-- aviso de que produtos, preços, checkout e operações ainda são demonstrativos.
+- aviso persistente de que produtos, preços, avaliações, disponibilidade, frete, checkout e operações ainda são demonstrativos.
 
 Essa etapa define linguagem visual, hierarquia, responsividade e experiência de navegação. Catálogo real, vendedores, pagamentos, estoque e pedidos continuam dependentes das fases comerciais e decisões pendentes deste documento.
 

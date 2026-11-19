@@ -1,4 +1,4 @@
-const CACHE_NAME = 'apex-combate-v44-forge-sidebar-1';
+const CACHE_NAME = 'apex-combate-v44-forge-store-1';
 const APP_SHELL = [
   './',
   './apex-combate.html',
@@ -10,6 +10,9 @@ const APP_SHELL = [
   './assets/apex-forge-hero.jpg',
   './assets/apex-forge-kimono.jpg',
   './assets/apex-forge-gloves.jpg',
+  './assets/apex-forge-rashguard.jpg',
+  './assets/apex-forge-shorts.jpg',
+  './assets/apex-forge-headgear.jpg',
   './icons/apex-192.png',
   './icons/apex-512.png'
 ];
