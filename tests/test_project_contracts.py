@@ -187,9 +187,48 @@ class ProductContractTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("[Índice documental](docs/README.md)", readme)
 
+    def test_apex_forge_visual_concept_is_original_responsive_and_demonstrative(self):
+        forge_path = ROOT / "apex-forge.html"
+        self.assertTrue(forge_path.is_file())
+        forge = forge_path.read_text(encoding="utf-8")
+        for contract in (
+            "Apex’s Forge — Forje sua jornada",
+            "Forje sua <span>jornada.</span>",
+            "Todas as lutas.<br><span>Uma só forja.</span>",
+            "Conceito visual · produtos, preços e operações demonstrativos",
+            "@media (max-width: 760px)",
+            'id="cartDrawer"',
+            'id="mobileMenu"',
+            "assets/apex-forge-hero.jpg",
+            "assets/apex-forge-kimono.jpg",
+            "assets/apex-forge-gloves.jpg",
+        ):
+            self.assertIn(contract, forge)
+        self.assertNotIn("CoreMotion", forge)
+        self.assertNotIn("CoreShop", forge)
+        for asset in ("apex-forge-hero.jpg", "apex-forge-kimono.jpg", "apex-forge-gloves.jpg"):
+            self.assertTrue((ROOT / "assets" / asset).is_file(), asset)
+
+    def test_apex_forge_is_available_in_every_authenticated_dashboard_without_sidebar_change(self):
+        entries = re.findall(r'data-forge-dashboard-entry="([^"]+)"', self.html)
+        self.assertEqual(entries, ["athlete", "academy", "technician", "federation"])
+        self.assertEqual(self.html.count('href="./apex-forge.html"'), 4)
+        self.assertEqual(self.html.count('target="_blank" rel="noopener"'), 4)
+        sidebar = self.html.split('<aside class="sidebar">', 1)[1].split('</aside>', 1)[0]
+        self.assertNotIn("Apex’s Forge", sidebar)
+        for page_id, next_page, role in (
+            ("page-home", "page-explore", "athlete"),
+            ("page-academy", "page-technician", "academy"),
+            ("page-technician", "page-federation", "technician"),
+        ):
+            page = self.html.split(f'id="{page_id}"', 1)[1].split(f'id="{next_page}"', 1)[0]
+            self.assertIn(f'data-forge-dashboard-entry="{role}"', page)
+        federation_page = self.html.split('id="page-federation"', 1)[1]
+        self.assertIn('data-forge-dashboard-entry="federation"', federation_page)
+
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063", "DEC-064", "DEC-065"):
             self.assertIn(decision, self.master)
         self.assertIn("revisão completa do ATLETA", self.master)
 
@@ -246,8 +285,10 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-notebook-login-3'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v44-notebook-login-3", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-forge-dashboard-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44-forge-dashboard-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        for offline_asset in ("./apex-forge.html", "./assets/apex-forge-hero.jpg", "./assets/apex-forge-kimono.jpg", "./assets/apex-forge-gloves.jpg"):
+            self.assertIn(offline_asset, (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

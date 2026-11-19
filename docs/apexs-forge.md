@@ -1,7 +1,7 @@
 # Apex’s Forge — Aplicativo Comercial Conectado
 
 **Proprietário:** Mozer  
-**Status:** nome oficial aprovado; implementação futura  
+**Status:** primeiro conceito visual publicado em caráter demonstrativo; detalhes e operação comercial em etapas futuras
 **Nome oficial:** Apex’s Forge  
 **Vínculo:** produto separado conectado ao Apex Combate por API comercial  
 **Slogan de trabalho:** Forje sua marca. Eleve seu negócio.
@@ -55,6 +55,25 @@ No aplicativo, a forja é uma metáfora para o ambiente em que o lojista:
 > **Forje sua marca. Eleve seu negócio.**
 
 “Forje sua marca” representa construção, identidade e fortalecimento. “Eleve seu negócio” conecta o crescimento comercial à ideia de Apex: chegar ao ponto mais alto.
+
+### Direção visual da primeira vitrine
+
+Mozer autorizou a retomada da Apex’s Forge pelo visual público, em nível profissional e com identidade própria. Uma loja de terceiro foi observada somente como referência de grau de acabamento; marca, código, textos, produtos e composição não serão copiados.
+
+O primeiro conceito publicado está em `../apex-forge.html` e estabelece:
+
+- direção editorial premium ligada à família Apex;
+- preto, grafite, branco técnico e Crimson Apex, com aço e tom metálico quente como apoio comercial;
+- fotografia original sem marca de terceiro;
+- abertura de campanha, coleções por finalidade, modalidades, seleção demonstrativa e manifesto;
+- vitrine responsiva para celular, notebook e desktop;
+- sacola e favoritos apenas como interações visuais nesta fase;
+- separação explícita entre a loja do comprador e o futuro aplicativo operacional do lojista;
+- aviso de que produtos, preços, checkout e operações ainda são demonstrativos.
+
+Essa etapa define linguagem visual, hierarquia, responsividade e experiência de navegação. Catálogo real, vendedores, pagamentos, estoque e pedidos continuam dependentes das fases comerciais e decisões pendentes deste documento.
+
+Por decisão posterior de Mozer, cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — passa a apresentar um cartão de acesso à vitrine da Apex’s Forge. O cartão abre o produto comercial separado em nova aba, não adiciona um quarto perfil público, não altera a sidebar autenticada e não compartilha permissões esportivas ou administrativas com a loja. O conteúdo identifica catálogo, preços e sacola como demonstrativos nesta fase.
 
 ---
 

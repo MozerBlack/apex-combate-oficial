@@ -2425,7 +2425,7 @@ O modelo de dados já permite uma Apex Central acima de múltiplas federações,
 **Documento de origem:** `apexs-forge.md`
 
 **Proprietário:** Mozer  
-**Status:** nome oficial aprovado; implementação futura  
+**Status:** identidade da vitrine profissional em desenvolvimento local; operação comercial futura
 **Nome oficial:** Apex’s Forge  
 **Vínculo:** produto separado conectado ao Apex Combate por API comercial  
 **Slogan de trabalho:** Forje sua marca. Eleve seu negócio.
@@ -2437,6 +2437,16 @@ O modelo de dados já permite uma Apex Central acima de múltiplas federações,
 As lojas virtuais não serão administradas dentro dos dashboards esportivos do Apex Combate. Será criado um segundo aplicativo para lojistas acompanharem e controlarem produtos, estoque, pedidos, vendas e repasses.
 
 A separação preserva a simplicidade do aplicativo esportivo e oferece uma operação comercial profissional para vendedores.
+
+#### Direção visual autorizada para a primeira vitrine
+
+Mozer autorizou a retomada da Apex’s Forge pela experiência visual pública, com acabamento profissional e composição original. A referência externa apresentada serve somente como parâmetro de qualidade; não serão copiados marca, código, textos, imagens, produtos ou estrutura visual.
+
+O conceito local `../apex-forge.html` adota linguagem editorial premium derivada da família Apex: preto, grafite, branco técnico, Crimson Apex e apoio metálico quente; fotografia própria; abertura de campanha; coleções por finalidade; modalidades; seleção demonstrativa; manifesto e apresentação para lojistas. A interface é responsiva e inclui sacola, favoritos e filtros somente como demonstração visual.
+
+Produtos, preços, catálogo, vendedores, checkout, pagamentos, estoque e pedidos não estão em operação nesta etapa. A experiência identifica esses dados como demonstrativos e mantém o aplicativo dos lojistas separado do Apex Combate.
+
+Cada dashboard autenticada do Apex Combate — atleta, clube, técnico e Federação — oferece um cartão contextual de acesso à vitrine da Apex’s Forge. O acesso abre o produto comercial separado em nova aba, preserva a sidebar vigente, não cria um quarto perfil público e não transfere à loja permissões, documentos ou dados esportivos e administrativos.
 
 ---
 
@@ -2955,6 +2965,8 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-061 | A central de campeonato ao vivo terá player de vídeo por tatame, ringue ou área e modo de filtragem por busca, modalidade, categoria, área, situação e luta do próprio atleta. A demonstração não exibirá luta falsa: o player ficará preparado para HLS autenticado e só reproduzirá fonte autorizada. Origens externas exigem allowlist explícita, URL temporária e autorização de imagem. | Aprovada e publicada; fonte real pendente de provedor autorizado |
 | DEC-062 | O nome “João Victor Mozer dos Santos” poderá aparecer nas referências autenticadas das chaves 1181 e 1201 e no histórico do Campeonato Paranaense de Karatê 2026 — Oeste, conforme autorização direta de Mozer. O registro não substituirá a conta demonstrativa de Rafael, não será apresentado como histórico do usuário autenticado e não presumirá resultado, colocação ou medalha. | Aprovada, implementada e publicada na demonstração oficial |
 | DEC-063 | O botão “Entrar na plataforma” deve manter uma área de clique direta em notebooks, sem `transform: scale()` e sem camadas decorativas sobre o cartão. O rodapé não poderá capturar eventos de ponteiro, ficará abaixo da autenticação e será ocultado em notebooks com até 900 px de altura. Permanecem acionamento direto por clique e Enter, confirmação textual em região `aria-live`, erros persistentes e revisão própria do service worker. | Aprovada, causa exata reproduzida, implementada e publicada na demonstração oficial |
+| DEC-064 | A Apex’s Forge é retomada pela criação de uma vitrine pública original e de nível profissional, derivada da família visual Apex e focada em artes marciais. Referências externas serão usadas apenas como parâmetro de acabamento, sem cópia. A primeira etapa é exclusivamente visual e responsiva; produtos, preços, sacola, vendedores e operações permanecem demonstrativos até a definição e implementação comercial. | Aprovada por Mozer; primeiro conceito local implementado para revisão |
+| DEC-065 | As dashboards autenticadas de atleta, clube, técnico e Federação terão um cartão contextual de acesso à Apex’s Forge. A vitrine abre como produto separado, sem novo perfil público, sem alteração da sidebar, sem mistura de permissões e com indicação de operação demonstrativa enquanto o comércio real não estiver habilitado. | Aprovada por Mozer; implementação local validada e publicação autorizada |
 
 ### Regras de mudança
 

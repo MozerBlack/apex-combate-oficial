@@ -1,11 +1,15 @@
-const CACHE_NAME = 'apex-combate-v44-notebook-login-3';
+const CACHE_NAME = 'apex-combate-v44-forge-dashboard-1';
 const APP_SHELL = [
   './',
   './apex-combate.html',
+  './apex-forge.html',
   './manifest.webmanifest',
   './assets/apex-combate-logo-oficial.png',
   './assets/apex-combate-hero.jpg',
   './assets/apex-combate-login-bg.jpg',
+  './assets/apex-forge-hero.jpg',
+  './assets/apex-forge-kimono.jpg',
+  './assets/apex-forge-gloves.jpg',
   './icons/apex-192.png',
   './icons/apex-512.png'
 ];
