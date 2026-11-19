@@ -970,8 +970,10 @@
       .profile-choice small { font-size: 10px; font-size: var(--font-micro, 10px); }
     }
     @media (max-height: 720px) and (min-width: 721px) {
-      .auth-stage { padding-block: 24px; }
-      .auth-card { transform: scale(.88); transform-origin: center; }
+      .auth-screen { overflow-y: auto; overscroll-behavior: contain; }
+      .auth-stage { min-height: 650px; padding-block: 24px; place-items: center; }
+      .auth-card { transform: none; }
+      .auth-submit { position: relative; z-index: 1; pointer-events: auto; }
       .auth-footer { display: none; }
     }
     @media (min-width: 2000px) {
@@ -5322,7 +5324,7 @@
 
     // Instalação PWA e suporte offline quando publicado por HTTPS.
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
+      window.addEventListener('load', () => navigator.serviceWorker.register('./apex-sw.js?v=44-notebook-login-1', { updateViaCache: 'none' }).then(registration => registration.update()).catch(() => {}));
     }
 
   </script>

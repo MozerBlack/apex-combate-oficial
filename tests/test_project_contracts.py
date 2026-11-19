@@ -32,6 +32,19 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn("addEventListener('click', showLoginScreen)", self.html)
         self.assertNotRegex(self.html, r"setTimeout\s*\(\s*showLoginScreen")
 
+    def test_notebook_login_button_is_not_inside_a_scaled_hit_area(self):
+        match = re.search(
+            r"@media\s*\(max-height:\s*720px\)\s*and\s*\(min-width:\s*721px\)\s*\{(.*?)\n\s*\}",
+            self.html,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match)
+        notebook_rules = match.group(1)
+        self.assertIn(".auth-screen { overflow-y: auto", notebook_rules)
+        self.assertIn(".auth-card { transform: none; }", notebook_rules)
+        self.assertNotIn("transform: scale", notebook_rules)
+        self.assertIn("pointer-events: auto", notebook_rules)
+
     def test_login_header_keeps_only_the_translator(self):
         match = re.search(
             r'<header class="auth-header auth-header--language-only"[^>]*>(.*?)</header>',
@@ -154,7 +167,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063"):
             self.assertIn(decision, self.master)
         self.assertIn("revisão completa do ATLETA", self.master)
 
@@ -211,8 +224,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=44'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v44", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-notebook-login-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44-notebook-login-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

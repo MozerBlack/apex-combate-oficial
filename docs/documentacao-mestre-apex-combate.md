@@ -2954,6 +2954,7 @@ Este arquivo registra decisões vigentes para impedir regressões de escopo ou i
 | DEC-060 | O atleta terá, dentro de Competições, uma central autenticada de campeonato ao vivo para acompanhar sua próxima luta, chave, categorias publicadas, adversário, área, número da luta, horário, quantidade de lutas anteriores, fila de chamadas, resultados da chave e avisos oficiais. A consulta é somente leitura, isolada pelas inscrições do atleta e atualizada automaticamente. | Aprovada e publicada na demonstração oficial |
 | DEC-061 | A central de campeonato ao vivo terá player de vídeo por tatame, ringue ou área e modo de filtragem por busca, modalidade, categoria, área, situação e luta do próprio atleta. A demonstração não exibirá luta falsa: o player ficará preparado para HLS autenticado e só reproduzirá fonte autorizada. Origens externas exigem allowlist explícita, URL temporária e autorização de imagem. | Aprovada e publicada; fonte real pendente de provedor autorizado |
 | DEC-062 | O nome “João Victor Mozer dos Santos” poderá aparecer nas referências autenticadas das chaves 1181 e 1201 e no histórico do Campeonato Paranaense de Karatê 2026 — Oeste, conforme autorização direta de Mozer. O registro não substituirá a conta demonstrativa de Rafael, não será apresentado como histórico do usuário autenticado e não presumirá resultado, colocação ou medalha. | Aprovada, implementada e publicada na demonstração oficial |
+| DEC-063 | O botão “Entrar na plataforma” deve manter uma área de clique direta em notebooks com tela baixa, sem `transform: scale()` no cartão de autenticação. A tela poderá rolar verticalmente sem sobrepor ou desalinhar o botão. O service worker receberá uma revisão própria para remover do Chrome caches anteriores da v44 e entregar a correção imediatamente. | Correção solicitada por Mozer; implementação e publicação em andamento |
 
 ### Regras de mudança
 
@@ -3013,7 +3014,9 @@ A central possui player de vídeo selecionável por área e modo de filtro para 
 
 Na área de Resultados, as chaves 1181 e 1201 do Campeonato Paranaense de Karatê 2026 — Oeste aparecem como referências históricas autenticadas com o nome “João Victor Mozer dos Santos”, por autorização direta do próprio Mozer. Esses registros são separados do histórico do usuário demonstrativo, preservam `Chave_260_Final.pdf` apenas como referência nominal e não inventam resultado, colocação, pontuação ou medalha.
 
-A publicação continua pendente de revisão e autorização do conjunto completo do atleta.
+Após relato de Mozer sobre o botão “Entrar na plataforma” no Google Chrome de um notebook, a área de autenticação para telas de até 720 px de altura deixou de aplicar escala CSS no cartão. A tela mantém rolagem vertical, o botão preserva eventos de ponteiro e o cache PWA recebeu uma nova revisão, forçando a substituição da cópia anterior no Chrome sem alterar credenciais, perfis ou o fluxo de autenticação.
+
+O conjunto completo do atleta e a correção de entrada no notebook foram autorizados para publicação na demonstração oficial.
 
 ---
 
