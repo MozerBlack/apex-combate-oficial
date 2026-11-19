@@ -54,7 +54,10 @@
     .site-header { position: sticky; top: 0; z-index: 100; background: rgba(8,9,11,.88); border-bottom: 1px solid var(--line); backdrop-filter: blur(18px); }
     .header-main { min-height: 78px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: clamp(28px, 4vw, 64px); }
     .brand { display: inline-flex; align-items: center; gap: 12px; min-width: max-content; }
-    .brand img { width: 49px; height: 49px; object-fit: contain; border-radius: 10px; }
+    .forge-mark { position: relative; width: 49px; height: 49px; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(239,38,54,.32); border-radius: 10px; display: grid; place-items: center; background: linear-gradient(145deg,#181b20,#090b0e); box-shadow: inset 0 0 0 1px rgba(255,255,255,.025); }
+    .forge-mark::before { content: ""; position: absolute; width: 38px; height: 12px; background: var(--red); transform: rotate(-58deg) translate(-2px,-8px); opacity: .88; }
+    .forge-mark::after { content: ""; position: absolute; right: 8px; bottom: 8px; width: 13px; height: 2px; background: var(--ember); }
+    .forge-mark i { position: relative; z-index: 1; color: white; font-family: var(--font-display); font-size: 25px; font-style: italic; font-weight: 950; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
     .brand-copy { display: grid; line-height: .82; }
     .brand-copy b { font-family: var(--font-display); font-size: 25px; font-style: italic; letter-spacing: .045em; }
     .brand-copy span { margin-top: 7px; color: var(--red-bright); font-size: 9px; font-weight: 950; letter-spacing: .42em; }
@@ -333,7 +336,8 @@
       .site-header { top: 0; }
       .header-main { min-height: 66px; gap: 10px; }
       .brand { gap: 8px; }
-      .brand img { width: 39px; height: 39px; }
+      .forge-mark { width: 39px; height: 39px; }
+      .forge-mark i { font-size: 21px; }
       .brand-copy b { font-size: 20px; }
       .brand-copy span { margin-top: 5px; font-size: 7px; }
       .header-actions .account, .header-actions .favorite { display: none; }
@@ -427,7 +431,7 @@
   <header class="site-header">
     <div class="shell header-main">
       <a class="brand" href="#topo" aria-label="Apex’s Forge, início">
-        <img src="assets/apex-combate-logo-oficial.png" alt="" />
+        <span class="forge-mark" aria-hidden="true"><i>F</i></span>
         <span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span>
       </a>
 
@@ -471,7 +475,7 @@
 
   <section class="search-overlay" id="searchOverlay" aria-hidden="true" aria-label="Busca da loja">
     <div class="search-shell">
-      <div class="search-head"><a class="brand" href="#topo"><img src="assets/apex-combate-logo-oficial.png" alt="" /><span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span></a><button class="search-close" id="searchClose" type="button" aria-label="Fechar busca">×</button></div>
+      <div class="search-head"><a class="brand" href="#topo"><span class="forge-mark" aria-hidden="true"><i>F</i></span><span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span></a><button class="search-close" id="searchClose" type="button" aria-label="Fechar busca">×</button></div>
       <label class="store-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="globalSearch" type="search" placeholder="O que você procura?" autocomplete="off" /></label>
       <p class="search-result-label" id="searchResultLabel">Produtos em destaque</p>
       <div class="search-results" id="searchResults"></div>
@@ -649,7 +653,7 @@
   <footer class="site-footer">
     <div class="shell footer-main">
       <div class="footer-brand">
-        <a class="brand" href="#topo"><img src="assets/apex-combate-logo-oficial.png" alt="" /><span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span></a>
+        <a class="brand" href="#topo"><span class="forge-mark" aria-hidden="true"><i>F</i></span><span class="brand-copy"><b>APEX’S</b><span>FORGE</span></span></a>
         <p>A forja comercial do ecossistema Apex. Equipamentos, marcas e experiências para todas as lutas.</p>
       </div>
       <div class="footer-column"><h3>Comprar</h3><a href="#colecoes">Coleções</a><a href="#modalidades">Modalidades</a><a href="#selecao">Equipamentos</a><a href="#selecao">Novidades</a></div>

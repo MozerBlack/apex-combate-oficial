@@ -221,6 +221,9 @@ class ProductContractTests(unittest.TestCase):
         self.assertEqual(len(re.findall(r'class="product-card(?:\s+dark)?" data-index="', forge)), 8)
         self.assertIn("Vitrine comercial demonstrativa", forge)
         self.assertIn("Nenhuma cobrança é realizada nesta vitrine demonstrativa.", forge)
+        self.assertNotIn("apex-combate-logo-oficial.png", forge)
+        self.assertEqual(forge.count('class="forge-mark"'), 3)
+        self.assertIn(".forge-mark i", forge)
         for asset in ("apex-forge-hero.jpg", "apex-forge-kimono.jpg", "apex-forge-gloves.jpg", "apex-forge-rashguard.jpg", "apex-forge-shorts.jpg", "apex-forge-headgear.jpg"):
             self.assertTrue((ROOT / "assets" / asset).is_file(), asset)
 
@@ -246,7 +249,7 @@ class ProductContractTests(unittest.TestCase):
 
     def test_document_master_has_all_parts_and_current_decisions(self):
         self.assertEqual(self.master.count("## Parte "), 10)
-        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063", "DEC-064", "DEC-065", "DEC-066", "DEC-067"):
+        for decision in ("DEC-039", "DEC-040", "DEC-041", "DEC-042", "DEC-043", "DEC-044", "DEC-045", "DEC-046", "DEC-047", "DEC-048", "DEC-049", "DEC-050", "DEC-051", "DEC-052", "DEC-053", "DEC-054", "DEC-055", "DEC-056", "DEC-057", "DEC-058", "DEC-059", "DEC-060", "DEC-061", "DEC-062", "DEC-063", "DEC-064", "DEC-065", "DEC-066", "DEC-067", "DEC-068"):
             self.assertIn(decision, self.master)
         self.assertIn("revisão completa do ATLETA", self.master)
 
@@ -303,8 +306,8 @@ class PwaContractTests(unittest.TestCase):
         self.assertTrue({"192x192", "512x512"}.issubset(sizes))
 
     def test_service_worker_is_registered(self):
-        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-forge-store-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
-        self.assertIn("apex-combate-v44-forge-store-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
+        self.assertIn("serviceWorker.register('./apex-sw.js?v=44-forge-own-mark-1'", (ROOT / "apex-combate.html").read_text(encoding="utf-8"))
+        self.assertIn("apex-combate-v44-forge-own-mark-1", (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
         for offline_asset in ("./apex-forge.html", "./assets/apex-forge-hero.jpg", "./assets/apex-forge-kimono.jpg", "./assets/apex-forge-gloves.jpg", "./assets/apex-forge-rashguard.jpg", "./assets/apex-forge-shorts.jpg", "./assets/apex-forge-headgear.jpg"):
             self.assertIn(offline_asset, (ROOT / "apex-sw.js").read_text(encoding="utf-8"))
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
